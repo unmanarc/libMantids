@@ -12,5 +12,4 @@ bool contains( const std::map<T,Y>& haystack, const T& needle )
 }
 }}
 
-
 #endif // STDLISTS_H

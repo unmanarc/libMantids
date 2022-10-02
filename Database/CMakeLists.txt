@@ -1,1 +1,4 @@
 ADD_SUBDIRECTORY(mdz3_db)
+ADD_SUBDIRECTORY(mdz3_db_mariadb)
+ADD_SUBDIRECTORY(mdz3_db_pgsql)
+ADD_SUBDIRECTORY(mdz3_db_sqlite3)
