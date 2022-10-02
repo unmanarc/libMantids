@@ -67,8 +67,8 @@ else()
         include_directories("${mdz3_threads_SOURCE_DIR}/../")
         target_link_libraries(${LIB_NAME} mdz3_threads)
 
-        include_directories("${mdz3_mem_vars_SOURCE_DIR}/../")
-        target_link_libraries(${LIB_NAME} mdz3_mem_vars)
+        include_directories("${mdz3_mem_SOURCE_DIR}/../")
+        target_link_libraries(${LIB_NAME} mdz3_mem)
 
         message("-- LINKING ${LIB_NAME} MARIADB_INCLUDE_DIR found at [${MYSQL_INCLUDE_DIR}]")
 

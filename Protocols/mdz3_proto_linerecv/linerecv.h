@@ -1,7 +1,7 @@
 #ifndef HTTP1BASE_H
 #define HTTP1BASE_H
 
-#include <mdz3_mem_vars/parser.h>
+#include <mdz3_mem/parser.h>
 #include "linerecv_subparser.h"
 
 namespace Mantids { namespace Protocols { namespace Line2Line {

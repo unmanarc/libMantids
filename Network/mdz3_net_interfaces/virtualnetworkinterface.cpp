@@ -12,7 +12,7 @@
 #else
 #include "tap-windows.h"
 #include "iphlpapi.h"
-#include <mdz3_mem_vars/w32compat.h>
+#include <mdz3_mem/w32compat.h>
 #endif
 
 #include <string.h>

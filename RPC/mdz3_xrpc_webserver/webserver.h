@@ -10,7 +10,7 @@
 #include <mdz3_auth/domains.h>
 #include <mdz3_xrpc_common/methodsmanager.h>
 #include <mdz3_prg_logs/rpclog.h>
-#include <mdz3_mem_vars/b_mem.h>
+#include <mdz3_mem/b_mem.h>
 
 namespace Mantids { namespace RPC { namespace Web {
 

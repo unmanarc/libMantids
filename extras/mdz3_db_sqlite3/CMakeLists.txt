@@ -58,8 +58,8 @@ else()
     include_directories("${mdz3_threads_SOURCE_DIR}/../")
     target_link_libraries(${LIB_NAME} mdz3_threads)
 
-    include_directories("${mdz3_mem_vars_SOURCE_DIR}/../")
-    target_link_libraries(${LIB_NAME} mdz3_mem_vars)
+    include_directories("${mdz3_mem_SOURCE_DIR}/../")
+    target_link_libraries(${LIB_NAME} mdz3_mem)
 
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(SQLite sqlite3)

@@ -2,7 +2,7 @@
 #include "mdz3_db/sqlconnector.h"
 
 #include <cstdint>
-#include <mdz3_mem_vars/a_string.h>
+#include <mdz3_mem/a_string.h>
 #include <unistd.h>
 
 using namespace Mantids::Database;

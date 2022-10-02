@@ -1,7 +1,7 @@
 #ifndef MIME_SUB_HEADER_H
 #define MIME_SUB_HEADER_H
 
-#include <mdz3_mem_vars/subparser.h>
+#include <mdz3_mem/subparser.h>
 
 #include <string>
 #include <map>

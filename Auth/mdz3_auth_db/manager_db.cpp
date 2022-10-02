@@ -1,8 +1,8 @@
 #include "manager_db.h"
 
-#include <mdz3_mem_vars/a_uint32.h>
-#include <mdz3_mem_vars/a_string.h>
-#include <mdz3_mem_vars/a_bool.h>
+#include <mdz3_mem/a_uint32.h>
+#include <mdz3_mem/a_string.h>
+#include <mdz3_mem/a_bool.h>
 
 
 #include <unistd.h>

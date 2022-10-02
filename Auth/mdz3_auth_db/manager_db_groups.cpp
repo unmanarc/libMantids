@@ -1,7 +1,7 @@
 #include "manager_db.h"
 #include <mdz3_threads/lock_shared.h>
-#include <mdz3_mem_vars/a_string.h>
-#include <mdz3_mem_vars/a_uint64.h>
+#include <mdz3_mem/a_string.h>
+#include <mdz3_mem/a_uint64.h>
 
 using namespace Mantids::Authentication;
 using namespace Mantids::Memory;

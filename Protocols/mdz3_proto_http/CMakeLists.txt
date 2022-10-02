@@ -42,8 +42,8 @@ if (EXTRAPREFIX)
     target_link_libraries(${LIB_NAME} "-L${EXTRAPREFIX}/lib")
 endif()
 
-include_directories("${mdz3_mem_vars_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_mem_vars)
+include_directories("${mdz3_mem_SOURCE_DIR}/../")
+target_link_libraries(${LIB_NAME} mdz3_mem)
 
 include_directories("${mdz3_proto_mime_SOURCE_DIR}/../")
 target_link_libraries(${LIB_NAME} mdz3_proto_mime)

@@ -2,7 +2,7 @@
 #include "mdz3_proto_http/rsp_status.h"
 #include "mdz3_xrpc_common/methodsmanager.h"
 
-#include <mdz3_mem_vars/b_mmap.h>
+#include <mdz3_mem/b_mmap.h>
 #include <mdz3_xrpc_common/streamablejson.h>
 #include <mdz3_helpers/crypto.h>
 #include <mdz3_helpers/json.h>

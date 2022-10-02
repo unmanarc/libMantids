@@ -1,4 +1,4 @@
-#include <mdz3_mem_vars/a_ipv4.h>
+#include <mdz3_mem/a_ipv4.h>
 #include "netifconfig.h"
 
 #include <string.h>
@@ -18,7 +18,7 @@
 #include "tap-windows.h"
 #include <Shlobj.h>
 #include <mdz3_helpers/appexec.h>
-#include <mdz3_mem_vars/w32compat.h>
+#include <mdz3_mem/w32compat.h>
 #endif
 
 #include <mdz3_helpers/mem.h>

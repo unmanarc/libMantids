@@ -67,8 +67,8 @@ else()
         include_directories("${mdz3_threads_SOURCE_DIR}/../")
         target_link_libraries(${LIB_NAME} mdz3_threads)
 
-        include_directories("${mdz3_mem_vars_SOURCE_DIR}/../")
-        target_link_libraries(${LIB_NAME} mdz3_mem_vars)
+        include_directories("${mdz3_mem_SOURCE_DIR}/../")
+        target_link_libraries(${LIB_NAME} mdz3_mem)
 
         target_include_directories(${LIB_NAME} PRIVATE ${PQ_INCLUDE_DIR})
         target_link_libraries(${LIB_NAME} ${POSTGRESQL_LIB})

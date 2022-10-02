@@ -1,10 +1,10 @@
-#include "mdz3_mem_vars/streamablefile.h"
+#include "mdz3_mem/streamablefile.h"
 #include "socket_tls.h"
 #include <fcntl.h>
 #include <openssl/ssl.h>
 #include <openssl/tls1.h>
 #include <string.h>
-#include <mdz3_mem_vars/streamablefile.h>
+#include <mdz3_mem/streamablefile.h>
 #include <mdz3_helpers/random.h>
 #include <stdexcept>
 

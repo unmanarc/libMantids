@@ -1,7 +1,7 @@
 #ifndef LINERECV_SUBPARSER_H
 #define LINERECV_SUBPARSER_H
 
-#include <mdz3_mem_vars/subparser.h>
+#include <mdz3_mem/subparser.h>
 
 namespace Mantids { namespace Protocols { namespace Line2Line {
 

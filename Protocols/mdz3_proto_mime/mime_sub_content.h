@@ -1,8 +1,8 @@
 #ifndef MIME_SUB_CONTENT_H
 #define MIME_SUB_CONTENT_H
 
-#include "mdz3_mem_vars/streamableobject.h"
-#include <mdz3_mem_vars/subparser.h>
+#include "mdz3_mem/streamableobject.h"
+#include <mdz3_mem/subparser.h>
 
 namespace Mantids { namespace Protocols { namespace MIME {
 

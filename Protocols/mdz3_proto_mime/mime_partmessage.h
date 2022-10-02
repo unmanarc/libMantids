@@ -4,7 +4,7 @@
 #include "mime_sub_content.h"
 #include "mime_sub_header.h"
 
-#include <mdz3_mem_vars/streamableobject.h>
+#include <mdz3_mem/streamableobject.h>
 
 namespace Mantids { namespace Protocols { namespace MIME {
 

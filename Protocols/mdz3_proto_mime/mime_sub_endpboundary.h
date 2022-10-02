@@ -1,7 +1,7 @@
 #ifndef MIME_SUB_ENDPBOUNDARY_H
 #define MIME_SUB_ENDPBOUNDARY_H
 
-#include <mdz3_mem_vars/subparser.h>
+#include <mdz3_mem/subparser.h>
 
 namespace Mantids { namespace Protocols { namespace MIME {
 

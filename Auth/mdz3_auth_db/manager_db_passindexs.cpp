@@ -3,12 +3,12 @@
 #include <limits>
 #include <mdz3_threads/lock_shared.h>
 
-#include <mdz3_mem_vars/a_string.h>
-#include <mdz3_mem_vars/a_datetime.h>
-#include <mdz3_mem_vars/a_bool.h>
-#include <mdz3_mem_vars/a_int32.h>
-#include <mdz3_mem_vars/a_uint32.h>
-#include <mdz3_mem_vars/a_var.h>
+#include <mdz3_mem/a_string.h>
+#include <mdz3_mem/a_datetime.h>
+#include <mdz3_mem/a_bool.h>
+#include <mdz3_mem/a_int32.h>
+#include <mdz3_mem/a_uint32.h>
+#include <mdz3_mem/a_var.h>
 
 using namespace Mantids::Authentication;
 using namespace Mantids::Memory;

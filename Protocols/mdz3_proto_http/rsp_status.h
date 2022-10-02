@@ -1,7 +1,7 @@
 #ifndef HTTP_CODE_RESPONSE_H
 #define HTTP_CODE_RESPONSE_H
 
-#include <mdz3_mem_vars/subparser.h>
+#include <mdz3_mem/subparser.h>
 #include "common_version.h"
 
 namespace Mantids { namespace Protocols { namespace HTTP {

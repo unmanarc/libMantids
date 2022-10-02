@@ -9,7 +9,7 @@
 #include <linux/limits.h>
 #else
 #include <windows.h>
-#include <mdz3_mem_vars/w32compat.h>
+#include <mdz3_mem/w32compat.h>
 #endif
 
 #include <fcntl.h>
@@ -24,7 +24,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <mdz3_mem_vars/a_var.h>
+#include <mdz3_mem/a_var.h>
 #include <mdz3_helpers/mem.h>
 
 using namespace std;

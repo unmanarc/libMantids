@@ -3,8 +3,8 @@
 
 #include <map>
 
-#include <mdz3_mem_vars/vars.h>
-#include <mdz3_mem_vars/parser.h>
+#include <mdz3_mem/vars.h>
+#include <mdz3_mem/parser.h>
 
 #include "mime_partmessage.h"
 #include "mime_sub_firstboundary.h"

@@ -1,6 +1,6 @@
 #include "query_sqlite3.h"
 #include "sqlconnector_sqlite3.h"
-#include <mdz3_mem_vars/a_allvars.h>
+#include <mdz3_mem/a_allvars.h>
 #include <string.h>
 
 #include <stdexcept>

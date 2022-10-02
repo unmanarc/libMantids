@@ -5,7 +5,7 @@
 #include "socket_streambasereader.h"
 #include "socket_streambasewriter.h"
 #include <utility>
-#include <mdz3_mem_vars/streamableobject.h>
+#include <mdz3_mem/streamableobject.h>
 
 namespace Mantids { namespace Network { namespace Sockets {
 

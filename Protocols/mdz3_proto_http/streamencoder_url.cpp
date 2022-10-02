@@ -3,8 +3,8 @@
 #include <limits>
 #include <inttypes.h>
 
-#include <mdz3_mem_vars/b_mem.h>
-#include <mdz3_mem_vars/b_chunks.h>
+#include <mdz3_mem/b_mem.h>
+#include <mdz3_mem/b_chunks.h>
 
 using namespace Mantids::Memory::Streams;
 using namespace Mantids::Memory::Streams::Encoders;

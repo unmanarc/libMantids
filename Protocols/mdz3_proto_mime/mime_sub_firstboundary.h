@@ -2,7 +2,7 @@
 #define MIME_SUB_ENDPOINT_H
 
 #include <string>
-#include <mdz3_mem_vars/subparser.h>
+#include <mdz3_mem/subparser.h>
 
 namespace Mantids { namespace Protocols { namespace MIME {
 

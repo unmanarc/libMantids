@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include "sqlconnector_pgsql.h"
 #include <string.h>
-#include <mdz3_mem_vars/a_allvars.h>
+#include <mdz3_mem/a_allvars.h>
 
 #include <stdexcept>
 

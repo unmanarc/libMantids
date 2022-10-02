@@ -1,7 +1,7 @@
 #ifndef STREAMDECURL_H
 #define STREAMDECURL_H
 
-#include <mdz3_mem_vars/streamableobject.h>
+#include <mdz3_mem/streamableobject.h>
 
 namespace Mantids { namespace Memory { namespace Streams { namespace Decoders {
 

@@ -1,8 +1,8 @@
 #ifndef HTTP_URL_REQUEST_H
 #define HTTP_URL_REQUEST_H
 
-#include <mdz3_mem_vars/subparser.h>
-#include <mdz3_mem_vars/b_base.h>
+#include <mdz3_mem/subparser.h>
+#include <mdz3_mem/b_base.h>
 
 #include <string>
 #include "common_version.h"

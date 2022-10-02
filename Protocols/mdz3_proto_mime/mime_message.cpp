@@ -1,8 +1,8 @@
 #include "mime_message.h"
 #include "mdz3_helpers/crypto.h"
 #include "mdz3_helpers/random.h"
-#include "mdz3_mem_vars/b_chunks.h"
-#include "mdz3_mem_vars/streamableobject.h"
+#include "mdz3_mem/b_chunks.h"
+#include "mdz3_mem/streamableobject.h"
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string.hpp>
 

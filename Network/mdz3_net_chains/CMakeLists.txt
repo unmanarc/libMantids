@@ -42,8 +42,8 @@ endif()
 include_directories("${mdz3_helpers_SOURCE_DIR}/../")
 target_link_libraries(${LIB_NAME} mdz3_helpers)
 
-include_directories("${mdz3_mem_vars_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_mem_vars)
+include_directories("${mdz3_mem_SOURCE_DIR}/../")
+target_link_libraries(${LIB_NAME} mdz3_mem)
 
 include_directories("${mdz3_net_sockets_SOURCE_DIR}/../")
 target_link_libraries(${LIB_NAME} mdz3_net_sockets)

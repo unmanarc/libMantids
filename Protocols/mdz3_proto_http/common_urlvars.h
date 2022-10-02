@@ -1,12 +1,12 @@
 #ifndef HTTPURLFORMATTEDVARS_H
 #define HTTPURLFORMATTEDVARS_H
 
-#include <mdz3_mem_vars/parser.h>
-#include <mdz3_mem_vars/vars.h>
+#include <mdz3_mem/parser.h>
+#include <mdz3_mem/vars.h>
 #include <map>
 
 #include "common_urlvar_subparser.h"
-#include "mdz3_mem_vars/streamableobject.h"
+#include "mdz3_mem/streamableobject.h"
 
 namespace Mantids { namespace Protocols { namespace HTTP { namespace Common {
 

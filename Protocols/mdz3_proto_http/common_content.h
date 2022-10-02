@@ -3,8 +3,8 @@
 
 #include "common_urlvars.h"
 
-#include <mdz3_mem_vars/subparser.h>
-#include <mdz3_mem_vars/b_base.h>
+#include <mdz3_mem/subparser.h>
+#include <mdz3_mem/b_base.h>
 #include <mdz3_proto_mime/mime_message.h>
 
 namespace Mantids { namespace Protocols { namespace HTTP { namespace Common {

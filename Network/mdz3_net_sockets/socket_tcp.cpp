@@ -3,7 +3,7 @@
 #include <sys/types.h>
 
 #ifdef _WIN32
-#include <mdz3_mem_vars/w32compat.h>
+#include <mdz3_mem/w32compat.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #else

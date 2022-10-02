@@ -1,7 +1,7 @@
 #ifndef QUERY_H
 #define QUERY_H
 
-#include <mdz3_mem_vars/a_var.h>
+#include <mdz3_mem/a_var.h>
 #include <map>
 #include <list>
 #include <vector>

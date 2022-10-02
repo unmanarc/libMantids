@@ -1,8 +1,8 @@
 #ifndef HTTP1BASE_H
 #define HTTP1BASE_H
 
-#include <mdz3_mem_vars/parser.h>
-#include <mdz3_mem_vars/vars.h>
+#include <mdz3_mem/parser.h>
+#include <mdz3_mem/vars.h>
 #include <mdz3_proto_mime/mime_sub_header.h>
 
 #include "common_content.h"

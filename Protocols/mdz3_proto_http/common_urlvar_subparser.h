@@ -1,7 +1,7 @@
 #ifndef HTTP_SUB_URLVARPARSER_H
 #define HTTP_SUB_URLVARPARSER_H
 
-#include <mdz3_mem_vars/subparser.h>
+#include <mdz3_mem/subparser.h>
 
 namespace Mantids { namespace Protocols { namespace HTTP { namespace Common {
 
