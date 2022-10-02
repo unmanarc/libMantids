@@ -1,2 +1,2 @@
-ADD_SUBDIRECTORY(mdz_hlp_functions)
+ADD_SUBDIRECTORY(mdz3_hlp_functions)
 

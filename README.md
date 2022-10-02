@@ -1,10 +1,10 @@
 # libMantids 
 
-Mini-Advanced C++ Network Toolkit for Internet Services Development
+Mini-Advanced C++ Network Toolkit for Internet Services Development v3
   
 Author: Aaron Mizrachi (unmanarc) <aaron@unmanarc.com>   
 Main License: LGPLv3   
-WIN32 License for mdz_net_interfaces: GPLv2 (tap-windows.h is GPLv2)  
+WIN32 License for mdz3_net_interfaces: GPLv2 (tap-windows.h is GPLv2)  
 
 
 ***
@@ -45,7 +45,6 @@ This framework provides C++11 based enhancing libraries for console and network 
 [![Copr build status](https://copr.fedorainfracloud.org/coprs/amizrachi/unmanarc/package/libMantids/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/amizrachi/unmanarc/package/libMantids/)
 
 
-
 ### Simple installation guide for Fedora/RHEL to develop software:
 
 To activate our repo's and download/install the software:
@@ -59,7 +58,7 @@ yum -y install yum-plugin-copr
 # Install unmanarc's copr
 yum copr enable amizrachi/unmanarc -y
 # Install the required software:
-yum -y install libMantids-devel jsoncpp-devel boost-devel boost-static openssl-devel sqlite-devel mariadb-devel postgresql-devel gcc-c++ cmake3
+yum -y install libMantids-devel boost-devel boost-static openssl-devel sqlite-devel mariadb-devel postgresql-devel gcc-c++ cmake3
 ```
 
 In RHEL8:
@@ -72,7 +71,7 @@ dnf -y install epel-release
 # Install unmanarc's copr
 dnf copr enable amizrachi/unmanarc -y
 # Install the required software:
-dnf -y install libMantids-devel jsoncpp-devel boost-devel boost-static openssl-devel sqlite-devel mariadb-devel postgresql-devel gcc-c++ cmake
+dnf -y install libMantids-devel boost-devel boost-static openssl-devel sqlite-devel mariadb-devel postgresql-devel gcc-c++ cmake
 ```
 
 
@@ -92,7 +91,6 @@ This library was tested so far in:
 * C++11 Compatible Compiler (like GCC >=5)
 * pthread
 * openssl (1.1.x)
-* jsoncpp
 * boost
 
 ### Extras Pre-requisites:

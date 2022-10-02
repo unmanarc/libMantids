@@ -1,1 +1,1 @@
-ADD_SUBDIRECTORY(mdz_fs_vars)
+ADD_SUBDIRECTORY(mdz3_fs_vars)

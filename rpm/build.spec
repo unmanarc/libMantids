@@ -1,11 +1,11 @@
-%define name libMantids
-%define version 2.7.12
+%define name libMantids3
+%define version 2.9.9
 %define build_timestamp %{lua: print(os.date("%Y%m%d"))}
 
 Name:           %{name}
 Version:        %{version}
 Release:        %{build_timestamp}.git%{?dist}
-Summary:        Mini-Advanced C++11 Network Toolkit for Internet Services Development
+Summary:        Mini-Advanced C++11 Network Toolkit for Internet Services Development v3
 License:        LGPLv3
 URL:            https://github.com/unmanarc/libMantids
 Source0:        https://github.com/unmanarc/libMantids/archive/master.tar.gz#/%{name}-%{version}-%{build_timestamp}.tar.gz
@@ -33,8 +33,7 @@ Group:          Development/Libraries
 %define debug_package %{nil}
 %endif
 
-
-BuildRequires:  %{cmake} jsoncpp-devel boost-devel boost-static sqlite-devel postgresql-devel gcc-c++
+BuildRequires:  %{cmake} boost-devel boost-static sqlite-devel postgresql-devel gcc-c++
 %if 0%{?rhel} == 6
 BuildRequires:  mysql-devel
 %else
@@ -46,7 +45,7 @@ BuildRequires:  openssl11-devel
 BuildRequires:  openssl-devel
 %endif
 
-Requires: jsoncpp boost-regex boost-thread
+Requires: boost-regex boost-thread
 %if 0%{?rhel} == 7
 Requires:       openssl11
 %else
@@ -63,7 +62,7 @@ Provides:       %{name}-sqlite
 Requires:       %{name} sqlite
 
 %description sqlite
-This package contains the SQLite3 extensions for libMantids
+This package contains the SQLite3 extensions for libMantids3
 
 %package postgresql
 Summary:        C++11 Framework Libraries v2 PostgreSQL Extensions
@@ -72,7 +71,7 @@ Provides:       %{name}-postgresql
 Requires:       %{name} postgresql-devel postgresql-libs
 
 %description postgresql
-This package contains the PostgreSQL extensions for libMantids
+This package contains the PostgreSQL extensions for libMantids3
 
 %package mariadb
 Summary:        C++11 Framework Libraries v2 MariaDB Extensions
@@ -81,7 +80,7 @@ Provides:       %{name}-mariadb
 Requires:       %{name} mariadb-devel mariadb-libs
 
 %description mariadb
-This package contains the MariaDB extensions for libMantids
+This package contains the MariaDB extensions for libMantids3
 
 %package devel
 Summary:        C++11 Framework Libraries v2 development files
@@ -142,22 +141,22 @@ ln -s . s390x-redhat-linux-gnu
 
 %files
 %doc
-%{_libdir}/libmdz_*
-%exclude %{_libdir}/libmdz_db_sqlite*
-%exclude %{_libdir}/libmdz_db_pgsql*
-%exclude %{_libdir}/libmdz_db_mariadb*
+%{_libdir}/libmdz3_*
+%exclude %{_libdir}/libmdz3_db_sqlite*
+%exclude %{_libdir}/libmdz3_db_pgsql*
+%exclude %{_libdir}/libmdz3_db_mariadb*
 
 %files devel
 /usr/include/mdz*
 /usr/share/pkgconfig/mdz*
 
 %files sqlite
-%{_libdir}/libmdz_db_sqlite*
+%{_libdir}/libmdz3_db_sqlite*
 
 %files postgresql
-%{_libdir}/libmdz_db_pgsql*
+%{_libdir}/libmdz3_db_pgsql*
 
 %files mariadb
-%{_libdir}/libmdz_db_mariadb*
+%{_libdir}/libmdz3_db_mariadb*
 
 %changelog

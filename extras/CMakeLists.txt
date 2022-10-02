@@ -1,4 +1,4 @@
-ADD_SUBDIRECTORY(mdz_auth_remote)
-ADD_SUBDIRECTORY(mdz_db_mariadb)
-ADD_SUBDIRECTORY(mdz_db_pgsql)
-ADD_SUBDIRECTORY(mdz_db_sqlite3)
+ADD_SUBDIRECTORY(mdz3_auth_remote)
+ADD_SUBDIRECTORY(mdz3_db_mariadb)
+ADD_SUBDIRECTORY(mdz3_db_pgsql)
+ADD_SUBDIRECTORY(mdz3_db_sqlite3)

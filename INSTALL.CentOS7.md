@@ -28,7 +28,7 @@ yum -y install cmake3
 *These are the required (mandatory) libraries*
 
 ```
-yum -y install openssl-devel jsoncpp-devel
+yum -y install openssl-devel
 ```
 
 ### Install Optional devel libraries:
@@ -47,13 +47,13 @@ This is the default build for the library:
 PREFIXPATH=/opt/osslibs
 
 prjdir=$(pwd)
-cmake3 . -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX:PATH=${PREFIXPATH} -DCMAKE_INSTALL_LIBDIR=lib -B~/builds/libMantids-Build-Shared
-cd ~/builds/libMantids-Build-Shared
+cmake3 . -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX:PATH=${PREFIXPATH} -DCMAKE_INSTALL_LIBDIR=lib -B~/builds/libMantids3-Build-Shared
+cd ~/builds/libMantids3-Build-Shared
 make clean
 make -j12 install
 cd "$prjdir"
-cmake3 . -DCMAKE_INSTALL_PREFIX:PATH=${PREFIXPATH} -DCMAKE_INSTALL_LIBDIR=lib -B~/builds/libMantids-Build-Static
-cd ~/builds/libMantids-Build-Static
+cmake3 . -DCMAKE_INSTALL_PREFIX:PATH=${PREFIXPATH} -DCMAKE_INSTALL_LIBDIR=lib -B~/builds/libMantids3-Build-Static
+cd ~/builds/libMantids3-Build-Static
 make clean
 make -j12 install
 cd "$prjdir"
@@ -66,7 +66,7 @@ cd "$prjdir"
 You can build this in one system, and you only need install the following runtimes:
 
 ```
-yum -y install jsoncpp openssl 
+yum -y install openssl 
 ```
 
 If you need database support:

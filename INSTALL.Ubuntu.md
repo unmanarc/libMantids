@@ -22,7 +22,7 @@ apt install build-essential cmake
 *These are the required (mandatory) libraries*
 
 ```
-apt -y install libboost-all-dev libssl-dev libjsoncpp-dev
+apt -y install libboost-all-dev libssl-dev
 ```
 
 ### Install Optional devel libraries:
@@ -41,13 +41,13 @@ This is the default build for the library:
 PREFIXPATH=/opt/osslibs
 
 prjdir=$(pwd)
-cmake . -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX:PATH=${PREFIXPATH} -B~/builds/libMantids-Build-Shared
-cd ~/builds/libMantids-Build-Shared
+cmake . -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX:PATH=${PREFIXPATH} -B~/builds/libMantids3-Build-Shared
+cd ~/builds/libMantids3-Build-Shared
 make clean
 make -j12 install
 cd "$prjdir"
-cmake . -DCMAKE_INSTALL_PREFIX:PATH=${PREFIXPATH} -B~/builds/libMantids-Build-Static
-cd ~/builds/libMantids-Build-Static
+cmake . -DCMAKE_INSTALL_PREFIX:PATH=${PREFIXPATH} -B~/builds/libMantids3-Build-Static
+cd ~/builds/libMantids3-Build-Static
 make clean
 make -j12 install
 cd "$prjdir"

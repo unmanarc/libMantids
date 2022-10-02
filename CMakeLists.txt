@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 ##############################################################################################################################
 # Vars and Versions:
-set(SVERSION 2.7.12)
+set(SVERSION 2.9.9)
 
 set(PROJECT_HOMEPAGE_URL "https://github.com/unmanarc/libMantids")
 set(PROJECT_CONTACT "Aaron G. Mizrachi P. <aaron@unmanarc.com>")
@@ -18,7 +18,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 
 ##############################################################################################################################
 # Project Settings:
-project(libMantids)
+project(libMantids3)
 project(${PROJECT_NAME} VERSION ${SVERSION} DESCRIPTION "Mini-Advanced Network Toolkit for Internet Services Development")
 ##############################################################################################################################
 
