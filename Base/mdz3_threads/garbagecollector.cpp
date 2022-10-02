@@ -4,7 +4,6 @@
 
 using namespace Mantids::Threads;
 
-using Ms = std::chrono::milliseconds;
 
 
 GarbageCollector::GarbageCollector(const uint32_t &periodMS)
@@ -37,7 +36,7 @@ GarbageCollector::~GarbageCollector()
 void GarbageCollector::loopGC()
 {
     std::unique_lock<std::mutex> lock(mutex_endNotificationLoop);
-  //  std::cout << "LOOPING gc" << std::endl << std::flush;
+    using Ms = std::chrono::milliseconds;
 
     while(!gcFinished)
     {

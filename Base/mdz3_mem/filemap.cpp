@@ -29,8 +29,7 @@ using namespace Mantids::Memory::Containers;
 /**
  * @brief emptyMap Virtual Memory Space used for empty file maps..
  */
-static char emptyMap[1] = {0};
-
+char FileMap::emptyMap[1] = {0};
 
 FileMap::FileMap()
 {

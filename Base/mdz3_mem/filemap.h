@@ -70,6 +70,8 @@ public:
 
 private:
 
+    static char emptyMap[1];
+
     bool unMapFile();
     bool mapFileUsingCurrentFileDescriptor(size_t len);
     void cleanVars();
