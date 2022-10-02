@@ -1,7 +1,7 @@
 #ifndef IAUTH_DOMAINS_H
 #define IAUTH_DOMAINS_H
 
-#include <mdz3_thr_safecontainers/map.h>
+#include <mdz3_threads/map.h>
 #include "manager.h"
 
 namespace Mantids { namespace Authentication {

@@ -3,8 +3,8 @@
 
 #include <boost/property_tree/ini_parser.hpp>
 #include <mdz3_prg_logs/applog.h>
-#include <mdz3_hlp_functions/json.h>
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_helpers/json.h>
+#include <mdz3_helpers/mem.h>
 
 #include "rpcclientimpl.h"
 

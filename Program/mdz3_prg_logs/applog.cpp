@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include <mdz3_hlp_functions/encoders.h>
+#include <mdz3_helpers/encoders.h>
 
 using namespace std;
 using namespace Mantids::Application::Logs;

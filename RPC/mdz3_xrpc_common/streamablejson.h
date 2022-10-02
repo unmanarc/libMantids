@@ -2,7 +2,7 @@
 #define JSON_STREAMABLEOBJECT_H
 
 #include <mdz3_mem_vars/streamableobject.h>
-#include <mdz3_hlp_functions/json.h>
+#include <mdz3_helpers/json.h>
 
 namespace Mantids { namespace Memory { namespace Streams {
 

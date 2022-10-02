@@ -1,6 +1,6 @@
 #include "a_double.h"
 #include <stdexcept>      // std::invalid_argument
-#include <mdz3_thr_mutex/lock_shared.h>
+#include <mdz3_threads/lock_shared.h>
 
 using namespace Mantids::Memory::Abstract;
 

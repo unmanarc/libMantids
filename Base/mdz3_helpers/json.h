@@ -2,7 +2,7 @@
 #define JSON_H
 
 #include <list>
-
+/*
 typedef Json::Value json;
 
 // jsoncpp macros:
@@ -36,6 +36,6 @@ private:
     std::string errors;
 };
 
-}};
+}};*/
 
 #endif // JSON_H

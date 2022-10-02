@@ -58,11 +58,11 @@ endif()
 include_directories("${mdz3_mem_vars_SOURCE_DIR}/../")
 target_link_libraries(${LIB_NAME} mdz3_mem_vars)
 
-include_directories("${mdz3_thr_threads_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_thr_threads)
+include_directories("${mdz3_threads_SOURCE_DIR}/../")
+target_link_libraries(${LIB_NAME} mdz3_threads)
 
-include_directories("${mdz3_hlp_functions_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_hlp_functions)
+include_directories("${mdz3_helpers_SOURCE_DIR}/../")
+target_link_libraries(${LIB_NAME} mdz3_helpers)
 
 option(SSLRHEL7 "OpenSSL 1.1 For Red Hat 7.x provided by EPEL" OFF)
 find_package(PkgConfig REQUIRED)

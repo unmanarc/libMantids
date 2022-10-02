@@ -1,6 +1,6 @@
 #include "json.h"
 
-
+/*
 std::string Mantids::Helpers::jsonToString(const json &value)
 {
     Json::StreamWriterBuilder builder;
@@ -57,3 +57,4 @@ std::list<std::string> Mantids::Helpers::jsonToStringList(const json &value, con
     }
     return r;
 }
+*/

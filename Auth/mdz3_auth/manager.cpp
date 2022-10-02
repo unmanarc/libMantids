@@ -1,7 +1,7 @@
 #include "manager.h"
 
-#include <mdz3_thr_mutex/lock_shared.h>
-#include <mdz3_hlp_functions/random.h>
+#include <mdz3_threads/lock_shared.h>
+#include <mdz3_helpers/random.h>
 
 using namespace Mantids::Authentication;
 

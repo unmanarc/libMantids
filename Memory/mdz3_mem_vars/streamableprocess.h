@@ -3,7 +3,7 @@
 
 #ifndef _WIN32
 
-#include <mdz3_hlp_functions/appexec.h>
+#include <mdz3_helpers/appexec.h>
 #include "streamableobject.h"
 
 namespace Mantids { namespace Memory { namespace Streams {

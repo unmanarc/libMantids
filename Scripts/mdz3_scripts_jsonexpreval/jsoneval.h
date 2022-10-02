@@ -2,7 +2,7 @@
 #define JSONEXPREVAL_H
 
 #include "atomicexpression.h"
-#include <mdz3_hlp_functions/json.h>
+#include <mdz3_helpers/json.h>
 
 namespace Mantids { namespace Scripts { namespace Expressions {
 

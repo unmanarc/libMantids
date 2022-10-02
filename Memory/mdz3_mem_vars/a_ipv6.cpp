@@ -7,8 +7,8 @@
 #endif
 
 #include <string.h>
-#include <mdz3_thr_mutex/lock_shared.h>
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_threads/lock_shared.h>
+#include <mdz3_helpers/mem.h>
 
 using namespace Mantids::Memory::Abstract;
 

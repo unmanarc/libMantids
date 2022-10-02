@@ -4,7 +4,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/split.hpp>
 
-#include <mdz3_hlp_functions/random.h>
+#include <mdz3_helpers/random.h>
 
 using namespace boost;
 using namespace boost::algorithm;

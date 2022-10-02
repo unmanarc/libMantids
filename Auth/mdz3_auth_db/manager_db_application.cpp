@@ -1,6 +1,6 @@
 #include "manager_db.h"
 
-#include <mdz3_thr_mutex/lock_shared.h>
+#include <mdz3_threads/lock_shared.h>
 
 #include <mdz3_mem_vars/a_string.h>
 #include <mdz3_mem_vars/a_datetime.h>

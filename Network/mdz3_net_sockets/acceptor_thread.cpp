@@ -10,7 +10,7 @@
 #include <string.h>
 
 #include "acceptor_multithreaded.h"
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_helpers/mem.h>
 
 using namespace Mantids::Network::Sockets::Acceptors;
 

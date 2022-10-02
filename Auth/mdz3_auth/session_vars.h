@@ -1,7 +1,7 @@
 #ifndef SESSION_VARS_H
 #define SESSION_VARS_H
 
-#include <mdz3_thr_mutex/mutex_shared.h>
+#include <mdz3_threads/mutex_shared.h>
 #include <string>
 #include <map>
 

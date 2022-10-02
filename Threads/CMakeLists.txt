@@ -1,3 +1,0 @@
-ADD_SUBDIRECTORY(mdz3_thr_mutex)
-ADD_SUBDIRECTORY(mdz3_thr_safecontainers)
-ADD_SUBDIRECTORY(mdz3_thr_threads)

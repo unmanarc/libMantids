@@ -7,7 +7,7 @@
 #include <winsock2.h>
 #include <ws2ipdef.h>
 
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_helpers/mem.h>
 
 char * strerror_r(int _errno, char * buf, int len)
 {

@@ -1,6 +1,6 @@
 #include "threadpool.h"
 
-#include <mdz3_hlp_functions/random.h>
+#include <mdz3_helpers/random.h>
 #include <iostream>
 
 using namespace Mantids::Threads::Pool;

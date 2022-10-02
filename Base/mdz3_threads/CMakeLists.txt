@@ -5,14 +5,12 @@ get_filename_component(PARENT_DIRFULL ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
 get_filename_component(PARENT_DIR ${PARENT_DIRFULL} NAME)
 
 project(${LIB_NAME})
-project(${LIB_NAME} VERSION ${SVERSION} DESCRIPTION "Mantids Libraries for Mutex Libraries")
+project(${LIB_NAME} VERSION ${SVERSION} DESCRIPTION "Mantids Libraries for Threads Library")
 
 file(GLOB_RECURSE EDV_INCLUDE_FILES "./*.h*")
 file(GLOB_RECURSE EDV_SOURCE_FILES "./*.c*")
 
 add_library(${LIB_NAME} ${EDV_INCLUDE_FILES} ${EDV_SOURCE_FILES})
-
-
 
 set_target_properties(  ${LIB_NAME}
                         PROPERTIES VERSION ${PROJECT_VERSION}
@@ -36,8 +34,10 @@ install(
         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig
         )
 
+include_directories("${mdz3_helpers_SOURCE_DIR}/../")
+target_link_libraries(${LIB_NAME} mdz3_helpers)
+
 if (EXTRAPREFIX)
     target_include_directories(${LIB_NAME} PUBLIC ${EXTRAPREFIX}/include)
     target_link_libraries(${LIB_NAME} "-L${EXTRAPREFIX}/lib")
 endif()
-

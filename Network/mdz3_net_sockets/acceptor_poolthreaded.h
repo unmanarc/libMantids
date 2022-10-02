@@ -3,9 +3,9 @@
 
 #include "socket_streambase.h"
 
-#include <mdz3_hlp_functions/mem.h>
-#include <mdz3_thr_threads/threaded.h>
-#include <mdz3_thr_threads/threadpool.h>
+#include <mdz3_helpers/mem.h>
+#include <mdz3_threads/threaded.h>
+#include <mdz3_threads/threadpool.h>
 
 // TODO: statistics
 

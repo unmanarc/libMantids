@@ -11,7 +11,7 @@
 #include <boost/algorithm/string/replace.hpp>
 
 #include <mdz3_mem_vars/a_bool.h>
-#include <mdz3_thr_mutex/lock_shared.h>
+#include <mdz3_threads/lock_shared.h>
 
 using namespace std;
 using namespace Mantids::Application::Arguments;

@@ -8,13 +8,13 @@
 #include <string.h>
 #include <time.h>
 
-#include <mdz3_hlp_functions/encoders.h>
-#include <mdz3_hlp_functions/crypto.h>
-#include <mdz3_hlp_functions/random.h>
+#include <mdz3_helpers/encoders.h>
+#include <mdz3_helpers/crypto.h>
+#include <mdz3_helpers/random.h>
 
 #include "ds_auth_function.h"
 
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_helpers/mem.h>
 
 
 namespace Mantids { namespace Authentication {

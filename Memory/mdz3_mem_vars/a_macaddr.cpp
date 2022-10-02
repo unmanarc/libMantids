@@ -6,8 +6,8 @@
 #include <arpa/inet.h>
 #endif
 
-#include <mdz3_thr_mutex/lock_shared.h>
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_threads/lock_shared.h>
+#include <mdz3_helpers/mem.h>
 #include <string.h>
 
 

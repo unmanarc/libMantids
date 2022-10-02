@@ -9,7 +9,7 @@
 #include "ds_auth_function.h"
 #include "ds_auth_secret.h"
 
-#include <mdz3_thr_safecontainers/mapitem.h>
+#include <mdz3_threads/mapitem.h>
 
 namespace Mantids { namespace Authentication {
 

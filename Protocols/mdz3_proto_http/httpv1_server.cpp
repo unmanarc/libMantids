@@ -7,7 +7,7 @@
 
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string.hpp>
-#include <mdz3_hlp_functions/encoders.h>
+#include <mdz3_helpers/encoders.h>
 #include <mdz3_mem_vars/b_mmap.h>
 
 #include <sys/stat.h>

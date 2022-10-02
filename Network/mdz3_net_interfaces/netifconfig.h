@@ -11,7 +11,7 @@
 #include <vector>
 #include <windows.h>
 #include "netheaders-windows.h"
-#include <mdz3_hlp_functions/appexec.h>
+#include <mdz3_helpers/appexec.h>
 #endif
 
 namespace Mantids { namespace Network { namespace Interfaces {

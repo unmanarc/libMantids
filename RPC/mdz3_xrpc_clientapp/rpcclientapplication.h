@@ -3,7 +3,7 @@
 
 #include <mdz3_prg_service/globalarguments.h>
 #include <mdz3_prg_service/application.h>
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_helpers/mem.h>
 #include <memory>
 #include "globals.h"
 //#include "rpcclientimpl.h"

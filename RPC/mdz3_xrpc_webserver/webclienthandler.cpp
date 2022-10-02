@@ -4,8 +4,8 @@
 
 #include <mdz3_mem_vars/b_mmap.h>
 #include <mdz3_xrpc_common/streamablejson.h>
-#include <mdz3_hlp_functions/crypto.h>
-#include <mdz3_hlp_functions/json.h>
+#include <mdz3_helpers/crypto.h>
+#include <mdz3_helpers/json.h>
 
 #include <stdarg.h>
 #include <fstream>

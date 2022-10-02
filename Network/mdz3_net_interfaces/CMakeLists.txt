@@ -69,12 +69,9 @@ elseif(WIN32)
 endif()
 
 
-include_directories("${mdz3_hlp_functions_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_hlp_functions)
+include_directories("${mdz3_helpers_SOURCE_DIR}/../")
+target_link_libraries(${LIB_NAME} mdz3_helpers)
 
 include_directories("${mdz3_mem_vars_SOURCE_DIR}/../")
 target_link_libraries(${LIB_NAME} mdz3_mem_vars)
-
-include_directories("${mdz3_thr_mutex_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_thr_mutex)
 

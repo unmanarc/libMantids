@@ -2,7 +2,7 @@
 #define XRPC_FUNCTIONS_AUTH_H
 
 #include <mdz3_xrpc_common/methodsmanager.h>
-#include <mdz3_hlp_functions/json.h>
+#include <mdz3_helpers/json.h>
 
 namespace Mantids { namespace RPC { namespace Templates {
 

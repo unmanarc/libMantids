@@ -19,7 +19,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_helpers/mem.h>
 
 
 using namespace Mantids::Network::Interfaces;

@@ -1,10 +1,10 @@
 #include "rpcclientapplication.h"
 #include "globals.h"
-#include "mdz3_hlp_functions/crypto.h"
-#include "mdz3_hlp_functions/encoders.h"
+#include "mdz3_helpers/crypto.h"
+#include "mdz3_helpers/encoders.h"
 #include "mdz3_net_sockets/socket_tls.h"
 
-#include <mdz3_hlp_functions/file.h>
+#include <mdz3_helpers/file.h>
 
 #include <sys/time.h>
 #include <boost/algorithm/string/replace.hpp>

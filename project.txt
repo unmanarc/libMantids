@@ -1,0 +1,15 @@
+- remove fastrpc (all interfaces)
+- rename rpc to apiserver
+- add rest support
+- add websockets support
+- remove remote auth server and client interfaces (what happens if I want a local project?)
+- add ldap support (this must liberate much work)
+- focus on what we are good at: networking (back with multiplexing, rawsockets)
+- finish hive7
+- remove jsoncpp, focus in boost (xml/json)
+- create websockets proxy
+- possible kerberos support?
+- oauth2 support?
+
+Scripting ideas:
+- lua? python?

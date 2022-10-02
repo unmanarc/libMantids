@@ -4,7 +4,7 @@
 #include "a_var.h"
 #include <map>
 #include <list>
-#include <mdz3_thr_mutex/mutex_shared.h>
+#include <mdz3_threads/mutex_shared.h>
 
 // TODO: limits...
 namespace Mantids { namespace Memory { namespace Abstract {

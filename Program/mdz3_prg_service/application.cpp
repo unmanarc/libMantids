@@ -25,7 +25,7 @@
 #include <unistd.h>
 
 #include <mdz3_mem_vars/a_var.h>
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_helpers/mem.h>
 
 using namespace std;
 

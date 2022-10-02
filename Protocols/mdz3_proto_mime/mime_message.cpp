@@ -1,6 +1,6 @@
 #include "mime_message.h"
-#include "mdz3_hlp_functions/crypto.h"
-#include "mdz3_hlp_functions/random.h"
+#include "mdz3_helpers/crypto.h"
+#include "mdz3_helpers/random.h"
 #include "mdz3_mem_vars/b_chunks.h"
 #include "mdz3_mem_vars/streamableobject.h"
 #include <boost/algorithm/string/split.hpp>

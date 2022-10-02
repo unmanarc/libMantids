@@ -42,14 +42,11 @@ if (EXTRAPREFIX)
 endif()
 
 
-include_directories("${mdz3_hlp_functions_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_hlp_functions)
+include_directories("${mdz3_helpers_SOURCE_DIR}/../")
+target_link_libraries(${LIB_NAME} mdz3_helpers)
 
-include_directories("${mdz3_thr_mutex_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_thr_mutex)
-
-include_directories("${mdz3_thr_safecontainers_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_thr_safecontainers)
+include_directories("${mdz3_threads_SOURCE_DIR}/../")
+target_link_libraries(${LIB_NAME} mdz3_threads)
 
 option(SSLRHEL7 "OpenSSL 1.1 For Red Hat 7.x provided by EPEL" OFF)
 find_package(PkgConfig REQUIRED)

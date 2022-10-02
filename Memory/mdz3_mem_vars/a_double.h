@@ -2,7 +2,7 @@
 #define A_DOUBLE_H
 #include "a_var.h"
 
-#include <mdz3_thr_mutex/mutex_shared.h>
+#include <mdz3_threads/mutex_shared.h>
 
 namespace Mantids { namespace Memory { namespace Abstract {
 

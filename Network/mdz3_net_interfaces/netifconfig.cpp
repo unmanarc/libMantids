@@ -17,12 +17,12 @@
 #else
 #include "tap-windows.h"
 #include <Shlobj.h>
-#include <mdz3_hlp_functions/appexec.h>
+#include <mdz3_helpers/appexec.h>
 #include <mdz3_mem_vars/w32compat.h>
 #endif
 
-#include <mdz3_hlp_functions/mem.h>
-#include <mdz3_hlp_functions/appexec.h>
+#include <mdz3_helpers/mem.h>
+#include <mdz3_helpers/appexec.h>
 
 
 using namespace Mantids::Network::Interfaces;

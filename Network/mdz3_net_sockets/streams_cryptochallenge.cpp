@@ -1,6 +1,6 @@
 #include "streams_cryptochallenge.h"
-#include <mdz3_hlp_functions/random.h>
-#include <mdz3_hlp_functions/crypto.h>
+#include <mdz3_helpers/random.h>
+#include <mdz3_helpers/crypto.h>
 
 using namespace Mantids;
 using namespace Mantids::Network::Sockets::NetStreams;

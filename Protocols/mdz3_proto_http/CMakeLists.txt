@@ -48,7 +48,7 @@ target_link_libraries(${LIB_NAME} mdz3_mem_vars)
 include_directories("${mdz3_proto_mime_SOURCE_DIR}/../")
 target_link_libraries(${LIB_NAME} mdz3_proto_mime)
 
-include_directories("${mdz3_hlp_functions_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_hlp_functions)
+include_directories("${mdz3_helpers_SOURCE_DIR}/../")
+target_link_libraries(${LIB_NAME} mdz3_helpers)
 
 

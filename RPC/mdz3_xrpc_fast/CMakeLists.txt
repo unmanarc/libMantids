@@ -41,17 +41,11 @@ if (EXTRAPREFIX)
     target_link_libraries(${LIB_NAME} "-L${EXTRAPREFIX}/lib")
 endif()
 
-include_directories("${mdz3_thr_threads_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_thr_threads)
+include_directories("${mdz3_threads_SOURCE_DIR}/../")
+target_link_libraries(${LIB_NAME} mdz3_threads)
 
-include_directories("${mdz3_thr_mutex_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_thr_mutex)
-
-include_directories("${mdz3_thr_safecontainers_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_thr_safecontainers)
-
-include_directories("${mdz3_hlp_functions_SOURCE_DIR}/../")
-target_link_libraries(${LIB_NAME} mdz3_hlp_functions)
+include_directories("${mdz3_helpers_SOURCE_DIR}/../")
+target_link_libraries(${LIB_NAME} mdz3_helpers)
 
 include_directories("${mdz3_net_sockets_SOURCE_DIR}/../")
 target_link_libraries(${LIB_NAME} mdz3_net_sockets)

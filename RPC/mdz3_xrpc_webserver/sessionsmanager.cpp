@@ -1,6 +1,6 @@
 #include "sessionsmanager.h"
 #include <thread>
-#include <mdz3_hlp_functions/random.h>
+#include <mdz3_helpers/random.h>
 
 #include <stdexcept>
 

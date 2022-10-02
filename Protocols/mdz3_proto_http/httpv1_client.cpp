@@ -1,6 +1,6 @@
 #include "httpv1_client.h"
 
-#include <mdz3_hlp_functions/encoders.h>
+#include <mdz3_helpers/encoders.h>
 
 #include <boost/regex.hpp>
 #include <boost/algorithm/string.hpp>

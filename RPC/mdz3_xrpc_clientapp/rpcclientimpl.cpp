@@ -3,8 +3,8 @@
 #include <inttypes.h>
 #include <thread>
 
-#include <mdz3_hlp_functions/crypto.h>
-#include <mdz3_hlp_functions/file.h>
+#include <mdz3_helpers/crypto.h>
+#include <mdz3_helpers/file.h>
 #include <mdz3_net_sockets/streams_cryptochallenge.h>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/split.hpp>

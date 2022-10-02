@@ -5,7 +5,7 @@
 #include <list>
 #include <map>
 #include <mdz3_mem_vars/a_var.h>
-#include <mdz3_thr_mutex/mutex_shared.h>
+#include <mdz3_threads/mutex_shared.h>
 
 #include "programvalues.h"
 

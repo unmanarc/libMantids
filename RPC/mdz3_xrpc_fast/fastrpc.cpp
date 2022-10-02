@@ -1,5 +1,5 @@
 #include "fastrpc.h"
-#include <mdz3_thr_mutex/lock_shared.h>
+#include <mdz3_threads/lock_shared.h>
 
 using namespace Mantids::RPC::Fast;
 using namespace Mantids;

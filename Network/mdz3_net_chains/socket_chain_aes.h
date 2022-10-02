@@ -6,7 +6,7 @@
 #include <openssl/evp.h>
 #include <string.h>
 #include <random>
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_helpers/mem.h>
 
 namespace Mantids { namespace Network { namespace Sockets { namespace ChainProtocols {
 

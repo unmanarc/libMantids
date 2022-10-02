@@ -2,9 +2,9 @@
 #define XRPC_SESSIONS_MANAGER_H
 
 #include <mdz3_auth/session.h>
-#include <mdz3_thr_safecontainers/map.h>
-#include <mdz3_thr_threads/garbagecollector.h>
-#include <mdz3_hlp_functions/random.h>
+#include <mdz3_threads/map.h>
+#include <mdz3_threads/garbagecollector.h>
+#include <mdz3_helpers/random.h>
 
 namespace Mantids { namespace RPC { namespace Web {
 

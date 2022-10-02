@@ -1,13 +1,13 @@
 #ifndef FASTRPC_H
 #define FASTRPC_H
 
-#include <mdz3_hlp_functions/json.h>
+#include <mdz3_helpers/json.h>
 
-#include <mdz3_thr_threads/threadpool.h>
-#include <mdz3_thr_mutex/mutex_shared.h>
-#include <mdz3_thr_mutex/mutex.h>
+#include <mdz3_threads/threadpool.h>
+#include <mdz3_threads/mutex_shared.h>
+#include <mdz3_threads/mutex.h>
 #include <mdz3_net_sockets/socket_streambase.h>
-#include <mdz3_thr_safecontainers/map.h>
+#include <mdz3_threads/map.h>
 
 namespace Mantids { namespace RPC { namespace Fast {
 

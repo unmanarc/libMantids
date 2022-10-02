@@ -5,7 +5,7 @@
 #include <openssl/tls1.h>
 #include <string.h>
 #include <mdz3_mem_vars/streamablefile.h>
-#include <mdz3_hlp_functions/random.h>
+#include <mdz3_helpers/random.h>
 #include <stdexcept>
 
 using namespace std;

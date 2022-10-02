@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include <mdz3_hlp_functions/json.h>
+#include <mdz3_helpers/json.h>
 
 #include "atomicexpressionside.h"
 

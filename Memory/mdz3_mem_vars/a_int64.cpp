@@ -1,7 +1,7 @@
 #include "a_int64.h"
 #include <stdexcept>      // std::invalid_argument
 using namespace Mantids::Memory::Abstract;
-#include <mdz3_thr_mutex/lock_shared.h>
+#include <mdz3_threads/lock_shared.h>
 
 INT64::INT64()
 {

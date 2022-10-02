@@ -2,7 +2,7 @@
 #include "sqlconnector_mariadb.h"
 #include <string.h>
 #include <mdz3_mem_vars/a_allvars.h>
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_helpers/mem.h>
 
 #include <errmsg.h>
 

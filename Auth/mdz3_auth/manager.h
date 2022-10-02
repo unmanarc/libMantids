@@ -8,7 +8,7 @@
 #include "accountsecret_validation.h"
 #include <time.h>
 
-#include <mdz3_thr_mutex/mutex_shared.h>
+#include <mdz3_threads/mutex_shared.h>
 
 namespace Mantids { namespace Authentication {
 

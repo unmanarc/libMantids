@@ -1,10 +1,10 @@
 #include "a_datetime.h"
 
 #include <stdlib.h>
-#include <mdz3_thr_mutex/lock_shared.h>
+#include <mdz3_threads/lock_shared.h>
 #include <time.h>
 #include <string.h>
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_helpers/mem.h>
 
 #ifdef _WIN32
 #include <windows.h>

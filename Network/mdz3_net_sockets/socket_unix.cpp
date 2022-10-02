@@ -9,7 +9,7 @@
 #include <sys/un.h>
 #include <sys/socket.h>
 
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_helpers/mem.h>
 
 using namespace Mantids::Network;
 using namespace Mantids::Network::Sockets;

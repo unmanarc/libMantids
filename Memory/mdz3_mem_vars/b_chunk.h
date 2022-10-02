@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdint.h>
 
-#include <mdz3_hlp_functions/mem.h>
+#include <mdz3_helpers/mem.h>
 
 namespace Mantids { namespace Memory { namespace Containers {
 

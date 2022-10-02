@@ -4,10 +4,10 @@
 #include <map>
 #include <list>
 
-#include <mdz3_hlp_functions/json.h>
+#include <mdz3_helpers/json.h>
 
 #include <mdz3_auth/domains.h>
-#include <mdz3_thr_mutex/mutex_shared.h>
+#include <mdz3_threads/mutex_shared.h>
 
 //#include "validation_codes.h"
 #include "methodsattributes_map.h"

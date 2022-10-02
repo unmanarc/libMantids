@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <set>
-#include <mdz3_hlp_functions/json.h>
+#include <mdz3_helpers/json.h>
 
 
 namespace Mantids { namespace Scripts { namespace Expressions {
