@@ -43,7 +43,7 @@ std::list<std::string> Mantids::Helpers::jsonToStringList(const json &value, con
     {
         for ( size_t x = 0; x< value.size(); x++)
         {
-            if (value[(int)x].isString())
+            if (value[(int)x].is_string())
                 r.push_back(value[(int)x].asString());
         }
     }
@@ -51,7 +51,7 @@ std::list<std::string> Mantids::Helpers::jsonToStringList(const json &value, con
     {
         for ( size_t x = 0; x< value[sub].size(); x++)
         {
-            if (value[sub][(int)x].isString())
+            if (value[sub][(int)x].is_string())
                 r.push_back(value[sub][(int)x].asString());
         }
     }

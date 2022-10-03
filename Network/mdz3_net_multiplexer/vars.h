@@ -13,9 +13,9 @@ typedef uint32_t LineID;
 #define MUX_LINE_SENDBUF 8192 // 8Kb read.
 #define MUX_LINE_HEAPSIZE (512*1024) // 512Kb.
 
-#define PLUGIN_MAX_DATA 512*1024;
-
+#define PLUGIN_MAX_DATA 512*1024
 #define JSON_MAX_DATA 8*1024*1024
+#define COMMAND_MAX_DATA 32*1024*1024
 
 }}}
 

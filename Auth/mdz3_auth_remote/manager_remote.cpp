@@ -162,7 +162,7 @@ time_t Manager_Remote::accountExpirationDate(const std::string & sAccountName)
     json answer = fastRPC->runRemoteRPCMethod(CKEY,"accountExpirationDate",payload,nullptr), jNull;
 
     if (jNull == answer) return 0;
-    return answer.asUInt64();
+    return answer.as_uint64();
 }
 
 bool Manager_Remote::passIndexLoginRequired(const uint32_t &passIndex )
@@ -176,7 +176,7 @@ bool Manager_Remote::passIndexLoginRequired(const uint32_t &passIndex )
 
     if (jNull == answer) return false;
 
-    return answer.asBool();
+    return answer.as_bool();
 }
 
 Secret_PublicData Manager_Remote::accountSecretPublicData(const std::string &sAccountName, uint32_t passIndex)

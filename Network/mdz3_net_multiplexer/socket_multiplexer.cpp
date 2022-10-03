@@ -1,4 +1,5 @@
 #include "socket_multiplexer.h"
+#include <cstdint>
 #include <mdz3_helpers/mem.h>
 
 using namespace Mantids::Network::Multiplexor;
@@ -22,7 +23,7 @@ Socket_Multiplexer::Socket_Multiplexer()
 Socket_Multiplexer::~Socket_Multiplexer()
 {
     mtLock_multiplexedSocket.unlock();
-    for (auto i : plugins)
+    for (const auto &i : plugins)
     {
         delete i.second;
     }
@@ -39,7 +40,7 @@ bool Socket_Multiplexer::plugin_Add(Socket_Mutiplexer_Plugin *plugin)
     return false;
 }
 
-void Socket_Multiplexer::run(Streams::StreamSocket *multiplexedSocket, const std::string & localName)
+void Socket_Multiplexer::run(Network::Sockets::Socket_StreamBase *multiplexedSocket, const std::string & localName)
 {  
     bool readOK;
     this->multiplexedSocket = multiplexedSocket;
@@ -47,17 +48,17 @@ void Socket_Multiplexer::run(Streams::StreamSocket *multiplexedSocket, const std
 
     unsigned char chIdSize = sizeof(LineID);
 
-    if (multiplexedSocket->writeU16(SOCKET_MULTIPLEXER_VERSION) && multiplexedSocket->writeU8(chIdSize))
+    if (multiplexedSocket->writeU<uint16_t>(SOCKET_MULTIPLEXER_VERSION) && multiplexedSocket->writeU<uint8_t>(chIdSize))
     {
-        peerMultiplexorVersion = multiplexedSocket->readU16(&readOK);
+        peerMultiplexorVersion = multiplexedSocket->readU<uint16_t>(&readOK);
         if (readOK)
         {
-            unsigned char channelSize = multiplexedSocket->readU8(&readOK);
+            unsigned char channelSize = multiplexedSocket->readU<uint8_t>(&readOK);
             if (readOK && channelSize == chIdSize)
             {
-                if (multiplexedSocket->writeString8(localName))
+                if (multiplexedSocket->writeStringEx<uint8_t>(localName))
                 {
-                    this->remoteName = multiplexedSocket->readString(&readOK,8);
+                    this->remoteName = multiplexedSocket->readStringEx<uint8_t>(&readOK);
                     if (readOK)
                     {
                         for (auto & i : plugins)
@@ -101,7 +102,7 @@ void Socket_Multiplexer::forceClose()
 bool Socket_Multiplexer::processMultiplexedSocket()
 {
     bool readen;
-    DataStructs::eMultiplexedSocketMessage msg = (DataStructs::eMultiplexedSocketMessage)multiplexedSocket->readU8(&readen);
+    DataStructs::eMultiplexedSocketMessage msg = (DataStructs::eMultiplexedSocketMessage)multiplexedSocket->readU<uint8_t>(&readen);
     if (!readen) return false;
 
     switch(msg)
@@ -181,28 +182,28 @@ bool Socket_Multiplexer::processMultiplexedSocket()
 bool Socket_Multiplexer::sendOnMultiplexedSocket_LineID(const LineID &chId)
 {
     if (sizeof(LineID) == 1)
-        return multiplexedSocket->writeU8(chId);
+        return multiplexedSocket->writeU<uint8_t>(chId);
     else if (sizeof(LineID) == 2)
-        return multiplexedSocket->writeU16(chId);
+        return multiplexedSocket->writeU<uint16_t>(chId);
     else
-        return multiplexedSocket->writeU32(chId);
+        return multiplexedSocket->writeU<uint32_t>(chId);
 }
 
 LineID Socket_Multiplexer::recvFromMultiplexedSocket_LineID(bool * readen)
 {
     if (sizeof(LineID) == 1)
-        return multiplexedSocket->readU8(readen);
+        return multiplexedSocket->readU<uint8_t>(readen);
     else if (sizeof(LineID) == 2)
-        return multiplexedSocket->readU16(readen);
+        return multiplexedSocket->readU<uint16_t>(readen);
     else
-        return multiplexedSocket->readU32(readen);
+        return multiplexedSocket->readU<uint32_t>(readen);
 }
 
 bool Socket_Multiplexer::close()
 {
     // send into multiplexed socket the close message, peer must close the connection.
     std::unique_lock<std::timed_mutex> lock(mtLock_multiplexedSocket);
-    return multiplexedSocket->writeU8(DataStructs::MPLX_MSG_CLOSE);
+    return multiplexedSocket->writeU<uint8_t>(DataStructs::MPLX_MSG_CLOSE);
 }
 
 
@@ -210,14 +211,14 @@ bool Socket_Multiplexer::multiplexedSocket_sendCloseACK1()
 {
     // send into multiplexed socket the close message acknowledge, peer must close the connection.
     std::unique_lock<std::timed_mutex> lock(mtLock_multiplexedSocket);
-    return multiplexedSocket->writeU8(DataStructs::MPLX_CLOSE_ACK1);
+    return multiplexedSocket->writeU<uint8_t>(DataStructs::MPLX_CLOSE_ACK1);
 }
 
 bool Socket_Multiplexer::multiplexedSocket_sendCloseACK2()
 {
     // send into multiplexed socket the close message, host must close the connection.
     std::unique_lock<std::timed_mutex> lock(mtLock_multiplexedSocket);
-    return multiplexedSocket->writeU8(DataStructs::MPLX_CLOSE_ACK2);
+    return multiplexedSocket->writeU<uint8_t>(DataStructs::MPLX_CLOSE_ACK2);
 }
 
 bool Socket_Multiplexer::getDestroySocketOnServer() const

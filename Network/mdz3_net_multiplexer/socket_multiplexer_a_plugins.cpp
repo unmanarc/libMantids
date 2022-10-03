@@ -1,4 +1,5 @@
 #include "socket_multiplexer.h"
+#include <cstdint>
 
 using namespace Mantids::Network::Multiplexor;
 
@@ -6,35 +7,38 @@ bool Socket_Multiplexer::processMultiplexedSocketCommand_Plugin_JSON16()
 {
     bool readen;
     json jMsg;
-    std::string pluginId = multiplexedSocket->readString(&readen,8), sMsg;
-    if (!readen) return false;
-    sMsg = multiplexedSocket->readString(&readen, 16);
-    if (!readen) return false;
+    std::string pluginId = multiplexedSocket->readStringEx<uint8_t>(&readen), sMsg;
 
-    Json::CharReaderBuilder builder;
-    Json::CharReader * reader = builder.newCharReader();
-    std::string errors;
+    if (!readen)
+        return false;
 
-    if (reader->parse(sMsg.c_str(), sMsg.c_str() + sMsg.size(), &(jMsg), &errors) && plugins.find(pluginId) != plugins.end())
+    sMsg = multiplexedSocket->readStringEx<uint32_t>(&readen, PLUGIN_MAX_DATA);
+
+    if (!readen)
+        return false;
+
+    std::error_code ec;
+    jMsg = boost::json::parse( sMsg, ec );
+
+    if ( !ec )
     {
         plugins[pluginId]->processJSON16(jMsg);
+        return true;
     }
     else
     {
         // parse problem?
+        return false;
     }
-
-    delete reader;
-    return true;
 }
 
 bool Socket_Multiplexer::processMultiplexedSocketCommand_Plugin_Data()
 {
     bool readen;
     unsigned int datalen = PLUGIN_MAX_DATA;
-    std::string pluginId = multiplexedSocket->readString(&readen,8);
+    std::string pluginId = multiplexedSocket->readStringEx<uint8_t>(&readen);
     if (!readen) return false;
-    char * pluginData = ((char *)multiplexedSocket->readBlock32WAlloc(&datalen));
+    char * pluginData = ((char *)multiplexedSocket->readBlockWAllocEx<uint32_t>( &datalen ));
     if (!pluginData) return false;
     if (plugins.find(pluginId) != plugins.end())
     {
@@ -49,17 +53,17 @@ bool Socket_Multiplexer::plugin_SendData(const std::string &pluginId, void *data
     if (noSendData) return false;
 
     if (lock) mtLock_multiplexedSocket.lock();
-    if (!multiplexedSocket->writeU8(DataStructs::MPLX_PLUGIN_DATA))
+    if (!multiplexedSocket->writeU<uint8_t>(DataStructs::MPLX_PLUGIN_DATA))
     {
         if (lock) mtLock_multiplexedSocket.unlock();
         return false;
     }
-    if (!multiplexedSocket->writeString8(pluginId))
+    if (!multiplexedSocket->writeStringEx<uint8_t>(pluginId))
     {
         if (lock) mtLock_multiplexedSocket.unlock();
         return false;
     }
-    if (!multiplexedSocket->writeBlock32(data,datalen))
+    if (!multiplexedSocket->writeBlockEx<uint32_t>(data,datalen))
     {
         if (lock) mtLock_multiplexedSocket.unlock();
         return false;
@@ -72,17 +76,17 @@ bool Socket_Multiplexer::plugin_SendJson(const std::string &pluginId, const json
 {
     if (noSendData) return false;
     if (lock) mtLock_multiplexedSocket.lock();
-    if (!multiplexedSocket->writeU8(DataStructs::MPLX_PLUGIN_JSON))
+    if (!multiplexedSocket->writeU<uint8_t>(DataStructs::MPLX_PLUGIN_JSON))
     {
         if (lock) mtLock_multiplexedSocket.unlock();
         return false;
     }
-    if (!multiplexedSocket->writeString8(pluginId))
+    if (!multiplexedSocket->writeStringEx<uint8_t>(pluginId))
     {
         if (lock) mtLock_multiplexedSocket.unlock();
         return false;
     }
-    if (!multiplexedSocket->writeString16(jData.toStyledString()))
+    if (!multiplexedSocket->writeStringEx<uint32_t>( boost::json::serialize(jData)))
     {
         if (lock) mtLock_multiplexedSocket.unlock();
         return false;

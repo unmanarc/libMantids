@@ -28,7 +28,7 @@ struct sServerConnectAcceptCallback
         callbackFunction=nullptr;
         obj = nullptr;
     }
-    Streams::StreamSocket * (*callbackFunction)(void *, const LineID &, const json &);
+    Network::Sockets::Socket_StreamBase * (*callbackFunction)(void *, const LineID &, const json &);
     void *obj;
 };
 
@@ -39,7 +39,7 @@ struct sClientConnectAcceptedCallback
         callbackFunction=nullptr;
         obj = nullptr;
     }
-    Streams::StreamSocket * (*callbackFunction)(void *, std::shared_ptr<Socket_Multiplexed_Line>);
+    Network::Sockets::Socket_StreamBase * (*callbackFunction)(void *, std::shared_ptr<Socket_Multiplexed_Line>);
     void *obj;
 };
 
@@ -63,7 +63,7 @@ struct sServerConnectionFinishedCallback
         obj = nullptr;
     }
     // obj, socket, failed reason
-    void (*callbackFunction)(void *, const LineID &, Streams::StreamSocket *);
+    void (*callbackFunction)(void *, const LineID &, Network::Sockets::Socket_StreamBase *);
     void *obj;
 };
 
@@ -77,9 +77,9 @@ public:
     Socket_Multiplexer_Callbacks();
     //////////////////////////////////
     // callback systems:
-    void setCallback_ServerConnectAcceptor(Streams::StreamSocket * (*callbackFunction)(void *, const LineID &, const json &), void *obj=nullptr);
-    void setCallback_ServerConnectionFinished(void (*callbackFunction)(void *, const LineID &, Streams::StreamSocket *), void *obj=nullptr);
-    void setCallback_ClientConnectAccepted(Streams::StreamSocket * (*callbackFunction)(void *, std::shared_ptr<Socket_Multiplexed_Line>), void * obj=nullptr);
+    void setCallback_ServerConnectAcceptor(Network::Sockets::Socket_StreamBase * (*callbackFunction)(void *, const LineID &, const json &), void *obj=nullptr);
+    void setCallback_ServerConnectionFinished(void (*callbackFunction)(void *, const LineID &, Network::Sockets::Socket_StreamBase *), void *obj=nullptr);
+    void setCallback_ClientConnectAccepted(Network::Sockets::Socket_StreamBase * (*callbackFunction)(void *, std::shared_ptr<Socket_Multiplexed_Line>), void * obj=nullptr);
     void setCallback_ClientConnectFailed(bool (*callbackFunction)(void *, std::shared_ptr<Socket_Multiplexed_Line>, DataStructs::eConnectFailedReason), void * obj=nullptr);
 
 protected:

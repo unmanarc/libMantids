@@ -9,7 +9,7 @@
 #include "socket_multiplexer_a_enum_lineaccept_msgs.h"
 #include "socket_multiplexer_plugin.h"
 
-#include <mdz3_net_sockets/streamsocket.h>
+#include <mdz3_net_sockets/socket_streambase.h>
 
 namespace Mantids { namespace Network { namespace Multiplexor {
 
@@ -29,7 +29,7 @@ public:
      * @param multiplexedSocket socket for sending/recving multiplexed messages
      * @param localName local multiplexor name
      */
-    void run(Streams::StreamSocket *multiplexedSocket, const std::string &localName = "localhost");
+    void run(Network::Sockets::Socket_StreamBase *multiplexedSocket, const std::string &localName = "localhost");
     /**
      * @brief close sends the message to close the multiplexed socket (ordered close)
      * @return true if remotely written, false if not.
@@ -102,7 +102,7 @@ private:
     bool processMultiplexedSocketCommand_Line_UpdateReadenBytes();
 
     // multiplexed socket:
-    Streams::StreamSocket * multiplexedSocket;
+    Network::Sockets::Socket_StreamBase * multiplexedSocket;
     std::timed_mutex mtLock_multiplexedSocket;
 
     std::string localName, remoteName;

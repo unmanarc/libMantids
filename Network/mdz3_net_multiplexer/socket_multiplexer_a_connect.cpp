@@ -1,4 +1,7 @@
 #include "socket_multiplexer.h"
+#include "vars.h"
+#include <boost/json/parser.hpp>
+#include <boost/json/serialize.hpp>
 #include <thread>
 
 // TODO: timeout callback
@@ -18,10 +21,10 @@ LineID Socket_Multiplexer::connect(const json &connectionParams, void * multiple
 
         LineID localLineId = sock->getLineID().localLineId;
         if (    localLineId != NULL_LINE
-                && multiplexedSocket->writeU8(DataStructs::MPLX_LINE_CONNECT)
+                && multiplexedSocket->writeU<uint8_t>(DataStructs::MPLX_LINE_CONNECT)
                 && sendOnMultiplexedSocket_LineID(localLineId)
-                && multiplexedSocket->writeU32(sock->getLocalWindowSize())
-                && multiplexedSocket->writeString16(connectionParams.toStyledString())
+                && multiplexedSocket->writeU<uint32_t>(sock->getLocalWindowSize())
+                && multiplexedSocket->writeStringEx<uint32_t>( boost::json::serialize(connectionParams))
                 )
         {
             mtLock_multiplexedSocket.unlock();
@@ -44,7 +47,7 @@ LineID Socket_Multiplexer::connect(const json &connectionParams, void * multiple
 void Socket_Multiplexer::client_HandlerConnection_Callback(std::shared_ptr<Socket_Multiplexed_Line> sock)
 {
     if (!cbClientConnectAccepted.callbackFunction) return;
-    Streams::StreamSocket * ssock = cbClientConnectAccepted.callbackFunction(cbClientConnectAccepted.obj, sock);
+    Network::Sockets::Socket_StreamBase * ssock = cbClientConnectAccepted.callbackFunction(cbClientConnectAccepted.obj, sock);
     if (ssock) sock->processLine(ssock,this);
     // remove/close the remote connection
     multiplexedSocket_sendLineData(sock->getLineID(),nullptr,0);
@@ -69,27 +72,28 @@ bool Socket_Multiplexer::processMultiplexedSocketCommand_Line_ConnectionAnswer()
     json jAcceptMsg;
     DataStructs::sLineID lineId;
     uint32_t remoteWindowSize;
-    DataStructs::eLineAcceptAnswerMSG msg;
+    DataStructs::eLineAcceptAnswerMSG msgCode;
 
     lineId.localLineId = recvFromMultiplexedSocket_LineID(&readen);
     lineId.remoteLineId = recvFromMultiplexedSocket_LineID(&readen);
-    remoteWindowSize = multiplexedSocket->readU32(&readen);
-    msg = (DataStructs::eLineAcceptAnswerMSG)multiplexedSocket->readU8(&readen);
-    sJMessage = multiplexedSocket->readString(&readen, 25); //(max: 32Mb)
+    remoteWindowSize = multiplexedSocket->readU<uint32_t>(&readen);
+    msgCode = (DataStructs::eLineAcceptAnswerMSG)multiplexedSocket->readU<uint8_t>(&readen);
+    sJMessage = multiplexedSocket->readStringEx<uint32_t>(&readen, JSON_MAX_DATA);
 
     if (readen)
     {
-        Json::CharReaderBuilder builder;
-        Json::CharReader * reader = builder.newCharReader();
-        std::string errors;
-        reader->parse(sJMessage.c_str(), sJMessage.c_str() + sJMessage.size(), &(jAcceptMsg), &errors);
-        delete reader;
+        std::error_code ec;
+        jAcceptMsg = boost::json::parse( sJMessage, ec );
+        if ( !ec )
+        {
+            // Accepted message...
+            // TODO: what to do with jAcceptMsg?
+        }
 
         std::shared_ptr<Socket_Multiplexed_Line> chSock = findLine(lineId.localLineId);
-
         if (chSock->isValidLine())
         {
-            switch (msg)
+            switch (msgCode)
             {
             case DataStructs::INIT_LINE_ANS_THREADED:
                 break;
@@ -144,13 +148,13 @@ bool Socket_Multiplexer::processMultiplexedSocketCommand_Line_ConnectionAnswer()
                 cntThrParams->chSock = chSock;
                 cntThrParams->multiPlexer = this;
 
-                if (msg == DataStructs::INIT_LINE_ANS_THREADFAILED) cntThrParams->reason = DataStructs::E_CONN_FAILED_ANSTHREAD;
-                else if (msg == DataStructs::INIT_LINE_ANS_BADPARAMS) cntThrParams->reason = DataStructs::E_CONN_FAILED_BADPARAMS;
-                else if (msg == DataStructs::INIT_LINE_ANS_FAILED) cntThrParams->reason = DataStructs::E_CONN_FAILED;
-                else if (msg == DataStructs::INIT_LINE_ANS_NOCALLBACK) cntThrParams->reason = DataStructs::E_CONN_FAILED_NOCALLBACK;
-                else if (msg == DataStructs::INIT_LINE_ANS_BADSERVERSOCK) cntThrParams->reason = DataStructs::E_CONN_FAILED_BADSERVERSOCK;
-                else if (msg == DataStructs::INIT_LINE_ANS_BADLOCALLINE) cntThrParams->reason = DataStructs::E_CONN_FAILED_BADLOCALLINE;
-                else if (msg == DataStructs::INIT_LINE_ANS_NOTAUTHORIZED) cntThrParams->reason = DataStructs::E_CONN_FAILED_NOTAUTHORIZED;
+                if (msgCode == DataStructs::INIT_LINE_ANS_THREADFAILED) cntThrParams->reason = DataStructs::E_CONN_FAILED_ANSTHREAD;
+                else if (msgCode == DataStructs::INIT_LINE_ANS_BADPARAMS) cntThrParams->reason = DataStructs::E_CONN_FAILED_BADPARAMS;
+                else if (msgCode == DataStructs::INIT_LINE_ANS_FAILED) cntThrParams->reason = DataStructs::E_CONN_FAILED;
+                else if (msgCode == DataStructs::INIT_LINE_ANS_NOCALLBACK) cntThrParams->reason = DataStructs::E_CONN_FAILED_NOCALLBACK;
+                else if (msgCode == DataStructs::INIT_LINE_ANS_BADSERVERSOCK) cntThrParams->reason = DataStructs::E_CONN_FAILED_BADSERVERSOCK;
+                else if (msgCode == DataStructs::INIT_LINE_ANS_BADLOCALLINE) cntThrParams->reason = DataStructs::E_CONN_FAILED_BADLOCALLINE;
+                else if (msgCode == DataStructs::INIT_LINE_ANS_NOTAUTHORIZED) cntThrParams->reason = DataStructs::E_CONN_FAILED_NOTAUTHORIZED;
 
                 std::thread(clientHandleConnectionFailedThread, cntThrParams).detach();
                 /*

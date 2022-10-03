@@ -15,7 +15,7 @@
 #include "socket_multiplexer_a_struct_databuffer.h"
 #include "socket_multiplexer_a_struct_lineid.h"
 
-#include <mdz3_net_sockets/streamsocket.h>
+#include <mdz3_net_sockets/socket_streambase.h>
 
 namespace Mantids { namespace Network { namespace Multiplexor {
 
@@ -51,7 +51,7 @@ public:
      * @param multiPlexer interface pointer
      * @return true if processed, false for memory related problems (undefined behaviour).
      */
-    bool processLine(Streams::StreamSocket * lineAttachedSocket, void * multiPlexer);
+    bool processLine(Network::Sockets::Socket_StreamBase * lineAttachedSocket, void * multiPlexer);
     /**
      * @brief finalizeProcessor
      */
@@ -100,7 +100,7 @@ private:
     void addBufferElement( DataStructs::sDataBuffer * dbuf );
     DataStructs::sDataBuffer * getBufferElement( bool emptyBlocking = true );
 
-    Streams::StreamSocket * lineAttachedSocket; // xmutexVars mutex.
+    Network::Sockets::Socket_StreamBase * lineAttachedSocket; // xmutexVars mutex.
     void * multiPlexer; // xmutexVars mutex.
     void * localObject; // rwLock_LocalObject mutex.
 

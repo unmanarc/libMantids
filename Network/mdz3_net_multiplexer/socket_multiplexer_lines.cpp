@@ -111,7 +111,7 @@ void Socket_Multiplexer_Lines::closeAndWaitForEveryLine()
     if (true)
     {
         Threads::Sync::Lock_RD lock(rwLock_MultiplexedLines);
-        for ( std::pair<LineID,std::shared_ptr<Socket_Multiplexed_Line>> cs : multiplexedLinesMap )
+        for ( const std::pair<LineID,std::shared_ptr<Socket_Multiplexed_Line>> &cs : multiplexedLinesMap )
         {
             cs.second->_lshutdown(); // the loosy way.
 

@@ -44,7 +44,7 @@ void Socket_Multiplexed_Line::_lshutdown()
 }
 
 
-bool Socket_Multiplexed_Line::processLine(Streams::StreamSocket *lineAttachedSocket, void *multiPlexer)
+bool Socket_Multiplexed_Line::processLine(Network::Sockets::Socket_StreamBase *lineAttachedSocket, void *multiPlexer)
 {
     if (!lineAttachedSocket || !multiPlexer)
     {
@@ -136,7 +136,7 @@ bool Socket_Multiplexed_Line::processBuffer()
     else
     {
         Threads::Sync::Lock_RD lock(rwLock_Vars);
-        if (!lineAttachedSocket->writeBlock(datab->data,datab->len))
+        if (!lineAttachedSocket->writeBlockEx<uint16_t>(datab->data,datab->len))
         {
             // TODO: if can't write maybe can't read, but anyway, close it.
             _lshutdown();

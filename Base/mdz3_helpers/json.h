@@ -2,20 +2,23 @@
 #define JSON_H
 
 #include <list>
-/*
-typedef Json::Value json;
+#include <boost/json/src.hpp>
 
+typedef boost::json::value json;
+
+#define JSON_ASCSTRING(j,x,def) (j[x].is_string()?j[x].as_string().c_str():def)
+#define JSON_ASSTRING(j,x,def) (j[x].is_string()?j[x].as_string():def)
+#define JSON_ASBOOL(j,x,def) (j[x].is_bool()?j[x].as_bool():def)
+#define JSON_ASDOUBLE(j,x,def) (j[x].is_double()?j[x].as_double():def)
+/*#define JSON_ASFLOAT(j,x,def) (j[x].is_double()?j[x].asFloat():def)*/
+/*#define JSON_ASINT(j,x,def) (j[x].is_int()?j[x].as_int():def)*/
+#define JSON_ASINT64(j,x,def) (j[x].is_int64()?j[x].as_int64():def)
+/*#define JSON_ASUINT(j,x,def) (j[x].is_uint()?j[x].as_int():def)*/
+#define JSON_ASUINT64(j,x,def) (j[x].is_uint64()?j[x].as_uint64():def)
+#define JSON_ISARRAY(j,x) (j.as_object().if_contains(x) && j[x].is_array())
+
+/*
 // jsoncpp macros:
-#define JSON_ASCSTRING(j,x,def) (j[x].isString()?j[x].asCString():def)
-#define JSON_ASSTRING(j,x,def) (j[x].isString()?j[x].asString():def)
-#define JSON_ASBOOL(j,x,def) (j[x].isBool()?j[x].asBool():def)
-#define JSON_ASDOUBLE(j,x,def) (j[x].isDouble()?j[x].asDouble():def)
-#define JSON_ASFLOAT(j,x,def) (j[x].isFloat()?j[x].asFloat():def)
-#define JSON_ASINT(j,x,def) (j[x].isInt()?j[x].asInt():def)
-#define JSON_ASINT64(j,x,def) (j[x].isInt64()?j[x].asInt64():def)
-#define JSON_ASUINT(j,x,def) (j[x].isUInt()?j[x].asUInt():def)
-#define JSON_ASUINT64(j,x,def) (j[x].isUInt64()?j[x].asUInt64():def)
-#define JSON_ISARRAY(j,x) (j.isMember(x) && j[x].isArray())
 
 namespace Mantids { namespace Helpers {
 

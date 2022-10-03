@@ -1,4 +1,4 @@
+ADD_SUBDIRECTORY(mdz3_net_sockets)
 ADD_SUBDIRECTORY(mdz3_net_chains)
 ADD_SUBDIRECTORY(mdz3_net_interfaces)
-ADD_SUBDIRECTORY(mdz3_net_sockets)
 ADD_SUBDIRECTORY(mdz3_net_multiplexer)

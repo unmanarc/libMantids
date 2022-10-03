@@ -57,9 +57,9 @@ set<string> AtomicExpressionSide::resolve(const json &v, bool resolveRegex, bool
         json result = path.resolve(v);
         set<string> res;
 
-        if (result.size() == 0 && !result.isNull())
+        if (result.as_object().size() == 0 && !result.is_null())
         {
-            res.insert( result.asString() );
+            res.insert( result.as_string() );
         }
         else
         {

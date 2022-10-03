@@ -1,4 +1,6 @@
 #include "socket_multiplexer.h"
+#include "vars.h"
+#include <cstdint>
 #include <thread>
 
 using namespace Mantids::Network::Multiplexor;
@@ -14,7 +16,7 @@ bool Socket_Multiplexer::multiplexedSocket_sendLineConnectionAnswer(const DataSt
     if (noSendData) return false;
     std::unique_lock<std::timed_mutex> lock(mtLock_multiplexedSocket);
 
-    if (!multiplexedSocket->writeU8(DataStructs::MPLX_LINE_CONNECT_ANS))
+    if (!multiplexedSocket->writeU<uint8_t>(DataStructs::MPLX_LINE_CONNECT_ANS))
     {
         return false;
     }
@@ -26,15 +28,16 @@ bool Socket_Multiplexer::multiplexedSocket_sendLineConnectionAnswer(const DataSt
     {
         return false;
     }
-    if (!multiplexedSocket->writeU32(localLineWindow))
+    if (!multiplexedSocket->writeU<uint32_t>(localLineWindow))
     {
         return false;
     }
-    if (!multiplexedSocket->writeU8(msg))
+    if (!multiplexedSocket->writeU<uint8_t>(msg))
     {
         return false;
     }
-    if (!multiplexedSocket->writeString32(answerValue.toStyledString(),JSON_MAX_DATA))
+    if (!multiplexedSocket->writeStringEx<uint32_t>(  boost::json::serialize(answerValue)
+                                                    ,JSON_MAX_DATA))
     {
         return false;
     }
@@ -60,7 +63,7 @@ void Socket_Multiplexer::server_AcceptConnection_Callback(DataStructs::sLineID l
     }
 
     // HERE WE CALL THE CALLBACK FUNCTION!!! -> should not take to long or block to work properly.
-    Streams::StreamSocket * ssock = cbServerConnectAcceptor.callbackFunction(cbServerConnectAcceptor.obj,sock->getLineID().localLineId,connectionParams);
+    Network::Sockets::Socket_StreamBase * ssock = cbServerConnectAcceptor.callbackFunction(cbServerConnectAcceptor.obj,sock->getLineID().localLineId,connectionParams);
 
     if (!ssock)
     {
@@ -101,22 +104,17 @@ bool Socket_Multiplexer::processMultiplexedSocketCommand_Line_Connect(bool autho
     thrParams->multiPlexer = this;
 
     thrParams->lineID.remoteLineId = recvFromMultiplexedSocket_LineID(&readen);
-    thrParams->remoteWindowSize = multiplexedSocket->readU32(&readen);
-    connectionParamsStr = multiplexedSocket->readString(&readen, 25);
+    thrParams->remoteWindowSize = multiplexedSocket->readU<uint32_t>(&readen);
+    connectionParamsStr = multiplexedSocket->readStringEx<uint32_t>(&readen, JSON_MAX_DATA);
 
     if (readen)
     {
-
         if (authorized)
         {
-            Json::CharReaderBuilder builder;
-            Json::CharReader * reader = builder.newCharReader();
-            std::string errors;
+            std::error_code ec;
+            thrParams->jConnectionParams = boost::json::parse( connectionParamsStr, ec );
 
-            bool parsingSuccessful = reader->parse(connectionParamsStr.c_str(), connectionParamsStr.c_str() + connectionParamsStr.size(), &(thrParams->jConnectionParams), &errors);
-            delete reader;
-
-            if ( parsingSuccessful )
+            if ( !ec )
             {
                 std::thread(serverAcceptConnectionThread, thrParams).detach();
                 multiplexedSocket_sendLineConnectionAnswer(thrParams->lineID, DataStructs::INIT_LINE_ANS_THREADED);

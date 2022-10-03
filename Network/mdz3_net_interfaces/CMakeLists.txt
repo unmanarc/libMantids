@@ -12,8 +12,6 @@ file(GLOB_RECURSE EDV_SOURCE_FILES "./*.c*")
 
 add_library(${LIB_NAME} ${EDV_INCLUDE_FILES} ${EDV_SOURCE_FILES})
 
-
-
 set_target_properties(  ${LIB_NAME}
                         PROPERTIES VERSION ${PROJECT_VERSION}
                         SOVERSION 2
@@ -40,7 +38,6 @@ if (EXTRAPREFIX)
     target_include_directories(${LIB_NAME} PUBLIC ${EXTRAPREFIX}/include)
     target_link_libraries(${LIB_NAME} "-L${EXTRAPREFIX}/lib")
 endif()
-
 
 find_library (
     WINDOWS_SOCKLIB
