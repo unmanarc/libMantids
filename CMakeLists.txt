@@ -31,7 +31,7 @@ include(GNUInstallDirs)
 # Subprojects:
 ADD_SUBDIRECTORY(Base)
 #ADD_SUBDIRECTORY(Scripts)
-#ADD_SUBDIRECTORY(Database)
+ADD_SUBDIRECTORY(Database)
 ADD_SUBDIRECTORY(Network)
 #ADD_SUBDIRECTORY(Protocols)
 #ADD_SUBDIRECTORY(Auth)
