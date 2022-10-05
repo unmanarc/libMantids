@@ -17,10 +17,8 @@ bool Socket_Multiplexer::processMultiplexedSocketCommand_Plugin_JSON16()
     if (!readen)
         return false;
 
-    std::error_code ec;
-    jMsg = boost::json::parse( sMsg, ec );
-
-    if ( !ec )
+    Helpers::JSONReader2 reader;
+    if ( reader.parse(sMsg,jMsg) )
     {
         plugins[pluginId]->processJSON16(jMsg);
         return true;
@@ -86,7 +84,7 @@ bool Socket_Multiplexer::plugin_SendJson(const std::string &pluginId, const json
         if (lock) mtLock_multiplexedSocket.unlock();
         return false;
     }
-    if (!multiplexedSocket->writeStringEx<uint32_t>( boost::json::serialize(jData)))
+    if (!multiplexedSocket->writeStringEx<uint32_t>( Mantids::Helpers::jsonToString( jData )  ))
     {
         if (lock) mtLock_multiplexedSocket.unlock();
         return false;

@@ -6,7 +6,6 @@
 - add ldap support (this must liberate much work)
 - focus on what we are good at: networking (back with multiplexing, rawsockets)
 - finish hive7
-- remove jsoncpp, focus in boost (xml/json)
 - create websockets proxy
 - possible kerberos support?
 - oauth2 support?

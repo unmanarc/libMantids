@@ -28,7 +28,7 @@ yum -y install cmake3
 *These are the required (mandatory) libraries*
 
 ```
-yum -y install openssl-devel
+yum -y install openssl-devel jsoncpp-devel
 ```
 
 ### Install Optional devel libraries:
@@ -66,7 +66,7 @@ cd "$prjdir"
 You can build this in one system, and you only need install the following runtimes:
 
 ```
-yum -y install openssl 
+yum -y install openssl jsoncpp 
 ```
 
 If you need database support:

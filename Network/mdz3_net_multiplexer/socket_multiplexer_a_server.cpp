@@ -36,7 +36,7 @@ bool Socket_Multiplexer::multiplexedSocket_sendLineConnectionAnswer(const DataSt
     {
         return false;
     }
-    if (!multiplexedSocket->writeStringEx<uint32_t>(  boost::json::serialize(answerValue)
+    if (!multiplexedSocket->writeStringEx<uint32_t>(  Mantids::Helpers::jsonToString(answerValue)
                                                     ,JSON_MAX_DATA))
     {
         return false;
@@ -111,10 +111,8 @@ bool Socket_Multiplexer::processMultiplexedSocketCommand_Line_Connect(bool autho
     {
         if (authorized)
         {
-            std::error_code ec;
-            thrParams->jConnectionParams = boost::json::parse( connectionParamsStr, ec );
-
-            if ( !ec )
+            Helpers::JSONReader2 reader;
+            if ( reader.parse(connectionParamsStr,thrParams->jConnectionParams) )
             {
                 std::thread(serverAcceptConnectionThread, thrParams).detach();
                 multiplexedSocket_sendLineConnectionAnswer(thrParams->lineID, DataStructs::INIT_LINE_ANS_THREADED);

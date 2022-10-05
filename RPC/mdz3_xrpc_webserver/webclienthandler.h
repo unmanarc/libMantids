@@ -4,6 +4,7 @@
 #include "sessionsmanager.h"
 #include "resourcesfilter.h"
 
+#include <mdz3_xrpc_common/streamablejson.h>
 #include <mdz3_xrpc_common/methodsmanager.h>
 #include <mdz3_auth/domains.h>
 #include <mdz3_proto_http/httpv1_server.h>

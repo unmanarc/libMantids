@@ -4,7 +4,6 @@
 #include <mdz3_helpers/json.h>
 #include <set>
 #include <mdz3_mem/subparser.h>
-#include "streamablejson.h"
 #include "authentication.h"
 
 namespace Mantids { namespace RPC {

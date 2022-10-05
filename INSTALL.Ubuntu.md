@@ -22,7 +22,7 @@ apt install build-essential cmake
 *These are the required (mandatory) libraries*
 
 ```
-apt -y install libboost-all-dev libssl-dev
+apt -y install libboost-all-dev libssl-dev libjsoncpp-dev
 ```
 
 ### Install Optional devel libraries:

@@ -57,9 +57,9 @@ set<string> AtomicExpressionSide::resolve(const json &v, bool resolveRegex, bool
         json result = path.resolve(v);
         set<string> res;
 
-        if (result.as_object().size() == 0 && !result.is_null())
+        if (result.size() == 0 && !result.isNull())
         {
-            res.insert( result.as_string() );
+            res.insert( result.asString() );
         }
         else
         {
@@ -89,6 +89,7 @@ set<string> AtomicExpressionSide::resolve(const json &v, bool resolveRegex, bool
     default:
         return {};
     }
+
 }
 
 boost::regex *AtomicExpressionSide::getRegexp() const

@@ -1,3 +1,3 @@
 ADD_SUBDIRECTORY(mdz3_auth)
 ADD_SUBDIRECTORY(mdz3_auth_db)
-#ADD_SUBDIRECTORY(mdz3_auth_remote)
+ADD_SUBDIRECTORY(mdz3_auth_remote)

@@ -20,6 +20,7 @@ Please install all the building environment with g++/gcc/cmake (mingw64)
 ```
 boost development
 openssl development
+jsoncpp development
 ```
 
 ### Install Optional devel libraries:

@@ -1,6 +1,6 @@
 #include "json.h"
 
-/*
+
 std::string Mantids::Helpers::jsonToString(const json &value)
 {
     Json::StreamWriterBuilder builder;
@@ -43,7 +43,7 @@ std::list<std::string> Mantids::Helpers::jsonToStringList(const json &value, con
     {
         for ( size_t x = 0; x< value.size(); x++)
         {
-            if (value[(int)x].is_string())
+            if (value[(int)x].isString())
                 r.push_back(value[(int)x].asString());
         }
     }
@@ -51,10 +51,10 @@ std::list<std::string> Mantids::Helpers::jsonToStringList(const json &value, con
     {
         for ( size_t x = 0; x< value[sub].size(); x++)
         {
-            if (value[sub][(int)x].is_string())
+            if (value[sub][(int)x].isString())
                 r.push_back(value[sub][(int)x].asString());
         }
     }
     return r;
 }
-*/
+

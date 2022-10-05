@@ -24,7 +24,7 @@ LineID Socket_Multiplexer::connect(const json &connectionParams, void * multiple
                 && multiplexedSocket->writeU<uint8_t>(DataStructs::MPLX_LINE_CONNECT)
                 && sendOnMultiplexedSocket_LineID(localLineId)
                 && multiplexedSocket->writeU<uint32_t>(sock->getLocalWindowSize())
-                && multiplexedSocket->writeStringEx<uint32_t>( boost::json::serialize(connectionParams))
+                && multiplexedSocket->writeStringEx<uint32_t>( Mantids::Helpers::jsonToString(connectionParams))
                 )
         {
             mtLock_multiplexedSocket.unlock();
@@ -82,9 +82,8 @@ bool Socket_Multiplexer::processMultiplexedSocketCommand_Line_ConnectionAnswer()
 
     if (readen)
     {
-        std::error_code ec;
-        jAcceptMsg = boost::json::parse( sJMessage, ec );
-        if ( !ec )
+        Helpers::JSONReader2 reader;
+        if ( reader.parse(sJMessage,jAcceptMsg) )
         {
             // Accepted message...
             // TODO: what to do with jAcceptMsg?

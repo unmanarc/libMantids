@@ -30,14 +30,14 @@ include(GNUInstallDirs)
 #############################################################################################################################
 # Subprojects:
 ADD_SUBDIRECTORY(Base)
-#ADD_SUBDIRECTORY(Scripts)
+ADD_SUBDIRECTORY(Scripts)
 ADD_SUBDIRECTORY(Database)
 ADD_SUBDIRECTORY(Network)
 ADD_SUBDIRECTORY(Protocols)
 ADD_SUBDIRECTORY(Auth)
-#ADD_SUBDIRECTORY(Program)
-#ADD_SUBDIRECTORY(RPC)
-##ADD_SUBDIRECTORY(devel)
+ADD_SUBDIRECTORY(Program)
+ADD_SUBDIRECTORY(RPC)
+#ADD_SUBDIRECTORY(devel)
 #ADD_SUBDIRECTORY(extras)
 
 #############################################################################################################################

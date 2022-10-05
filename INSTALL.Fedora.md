@@ -26,7 +26,7 @@ dnf -y install cmake
 *These are the required (mandatory) libraries*
 
 ```
-dnf -y install openssl-devel boost-devel
+dnf -y install openssl-devel boost-devel jsoncpp-devel
 ```
 
 ### Install Optional devel libraries:
@@ -64,7 +64,7 @@ cd "$prjdir"
 You can build this in one system, and you only need install the following runtimes:
 
 ```
-dnf -y install openssl boost
+dnf -y install openssl boost jsoncpp
 ```
 
 If you need database support:

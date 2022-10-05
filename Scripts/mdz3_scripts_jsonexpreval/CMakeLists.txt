@@ -41,6 +41,11 @@ if (EXTRAPREFIX)
     target_link_libraries(${LIB_NAME} "-L${EXTRAPREFIX}/lib")
 endif()
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(JSONCPP jsoncpp)
+link_libraries(${JSONCPP_LIBRARIES})
+target_include_directories(${LIB_NAME} PUBLIC ${JSONCPP_INCLUDE_DIRS})
+target_link_libraries(${LIB_NAME} ${JSONCPP_LIBRARIES})
 
 include_directories("${mdz3_helpers_SOURCE_DIR}/../")
 target_link_libraries(${LIB_NAME} mdz3_helpers)

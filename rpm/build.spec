@@ -33,7 +33,7 @@ Group:          Development/Libraries
 %define debug_package %{nil}
 %endif
 
-BuildRequires:  %{cmake} boost-devel boost-static sqlite-devel postgresql-devel gcc-c++
+BuildRequires:  %{cmake} jsoncpp-devel boost-devel boost-static sqlite-devel postgresql-devel gcc-c++
 %if 0%{?rhel} == 6
 BuildRequires:  mysql-devel
 %else
@@ -45,7 +45,7 @@ BuildRequires:  openssl11-devel
 BuildRequires:  openssl-devel
 %endif
 
-Requires: boost-regex boost-thread
+Requires: jsoncpp boost-regex boost-thread
 %if 0%{?rhel} == 7
 Requires:       openssl11
 %else

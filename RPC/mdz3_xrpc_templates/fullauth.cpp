@@ -1021,7 +1021,7 @@ std::map<std::string, std::string> FullAuth::jsonToMap(const json &jValue)
     std::map<std::string, std::string> r;
     for (const std::string & memberName : jValue.getMemberNames())
     {
-        if (jValue[memberName].is_string())
+        if (jValue[memberName].isString())
             r[memberName] = JSON_ASSTRING(jValue,memberName,"");
     }
     return r;

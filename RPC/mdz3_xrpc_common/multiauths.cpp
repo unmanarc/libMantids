@@ -1,4 +1,5 @@
 #include "multiauths.h"
+#include "streamablejson.h"
 //#include "retcodes.h"
 
 using namespace Mantids::RPC;
