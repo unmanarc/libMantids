@@ -1,6 +1,6 @@
 #include "methodsattributes_map.h"
 
-using namespace Mantids::Authentication;
+using namespace Mantids3::Authentication;
 
 MethodsAttributes_Map::MethodsAttributes_Map()
 {

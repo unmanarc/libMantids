@@ -1,6 +1,6 @@
 #include "lock_rw.h"
 
-using namespace Mantids::Threads::Sync;
+using namespace Mantids3::Threads::Sync;
 
 Lock_RW::Lock_RW(Mutex_Shared &mutex, bool dontlock)
 {

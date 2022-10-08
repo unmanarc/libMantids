@@ -2,8 +2,8 @@
 #include "streamablejson.h"
 //#include "retcodes.h"
 
-using namespace Mantids::RPC;
-using namespace Mantids;
+using namespace Mantids3::RPC;
+using namespace Mantids3;
 
 MultiAuths::MultiAuths()
 {
@@ -44,7 +44,7 @@ bool MultiAuths::setAuthentications(const std::string &sAuthentications)
     if (sAuthentications.empty()) return true;
 
     json jAuthentications;
-    Mantids::Helpers::JSONReader2 reader;
+    Mantids3::Helpers::JSONReader2 reader;
     if (!reader.parse(sAuthentications, jAuthentications)) return false;
     if (!jAuthentications.isObject()) return false;
 

@@ -7,7 +7,7 @@
 #include <utility>
 #include <mdz3_mem/streamableobject.h>
 
-namespace Mantids { namespace Network { namespace Sockets {
+namespace Mantids3 { namespace Network { namespace Sockets {
 
 class Socket_StreamBase : public Memory::Streams::StreamableObject, public Sockets::Socket, public Socket_StreamBaseReader, public Socket_StreamBaseWriter
 {

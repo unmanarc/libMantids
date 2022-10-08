@@ -8,7 +8,7 @@
 #include <clocale>
 
 using namespace std;
-using namespace Mantids::Scripts::Expressions;
+using namespace Mantids3::Scripts::Expressions;
 
 JSONEval::JSONEval()
 {

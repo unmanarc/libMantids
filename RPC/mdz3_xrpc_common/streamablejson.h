@@ -4,7 +4,7 @@
 #include <mdz3_mem/streamableobject.h>
 #include <mdz3_helpers/json.h>
 
-namespace Mantids { namespace Memory { namespace Streams {
+namespace Mantids3 { namespace Memory { namespace Streams {
 
 class StreamableJSON : public Memory::Streams::StreamableObject
 {

@@ -3,7 +3,7 @@
 
 #include <mdz3_mem/streamableobject.h>
 
-namespace Mantids { namespace Protocols { namespace HTTP { namespace Common {
+namespace Mantids3 { namespace Protocols { namespace HTTP { namespace Common {
 
 class Content_Chunked_SubParser : public Memory::Streams::StreamableObject
 {

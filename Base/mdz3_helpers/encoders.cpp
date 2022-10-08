@@ -4,7 +4,7 @@
 #include <inttypes.h>
 
 using namespace std;
-using namespace Mantids::Helpers;
+using namespace Mantids3::Helpers;
 
 const std::string Encoders::b64Chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 

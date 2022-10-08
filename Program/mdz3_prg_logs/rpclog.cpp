@@ -19,7 +19,7 @@
 
 #include <mdz3_helpers/encoders.h>
 
-using namespace Mantids::Application::Logs;
+using namespace Mantids3::Application::Logs;
 
 RPCLog::RPCLog(unsigned int _logMode) : LogBase(_logMode)
 {

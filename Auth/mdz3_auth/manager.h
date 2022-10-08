@@ -10,7 +10,7 @@
 
 #include <mdz3_threads/mutex_shared.h>
 
-namespace Mantids { namespace Authentication {
+namespace Mantids3 { namespace Authentication {
 
 struct sAccountDetails{
     std::string sGivenName,sLastName,sEmail,sDescription,sExtraData;

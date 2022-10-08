@@ -2,7 +2,7 @@
 
 #include "socket_multiplexer.h"
 
-using namespace Mantids::Network::Multiplexor;
+using namespace Mantids3::Network::Multiplexor;
 
 Socket_Mutiplexer_Plugin::Socket_Mutiplexer_Plugin()
 {

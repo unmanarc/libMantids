@@ -4,7 +4,7 @@
 #include <string>
 #include <mdz3_helpers/json.h>
 
-namespace Mantids { namespace Network { namespace Multiplexor {
+namespace Mantids3 { namespace Network { namespace Multiplexor {
 
 class Socket_Mutiplexer_Plugin
 {

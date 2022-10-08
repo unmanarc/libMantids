@@ -13,7 +13,7 @@
 #include <mdz3_prg_logs/rpclog.h>
 #include <mutex>
 
-namespace Mantids { namespace RPC { namespace Web {
+namespace Mantids3 { namespace RPC { namespace Web {
 
 class WebClientHandler : public Protocols::HTTP::HTTPv1_Server
 {
@@ -23,7 +23,7 @@ public:
 
     //////////////////////////////////////////////
     // Initialization:
-    void setAuthenticators(Mantids::Authentication::Domains * authenticator);
+    void setAuthenticators(Mantids3::Authentication::Domains * authenticator);
     void setMethodsManager(MethodsManager *value);
     //////////////////////////////////////////////
 
@@ -80,22 +80,22 @@ private:
     Protocols::HTTP::Status::eRetCode procJAPI_Version();
 
 
-    std::string persistentAuthentication(const std::string & userName, const std::string &domainName, const Authentication &authData, Mantids::Authentication::Session *session, Mantids::Authentication::Reason *authReason);
-    Mantids::Authentication::Reason temporaryAuthentication(const std::string &userName, const std::string &domainName, const Authentication &authData);
+    std::string persistentAuthentication(const std::string & userName, const std::string &domainName, const Authentication &authData, Mantids3::Authentication::Session *session, Mantids3::Authentication::Reason *authReason);
+    Mantids3::Authentication::Reason temporaryAuthentication(const std::string &userName, const std::string &domainName, const Authentication &authData);
 
-    //std::string getAuthSessionID(Mantids::Authentication::Session *authSession);
+    //std::string getAuthSessionID(Mantids3::Authentication::Session *authSession);
 
-    void log(Mantids::Application::Logs::eLogLevels logSeverity,  const std::string &module, const uint32_t &outSize, const char *fmtLog,... );
+    void log(Mantids3::Application::Logs::eLogLevels logSeverity,  const std::string &module, const uint32_t &outSize, const char *fmtLog,... );
 
     Application::Logs::RPCLog * rpcLog;
 
     MethodsManager * methodsManager;
-    Mantids::Authentication::Domains * authDomains;
+    Mantids3::Authentication::Domains * authDomains;
     SessionsManager * sessionsManager;
 
     // Current Session Vars:
     WebSession * webSession;
-    Mantids::Authentication::Session *authSession;
+    Mantids3::Authentication::Session *authSession;
     uint64_t uSessionMaxAge;
     std::string sSessionId;
     bool bDestroySession;

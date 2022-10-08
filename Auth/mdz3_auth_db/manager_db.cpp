@@ -12,9 +12,9 @@
 #include <pwd.h>
 #endif
 
-using namespace Mantids::Authentication;
+using namespace Mantids3::Authentication;
 
-Manager_DB::Manager_DB( Mantids::Database::SQLConnector * sqlConnector )
+Manager_DB::Manager_DB( Mantids3::Database::SQLConnector * sqlConnector )
 {
     this->sqlConnector = sqlConnector;
 }

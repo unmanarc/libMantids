@@ -3,7 +3,7 @@
 
 #include "b_base.h"
 
-namespace Mantids { namespace Memory { namespace Containers {
+namespace Mantids3 { namespace Memory { namespace Containers {
 
 
 class B_MEM : public B_Base

@@ -4,13 +4,13 @@
 #include <mdz3_auth/manager.h>
 #include <mdz3_db/sqlconnector.h>
 
-namespace Mantids { namespace Authentication {
+namespace Mantids3 { namespace Authentication {
 
 class Manager_DB : public Manager
 {
 public:
     // Open authentication system:
-    Manager_DB( Mantids::Database::SQLConnector * sqlConnector );
+    Manager_DB( Mantids3::Database::SQLConnector * sqlConnector );
     bool initScheme() override;
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -136,7 +136,7 @@ private:
 
     std::list<std::string> sqlErrorList;
     std::string filePath;
-    Mantids::Database::SQLConnector * sqlConnector;
+    Mantids3::Database::SQLConnector * sqlConnector;
 };
 
 

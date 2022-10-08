@@ -3,9 +3,9 @@
 #include <mdz3_mem/a_string.h>
 #include <mdz3_mem/a_uint64.h>
 
-using namespace Mantids::Authentication;
-using namespace Mantids::Memory;
-using namespace Mantids::Database;
+using namespace Mantids3::Authentication;
+using namespace Mantids3::Memory;
+using namespace Mantids3::Database;
 
 bool Manager_DB::groupAdd(const std::string &groupName, const std::string &groupDescription)
 {

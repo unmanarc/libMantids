@@ -7,7 +7,7 @@
 #include <memory>
 #include "socket_multiplexed_line.h"
 
-namespace Mantids { namespace Network { namespace Multiplexor {
+namespace Mantids3 { namespace Network { namespace Multiplexor {
 
 class Socket_Multiplexer_Lines
 {

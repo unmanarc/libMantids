@@ -8,7 +8,7 @@
 #include <limits>
 #include <stdexcept>
 
-namespace Mantids { namespace Network { namespace Sockets {
+namespace Mantids3 { namespace Network { namespace Sockets {
 
 
 class Socket_StreamBaseReader

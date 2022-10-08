@@ -17,7 +17,7 @@
 
 #include <mdz3_net_sockets/socket_streambase.h>
 
-namespace Mantids { namespace Network { namespace Multiplexor {
+namespace Mantids3 { namespace Network { namespace Multiplexor {
 
 class Socket_Multiplexed_Line
 {

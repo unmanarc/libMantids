@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-using namespace Mantids::Network::Sockets::ChainProtocols;
+using namespace Mantids3::Network::Sockets::ChainProtocols;
 
 Socket_Chain_XOR::Socket_Chain_XOR()
 {
@@ -14,7 +14,7 @@ int Socket_Chain_XOR::partialRead(void *data, const uint32_t &datalen)
 {
     if (!datalen) return 0;
 
-    int r = Mantids::Network::Sockets::Socket::partialRead(data,datalen);
+    int r = Mantids3::Network::Sockets::Socket::partialRead(data,datalen);
     if (r<=0) return r;
 
     char * datacp = getXorCopy(data,r);
@@ -32,7 +32,7 @@ int Socket_Chain_XOR::partialWrite(const void *data, const uint32_t &datalen)
     char * datacp = getXorCopy(data,datalen);
     if (!datacp) return 0;
 
-    int r = Mantids::Network::Sockets::Socket::partialWrite(datacp,datalen);
+    int r = Mantids3::Network::Sockets::Socket::partialWrite(datacp,datalen);
     delete [] datacp;
     return r;
 }

@@ -6,7 +6,7 @@
 #include <mutex>
 #include <condition_variable>
 
-namespace Mantids { namespace Threads { namespace Safe {
+namespace Mantids3 { namespace Threads { namespace Safe {
 
 /**
  * @brief The Thread Safe Queue class

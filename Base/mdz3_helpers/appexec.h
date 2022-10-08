@@ -22,7 +22,7 @@
 #define APPEXEC_ERR_CREATEPROCESS 5
 
 
-namespace Mantids { namespace Helpers {
+namespace Mantids3 { namespace Helpers {
 
 class AppExec
 {

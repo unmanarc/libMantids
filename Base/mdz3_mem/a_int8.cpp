@@ -1,6 +1,6 @@
 #include "a_int8.h"
 #include <stdexcept>      // std::invalid_argument
-using namespace Mantids::Memory::Abstract;
+using namespace Mantids3::Memory::Abstract;
 #include <mdz3_threads/lock_shared.h>
 
 INT8::INT8()

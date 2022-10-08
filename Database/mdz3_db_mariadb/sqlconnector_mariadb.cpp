@@ -5,7 +5,7 @@
 #include <mdz3_mem/a_string.h>
 #include <unistd.h>
 
-using namespace Mantids::Database;
+using namespace Mantids3::Database;
 
 SQLConnector_MariaDB::SQLConnector_MariaDB()
 {

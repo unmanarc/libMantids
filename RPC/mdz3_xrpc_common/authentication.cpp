@@ -1,8 +1,8 @@
 #include "authentication.h"
 
 
-using namespace Mantids::RPC;
-using namespace Mantids;
+using namespace Mantids3::RPC;
+using namespace Mantids3;
 
 Authentication::Authentication()
 {
@@ -21,7 +21,7 @@ bool Authentication::fromString(const std::string &sAuth)
 
      if (sAuth.empty()) return true;
 
-     Mantids::Helpers::JSONReader2 reader;
+     Mantids3::Helpers::JSONReader2 reader;
      if (!reader.parse(sAuth, x)) return false;
      if (!x.isObject()) return false;
 

@@ -14,8 +14,8 @@ using namespace boost;
 using namespace boost::algorithm;
 
 
-using namespace Mantids::RPC;
-using namespace Mantids::Application;
+using namespace Mantids3::RPC;
+using namespace Mantids3::Application;
 
 RPCClientImpl::RPCClientImpl()
 {
@@ -49,7 +49,7 @@ void RPCClientImpl::runRPClient()
 
     for (;;)
     {
-        Mantids::Network::Sockets::Socket_TLS sockRPCClient;
+        Mantids3::Network::Sockets::Socket_TLS sockRPCClient;
 
         if (!Globals::getLC_C2UsePSK())
         {
@@ -67,7 +67,7 @@ void RPCClientImpl::runRPClient()
             {
                 bool ok = false;
                 // Load Key
-                std::string keyPassPhrase = Mantids::Helpers::Crypto::AES256DecryptB64( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
+                std::string keyPassPhrase = Mantids3::Helpers::Crypto::AES256DecryptB64( Mantids3::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
                                                                             ,(char *)masterKey->data,masterKey->len,&ok
                                                                             );
 
@@ -95,7 +95,7 @@ void RPCClientImpl::runRPClient()
         {
             // Load Key
             bool ok;
-            std::string key = Mantids::Helpers::Crypto::AES256DecryptB64( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_C2PSKSharedKeyFile() )
+            std::string key = Mantids3::Helpers::Crypto::AES256DecryptB64( Mantids3::Helpers::File::loadFileIntoString( Globals::getLC_C2PSKSharedKeyFile() )
                                                                         ,(char *)masterKey->data,masterKey->len,&ok
                                                                         );
             std::vector<std::string> keyParts;
@@ -162,7 +162,7 @@ bool RPCClientImpl::retrieveConfigFromLocalFile()
             std::string sRemoteConfigDecrypted = decryptStr(lineInFile);
 
             json jRemoteConfig;
-            Mantids::Helpers::JSONReader2 reader;
+            Mantids3::Helpers::JSONReader2 reader;
             bool parsingSuccessful = reader.parse( sRemoteConfigDecrypted, jRemoteConfig );
             if ( parsingSuccessful )
             {

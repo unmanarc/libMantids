@@ -12,7 +12,7 @@
 #include <mdz3_prg_logs/rpclog.h>
 #include <mdz3_mem/b_mem.h>
 
-namespace Mantids { namespace RPC { namespace Web {
+namespace Mantids3 { namespace RPC { namespace Web {
 
 
 class WebServer
@@ -62,7 +62,7 @@ public:
      * @brief setAuthenticator Set the Authenticator for Login
      * @param value Authenticator Object
      */
-    void setAuthenticator(Mantids::Authentication::Domains *value);
+    void setAuthenticator(Mantids3::Authentication::Domains *value);
     /**
      * @brief setMethodManagers Set the Method Manager that will be used for calling methods
      * @param value method manager Object
@@ -151,7 +151,7 @@ public:
     // Internal Methods (ClientHandler->Webserver), don't use them
     ////////////////////////////////////////////////////////////////////////////////
     MethodsManager *getMethodManagers() const;
-    Mantids::Authentication::Domains *getAuthenticator() const;
+    Mantids3::Authentication::Domains *getAuthenticator() const;
     SessionsManager * getSessionsManager();
     ResourcesFilter *getResourceFilter() const;
     bool getUseFormattedJSONOutput() const;
@@ -168,7 +168,7 @@ public:
     Application::Logs::RPCLog *getRPCLog() const;
     void setRPCLog(Application::Logs::RPCLog *value);
 
-    std::map<std::string, Mantids::Memory::Containers::B_MEM *> getStaticContentElements();
+    std::map<std::string, Mantids3::Memory::Containers::B_MEM *> getStaticContentElements();
 
     std::string getRedirectOn404() const;
     void setRedirectOn404(const std::string &newRedirectOn404);
@@ -192,7 +192,7 @@ private:
 
     void * obj;
 
-    std::map<std::string,Mantids::Memory::Containers::B_MEM *> staticContentElements;
+    std::map<std::string,Mantids3::Memory::Containers::B_MEM *> staticContentElements;
     std::list<char *> memToBeFreed;
 
     std::mutex mutexInternalContent;
@@ -200,7 +200,7 @@ private:
     sWebServerCallBack extCallBackOnConnect, extCallBackOnInitFailed, extCallBackOnTimeOut;
     Application::Logs::RPCLog * rpcLog;
     ResourcesFilter * resourceFilter;
-    Mantids::Authentication::Domains * authenticator;
+    Mantids3::Authentication::Domains * authenticator;
     MethodsManager *methodManagers;
     SessionsManager sessionsManager;
     std::string redirectOn404;

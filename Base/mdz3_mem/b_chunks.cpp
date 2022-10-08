@@ -1,7 +1,7 @@
 ﻿#include "b_chunks.h"
 #include <string.h>
 
-using namespace Mantids::Memory::Containers;
+using namespace Mantids3::Memory::Containers;
 
 
 B_Chunks::B_Chunks()
@@ -442,7 +442,7 @@ bool B_Chunks::compare2(const void *buf, const uint64_t &len, bool caseSensitive
         {
             size_t currentChunkSize = dataToCompare>currentChunk.size?currentChunk.size:dataToCompare;
 
-            if (Mantids::Helpers::Mem::memicmp2(currentChunk.data, buf,currentChunkSize,caseSensitive)) return false; // does not match!
+            if (Mantids3::Helpers::Mem::memicmp2(currentChunk.data, buf,currentChunkSize,caseSensitive)) return false; // does not match!
 
             dataToCompare-=currentChunkSize;
             dataCompared+=currentChunkSize;

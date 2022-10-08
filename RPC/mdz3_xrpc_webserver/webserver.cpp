@@ -5,9 +5,9 @@
 
 #include <stdexcept>
 
-using namespace Mantids::RPC::Web;
-using namespace Mantids::RPC;
-using namespace Mantids;
+using namespace Mantids3::RPC::Web;
+using namespace Mantids3::RPC;
+using namespace Mantids3;
 
 WebServer::WebServer()
 {
@@ -139,7 +139,7 @@ void WebServer::setRedirectOn404(const std::string & newRedirectOn404)
     redirectOn404 = newRedirectOn404;
 }
 
-std::map<std::string, Mantids::Memory::Containers::B_MEM *> WebServer::getStaticContentElements()
+std::map<std::string, Mantids3::Memory::Containers::B_MEM *> WebServer::getStaticContentElements()
 {
     std::lock_guard<std::mutex> lck (mutexInternalContent);
     return staticContentElements;
@@ -182,7 +182,7 @@ void WebServer::addInternalContentElement(const std::string &path, const std::st
         char * xmem = (char *)malloc(content.size()+1);
         xmem[content.size()]=0;
         memcpy(xmem,content.c_str(),content.size());
-        staticContentElements[path] = new Mantids::Memory::Containers::B_MEM(xmem,content.size());
+        staticContentElements[path] = new Mantids3::Memory::Containers::B_MEM(xmem,content.size());
         memToBeFreed.push_back(xmem);
     }
 }
@@ -222,17 +222,17 @@ bool WebServer::getUsingCSRFToken() const
     return usingCSRFToken;
 }
 
-Mantids::RPC::Web::WebServer::sWebServerCallBack WebServer::getExtCallBackOnTimeOut() const
+Mantids3::RPC::Web::WebServer::sWebServerCallBack WebServer::getExtCallBackOnTimeOut() const
 {
     return extCallBackOnTimeOut;
 }
 
-Mantids::RPC::Web::WebServer::sWebServerCallBack WebServer::getExtCallBackOnInitFailed() const
+Mantids3::RPC::Web::WebServer::sWebServerCallBack WebServer::getExtCallBackOnInitFailed() const
 {
     return extCallBackOnInitFailed;
 }
 
-Mantids::RPC::Web::WebServer::sWebServerCallBack WebServer::getExtCallBackOnConnect() const
+Mantids3::RPC::Web::WebServer::sWebServerCallBack WebServer::getExtCallBackOnConnect() const
 {
     return extCallBackOnConnect;
 }
@@ -307,7 +307,7 @@ SessionsManager *WebServer::getSessionsManager()
     return &sessionsManager;
 }
 
-Mantids::Authentication::Domains *WebServer::getAuthenticator() const
+Mantids3::Authentication::Domains *WebServer::getAuthenticator() const
 {
     return authenticator;
 }
@@ -322,7 +322,7 @@ void WebServer::setMethodManagers(MethodsManager *value)
     methodManagers = value;
 }
 
-void WebServer::setAuthenticator(Mantids::Authentication::Domains *value)
+void WebServer::setAuthenticator(Mantids3::Authentication::Domains *value)
 {
     authenticator = value;
 }

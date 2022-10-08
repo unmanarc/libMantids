@@ -5,7 +5,7 @@
 #include <string>
 #include <map>
 
-namespace Mantids { namespace Authentication {
+namespace Mantids3 { namespace Authentication {
 
 class Session_Vars
 {

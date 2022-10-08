@@ -12,7 +12,7 @@
 
 #include "mapitem.h"
 
-namespace Mantids { namespace Threads { namespace Safe {
+namespace Mantids3 { namespace Threads { namespace Safe {
 
 template <class T>
 class Map

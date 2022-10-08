@@ -1,7 +1,7 @@
 #include "streams_bufferedreader.h"
 #include <string.h>
 
-using namespace Mantids::Network::Sockets;
+using namespace Mantids3::Network::Sockets;
 using namespace NetStreams;
 
 BufferedReader::BufferedReader(Socket_StreamBase *stream, const size_t &bufferSize)

@@ -3,7 +3,7 @@
 #include <random>
 
 using namespace std;
-using namespace Mantids::Helpers;
+using namespace Mantids3::Helpers;
 
 Random::Random()
 {

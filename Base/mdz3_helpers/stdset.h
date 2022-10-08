@@ -3,7 +3,7 @@
 
 #include <set>
 
-namespace Mantids { namespace Helpers {
+namespace Mantids3 { namespace Helpers {
 
 template <typename T>
 bool contains( const std::set<T>& haystack, const T& needle )

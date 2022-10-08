@@ -10,9 +10,9 @@
 #include <mdz3_mem/a_uint32.h>
 #include <mdz3_mem/a_var.h>
 
-using namespace Mantids::Authentication;
-using namespace Mantids::Memory;
-using namespace Mantids::Database;
+using namespace Mantids3::Authentication;
+using namespace Mantids3::Memory;
+using namespace Mantids3::Database;
 
 std::set<uint32_t> Manager_DB::passIndexesUsedByAccount(const std::string &sAccountName)
 {

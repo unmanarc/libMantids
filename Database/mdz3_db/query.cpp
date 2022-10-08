@@ -2,7 +2,7 @@
 #include "sqlconnector.h"
 #include <stdexcept>
 
-using namespace Mantids::Database;
+using namespace Mantids3::Database;
 
 Query::Query()
 {
@@ -49,7 +49,7 @@ bool Query::setPreparedSQLQuery(const std::string &value, const std::map<std::st
     return true;
 }
 
-bool Query::bindInputVars(const std::map<std::string, Mantids::Memory::Abstract::Var *> &vars)
+bool Query::bindInputVars(const std::map<std::string, Mantids3::Memory::Abstract::Var *> &vars)
 {
     if (vars.empty()) return true;
     if (bBindInputVars)
@@ -59,7 +59,7 @@ bool Query::bindInputVars(const std::map<std::string, Mantids::Memory::Abstract:
     return postBindInputVars();
 }
 
-bool Query::bindResultVars(const std::vector<Mantids::Memory::Abstract::Var *> &vars)
+bool Query::bindResultVars(const std::vector<Mantids3::Memory::Abstract::Var *> &vars)
 {
     if (vars.empty()) return true;
     if (bBindResultVars)

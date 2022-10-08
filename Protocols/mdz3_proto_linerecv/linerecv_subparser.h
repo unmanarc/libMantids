@@ -3,7 +3,7 @@
 
 #include <mdz3_mem/subparser.h>
 
-namespace Mantids { namespace Protocols { namespace Line2Line {
+namespace Mantids3 { namespace Protocols { namespace Line2Line {
 
 class LineRecv_SubParser : public Memory::Streams::SubParser
 {

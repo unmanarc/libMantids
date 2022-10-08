@@ -1,7 +1,7 @@
 #include "fullauth.h"
 #include <regex>
-using namespace Mantids::RPC::Templates;
-using namespace Mantids;
+using namespace Mantids3::RPC::Templates;
+using namespace Mantids3;
 
 std::string FullAuth::dirAppName;
 
@@ -126,16 +126,16 @@ json FullAuth::accountAdd(void *obj, Authentication::Manager *auth, Authenticati
     }
 
     // Create Expired SSHA256 password (require change)
-    Mantids::Authentication::Secret newSecretData = Mantids::Authentication::createNewSecret(JSON_ASSTRING(payload,"secretTempPass",""),Mantids::Authentication::FN_SSHA256,true);
+    Mantids3::Authentication::Secret newSecretData = Mantids3::Authentication::createNewSecret(JSON_ASSTRING(payload,"secretTempPass",""),Mantids3::Authentication::FN_SSHA256,true);
 
-    Mantids::Authentication::sAccountDetails accountDetails;
+    Mantids3::Authentication::sAccountDetails accountDetails;
     accountDetails.sDescription = JSON_ASSTRING(payload,"description","");
     accountDetails.sEmail = JSON_ASSTRING(payload,"mail","");
     accountDetails.sExtraData = JSON_ASSTRING(payload,"extraData","");
     accountDetails.sGivenName = JSON_ASSTRING(payload,"givenName","");
     accountDetails.sLastName = JSON_ASSTRING(payload,"lastName","");
 
-    Mantids::Authentication::sAccountAttribs accountAttribs;
+    Mantids3::Authentication::sAccountAttribs accountAttribs;
     accountAttribs.confirmed  = JSON_ASBOOL(payload,"isConfirmed",false);
     accountAttribs.enabled  = JSON_ASBOOL(payload,"isEnabled",false);
     accountAttribs.superuser  = JSON_ASBOOL(payload,"isSuperuser",false);
@@ -164,30 +164,30 @@ json FullAuth::accountExist(void *obj, Authentication::Manager *auth, Authentica
     return payloadOut;
 }
 
-json FullAuth::accountChangeSecret(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountChangeSecret(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
-    Mantids::Authentication::Secret secretData;
+    Mantids3::Authentication::Secret secretData;
     secretData.fromMap(jsonToMap(payload["secretData"]));
     payloadOut["retCode"] = auth->accountChangeSecret(JSON_ASSTRING(payload,"accountName",""),  secretData, JSON_ASUINT(payload,"passIndex",0));
     return payloadOut;
 }
 
-json FullAuth::accountRemove(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountRemove(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->accountRemove(JSON_ASSTRING(payload,"accountName",""));
     return payloadOut;
 }
 
-json FullAuth::accountDisable(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountDisable(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->accountDisable(JSON_ASSTRING(payload,"accountName",""), JSON_ASBOOL(payload,"disabled",false));
     return payloadOut;
 }
 
-json FullAuth::accountConfirm(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountConfirm(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->accountDisable(JSON_ASSTRING(payload,"accountName",""), JSON_ASBOOL(payload,"disabled",false));
@@ -197,7 +197,7 @@ json FullAuth::accountConfirm(void *, Mantids::Authentication::Manager *auth,Man
 json FullAuth::accountChangeBasicInfo(void *obj, Authentication::Manager *auth, Authentication::Session *session, const json &payload)
 {
     json payloadOut;
-    Mantids::Authentication::sAccountAttribs attribs;
+    Mantids3::Authentication::sAccountAttribs attribs;
 
     attribs.enabled = JSON_ASBOOL(payload,"isEnabled",false);
     attribs.confirmed = JSON_ASBOOL(payload,"isConfirmed",false);
@@ -214,7 +214,7 @@ json FullAuth::accountChangeBasicInfo(void *obj, Authentication::Manager *auth, 
 
 }
 
-json FullAuth::accountChangeDescription(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountChangeDescription(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->accountChangeDescription(JSON_ASSTRING(payload,"accountName",""), JSON_ASSTRING(payload,"description",""));
@@ -235,21 +235,21 @@ json FullAuth::accountChangeLastName(void *obj, Authentication::Manager *auth, A
     return payloadOut;
 }
 
-json FullAuth::accountChangeEmail(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountChangeEmail(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->accountChangeEmail(JSON_ASSTRING(payload,"accountName",""), JSON_ASSTRING(payload,"email",""));
     return payloadOut;
 }
 
-json FullAuth::accountChangeExtraData(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountChangeExtraData(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->accountChangeExtraData(JSON_ASSTRING(payload,"accountName",""), JSON_ASSTRING(payload,"extraData",""));
     return payloadOut;
 }
 
-json FullAuth::accountChangeExpiration(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountChangeExpiration(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->accountChangeExpiration(JSON_ASSTRING(payload,"accountName",""), JSON_ASUINT64(payload,"expiration",0));
@@ -276,28 +276,28 @@ json FullAuth::accountChangeGroupSet(void *obj, Authentication::Manager *auth, A
     return payloadOut;
 }
 
-json FullAuth::isAccountDisabled(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::isAccountDisabled(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["disabled"] = auth->isAccountDisabled(JSON_ASSTRING(payload,"accountName",""));
     return payloadOut;
 }
 
-json FullAuth::isAccountConfirmed(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::isAccountConfirmed(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["confirmed"] = auth->isAccountConfirmed(JSON_ASSTRING(payload,"accountName",""));
     return payloadOut;
 }
 
-json FullAuth::isAccountSuperUser(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::isAccountSuperUser(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["superuser"] = auth->isAccountSuperUser(JSON_ASSTRING(payload,"accountName",""));
     return payloadOut;
 }
 
-json FullAuth::accountDescription(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountDescription(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["description"] = auth->accountDescription(JSON_ASSTRING(payload,"accountName",""));
@@ -438,42 +438,42 @@ json FullAuth::resetBadAttempts(void *obj, Authentication::Manager *auth, Authen
     return payloadOut;
 }
 
-json FullAuth::accountEmail(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountEmail(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["email"] = auth->accountEmail(JSON_ASSTRING(payload,"accountName",""));
     return payloadOut;
 }
 
-json FullAuth::accountExtraData(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountExtraData(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["extraData"] = auth->accountExtraData(JSON_ASSTRING(payload,"accountName",""));
     return payloadOut;
 }
 
-json FullAuth::accountExpirationDate(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountExpirationDate(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["expirationDate"] = Json::Int64(auth->accountExpirationDate(JSON_ASSTRING(payload,"accountName","")));
     return payloadOut;
 }
 
-json FullAuth::isAccountExpired(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::isAccountExpired(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["isAccountExpired"] = auth->isAccountExpired(JSON_ASSTRING(payload,"accountName",""));
     return payloadOut;
 }
 
-json FullAuth::accountValidateAttribute(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountValidateAttribute(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["isAccountExpired"] = auth->accountValidateAttribute(JSON_ASSTRING(payload,"accountName",""),  {JSON_ASSTRING(payload,"appName",""),JSON_ASSTRING(payload,"attribName","")});
     return payloadOut;
 }
 
-json FullAuth::accountsList(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountsList(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["accountsList"] = stringListToValue(auth->accountsList());
@@ -504,7 +504,7 @@ json FullAuth::accountsBasicInfoSearch(void *obj, Authentication::Manager *auth,
     return x;
 }
 
-json FullAuth::accountGroups(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountGroups(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
 
@@ -512,7 +512,7 @@ json FullAuth::accountGroups(void *, Mantids::Authentication::Manager *auth,Mant
     return payloadOut;
 }
 
-json FullAuth::accountDirectAttribs(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountDirectAttribs(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
 
@@ -520,7 +520,7 @@ json FullAuth::accountDirectAttribs(void *, Mantids::Authentication::Manager *au
     return payloadOut;
 }
 
-json FullAuth::accountUsableAttribs(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::accountUsableAttribs(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
 
@@ -709,7 +709,7 @@ json FullAuth::applicationsBasicInfoSearch(void *obj, Authentication::Manager *a
     return x;
 }
 
-json FullAuth::attribAdd(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::attribAdd(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
 
@@ -727,7 +727,7 @@ json FullAuth::attribAdd(void *, Mantids::Authentication::Manager *auth,Mantids:
     return payloadOut;
 }
 
-json FullAuth::attribRemove(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::attribRemove(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
 
@@ -744,35 +744,35 @@ json FullAuth::attribRemove(void *, Mantids::Authentication::Manager *auth,Manti
     return payloadOut;
 }
 
-json FullAuth::attribGroupAdd(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::attribGroupAdd(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->attribGroupAdd( {JSON_ASSTRING(payload,"appName",""),JSON_ASSTRING(payload,"attribName","")},JSON_ASSTRING(payload,"groupName",""));
     return payloadOut;
 }
 
-json FullAuth::attribGroupRemove(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::attribGroupRemove(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->attribGroupRemove( {JSON_ASSTRING(payload,"appName",""),JSON_ASSTRING(payload,"attribName","")},JSON_ASSTRING(payload,"groupName",""));
     return payloadOut;
 }
 
-json FullAuth::attribAccountAdd(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::attribAccountAdd(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->attribAccountAdd( {JSON_ASSTRING(payload,"appName",""),JSON_ASSTRING(payload,"attribName","")},JSON_ASSTRING(payload,"accountName",""));
     return payloadOut;
 }
 
-json FullAuth::attribAccountRemove(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::attribAccountRemove(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->attribAccountRemove( {JSON_ASSTRING(payload,"appName",""),JSON_ASSTRING(payload,"attribName","")},JSON_ASSTRING(payload,"accountName",""));
     return payloadOut;
 }
 
-json FullAuth::attribChangeDescription(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::attribChangeDescription(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
 
@@ -789,21 +789,21 @@ json FullAuth::attribChangeDescription(void *, Mantids::Authentication::Manager 
     return payloadOut;
 }
 
-json FullAuth::attribsList(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::attribsList(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["attribsList"] = attribListToValue(auth->attribsList(JSON_ASSTRING(payload,"appName","")),auth);
     return payloadOut;
 }
 
-json FullAuth::attribGroups(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::attribGroups(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["attribGroups"] = stringListToValue(auth->attribGroups( {JSON_ASSTRING(payload,"appName",""),JSON_ASSTRING(payload,"attribName","")}));
     return payloadOut;
 }
 
-json FullAuth::attribAccounts(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::attribAccounts(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["attribAccounts"] = stringListToValue(auth->attribAccounts( {JSON_ASSTRING(payload,"appName",""),JSON_ASSTRING(payload,"attribName","")}));
@@ -839,77 +839,77 @@ json FullAuth::attribsLeftListForGroup(void *obj, Authentication::Manager *auth,
     return payloadOut;
 }
 
-json FullAuth::groupAdd(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::groupAdd(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->groupAdd(JSON_ASSTRING(payload,"groupName",""), JSON_ASSTRING(payload,"groupDescription",""));
     return payloadOut;
 }
 
-json FullAuth::groupRemove(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::groupRemove(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->groupRemove(JSON_ASSTRING(payload,"groupName",""));
     return payloadOut;
 }
 
-json FullAuth::groupExist(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::groupExist(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->groupExist(JSON_ASSTRING(payload,"groupName",""));
     return payloadOut;
 }
 
-json FullAuth::groupAccountAdd(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::groupAccountAdd(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->groupAccountAdd(JSON_ASSTRING(payload,"groupName",""),JSON_ASSTRING(payload,"accountName",""));
     return payloadOut;
 }
 
-json FullAuth::groupAccountRemove(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::groupAccountRemove(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->groupAccountRemove(JSON_ASSTRING(payload,"groupName",""),JSON_ASSTRING(payload,"accountName",""));
     return payloadOut;
 }
 
-json FullAuth::groupChangeDescription(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::groupChangeDescription(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->groupChangeDescription(JSON_ASSTRING(payload,"groupName",""),JSON_ASSTRING(payload,"groupDescription",""));
     return payloadOut;
 }
 
-json FullAuth::groupValidateAttribute(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::groupValidateAttribute(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["retCode"] = auth->groupValidateAttribute(JSON_ASSTRING(payload,"groupName",""), {JSON_ASSTRING(payload,"appName",""),JSON_ASSTRING(payload,"attribName","")});
     return payloadOut;
 }
 
-json FullAuth::groupDescription(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::groupDescription(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["description"] = auth->groupDescription(JSON_ASSTRING(payload,"groupName",""));
     return payloadOut;
 }
 
-json FullAuth::groupsList(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::groupsList(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["groupsList"] = stringListToValue(auth->groupsList());
     return payloadOut;
 }
 
-json FullAuth::groupAttribs(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::groupAttribs(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["groupAttribs"] = attribListToValue(auth->groupAttribs(JSON_ASSTRING(payload,"groupName","")),auth);
     return payloadOut;
 }
 
-json FullAuth::groupAccounts(void *, Mantids::Authentication::Manager *auth,Mantids::Authentication::Session *session, const json &payload)
+json FullAuth::groupAccounts(void *, Mantids3::Authentication::Manager *auth,Mantids3::Authentication::Session *session, const json &payload)
 {
     json payloadOut;
     payloadOut["groupAccounts"] = stringListToValue(auth->groupAccounts(JSON_ASSTRING(payload,"groupName","")));
@@ -982,7 +982,7 @@ json FullAuth::groupBasicInfo(void *obj, Authentication::Manager *auth, Authenti
         // Take the unused application attribs for this group:
 
         x=0;
-        for (const Mantids::Authentication::sApplicationAttrib & attrib : auth->attribsList(attrib.appName))
+        for (const Mantids3::Authentication::sApplicationAttrib & attrib : auth->attribsList(attrib.appName))
         {
             if (directAttribs.find(attrib)==directAttribs.end())
             {

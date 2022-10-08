@@ -8,7 +8,7 @@
 #include "common_urlvar_subparser.h"
 #include "mdz3_mem/streamableobject.h"
 
-namespace Mantids { namespace Protocols { namespace HTTP { namespace Common {
+namespace Mantids3 { namespace Protocols { namespace HTTP { namespace Common {
 
 
 class URLVars : public Memory::Abstract::Vars, public Memory::Streams::Parser

@@ -6,7 +6,7 @@
 
 #include <atomic>
 
-namespace Mantids { namespace RPC {
+namespace Mantids3 { namespace RPC {
 
 class RPCClientImpl
 {
@@ -55,14 +55,14 @@ protected:
      * @param sockRPCClient TLS Socket
      * @return if false, the connection will not continue
      */
-    virtual bool postConnect(Mantids::Network::Sockets::Socket_TLS * sockRPCClient) { return  true; }
+    virtual bool postConnect(Mantids3::Network::Sockets::Socket_TLS * sockRPCClient) { return  true; }
 
     virtual std::string decryptStr(const std::string & src) { return src; };
     virtual std::string encryptStr(const std::string & src) { return src; };
 
     std::string getClientConfigCmd,updateClientConfigLoadTimeCmd;
 
-    Mantids::RPC::Fast::FastRPC fastRPC;
+    Mantids3::RPC::Fast::FastRPC fastRPC;
     json jRetrievedConfig;
     std::atomic<bool> failedToRetrieveC2Config;
 

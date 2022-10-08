@@ -2,7 +2,7 @@
 #define AUTH_REASONS_H
 
 
-namespace Mantids { namespace Authentication {
+namespace Mantids3 { namespace Authentication {
 
 
 

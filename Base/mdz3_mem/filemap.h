@@ -8,7 +8,7 @@
 #include <windows.h>
 #endif
 
-namespace Mantids { namespace Memory { namespace Containers {
+namespace Mantids3 { namespace Memory { namespace Containers {
 
 class FileMap
 {

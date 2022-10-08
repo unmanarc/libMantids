@@ -8,7 +8,7 @@
 #include <mutex>
 #include <string>
 
-namespace Mantids { namespace Database {
+namespace Mantids3 { namespace Database {
 
 class Query
 {

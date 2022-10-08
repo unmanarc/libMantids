@@ -4,7 +4,7 @@
 #include <mdz3_db/query.h>
 #include <sqlite3.h>
 
-namespace Mantids { namespace Database {
+namespace Mantids3 { namespace Database {
 
 class Query_SQLite3 : public Query
 {

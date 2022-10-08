@@ -15,7 +15,7 @@
 #define ETH_ALEN 6
 
 
-namespace Mantids { namespace Memory { namespace Abstract {
+namespace Mantids3 { namespace Memory { namespace Abstract {
 
 class MACADDR: public Var
 {

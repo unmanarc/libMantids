@@ -18,7 +18,7 @@
 #include <string>
 #include <atomic>
 
-namespace Mantids { namespace Network { namespace Sockets {
+namespace Mantids3 { namespace Network { namespace Sockets {
 
 /**
  * Socket base class

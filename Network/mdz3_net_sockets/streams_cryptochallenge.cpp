@@ -2,10 +2,10 @@
 #include <mdz3_helpers/random.h>
 #include <mdz3_helpers/crypto.h>
 
-using namespace Mantids;
-using namespace Mantids::Network::Sockets::NetStreams;
+using namespace Mantids3;
+using namespace Mantids3::Network::Sockets::NetStreams;
 
-CryptoChallenge::CryptoChallenge(Mantids::Network::Sockets::Socket_StreamBase *socket)
+CryptoChallenge::CryptoChallenge(Mantids3::Network::Sockets::Socket_StreamBase *socket)
 {
     this->socket = socket;
 }

@@ -4,7 +4,7 @@
 #ifndef _WIN32
 #include "socket_streambase.h"
 
-namespace Mantids { namespace Network { namespace Sockets {
+namespace Mantids3 { namespace Network { namespace Sockets {
 
 
 /**

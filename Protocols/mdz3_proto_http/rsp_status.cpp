@@ -8,8 +8,8 @@
 using namespace std;
 using namespace boost;
 using namespace boost::algorithm;
-using namespace Mantids::Protocols::HTTP;
-using namespace Mantids;
+using namespace Mantids3::Protocols::HTTP;
+using namespace Mantids3;
 
 const sHTTP_StatusCode Status::responseRetCodes[] = {
     {100,"Continue"},

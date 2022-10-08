@@ -9,7 +9,7 @@
 #include "acceptor_thread.h"
 #include "socket_streambase.h"
 
-namespace Mantids { namespace Network { namespace Sockets { namespace Acceptors {
+namespace Mantids3 { namespace Network { namespace Sockets { namespace Acceptors {
 
 /**
  * @brief The MultiThreadedAcceptor class Accept streams on thread from a listening socket.

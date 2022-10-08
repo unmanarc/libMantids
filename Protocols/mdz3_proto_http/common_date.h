@@ -4,7 +4,7 @@
 #include <time.h>
 #include <string>
 
-namespace Mantids { namespace Protocols { namespace HTTP { namespace Common {
+namespace Mantids3 { namespace Protocols { namespace HTTP { namespace Common {
 
 class Date
 {

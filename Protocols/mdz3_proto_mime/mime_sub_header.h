@@ -11,7 +11,7 @@
  * TODO: Security: check if other servers can handle the MIME properly...
  */
 
-namespace Mantids { namespace Protocols { namespace MIME {
+namespace Mantids3 { namespace Protocols { namespace MIME {
 // ??
 /**
  * @brief The HeaderOption struct

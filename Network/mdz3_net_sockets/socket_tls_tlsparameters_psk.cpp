@@ -2,7 +2,7 @@
 #include <stdexcept>
 
 using namespace std;
-using namespace Mantids::Network::Sockets;
+using namespace Mantids3::Network::Sockets;
 
 std::map<void *,Socket_TLS::TLSKeyParameters::PSKClientValue *> Socket_TLS::TLSKeyParameters::PSKStaticHdlr::cliPSKBySSLH;
 std::map<void *,Socket_TLS::TLSKeyParameters::PSKServerWallet *> Socket_TLS::TLSKeyParameters::PSKStaticHdlr::svrPSKBySSLH;

@@ -54,7 +54,7 @@ struct sAppPIPE {
 };
 #endif
 
-Mantids::Helpers::AppExec::sAppExecResult Mantids::Helpers::AppExec::blexec(const sAppExecCmd &cmd)
+Mantids3::Helpers::AppExec::sAppExecResult Mantids3::Helpers::AppExec::blexec(const sAppExecCmd &cmd)
 {
     sAppExecResult rt;
 
@@ -148,7 +148,7 @@ Mantids::Helpers::AppExec::sAppExecResult Mantids::Helpers::AppExec::blexec(cons
 
 #ifndef _WIN32
 
-Mantids::Helpers::AppSpawn::AppSpawn()
+Mantids3::Helpers::AppSpawn::AppSpawn()
 {
     attrp = nullptr;
     file_actionsp = &file_actions;
@@ -158,7 +158,7 @@ Mantids::Helpers::AppSpawn::AppSpawn()
 
 }
 
-bool Mantids::Helpers::AppSpawn::setExec(const std::string &path)
+bool Mantids3::Helpers::AppSpawn::setExec(const std::string &path)
 {
     if (
         #ifndef _WIN32
@@ -174,28 +174,28 @@ bool Mantids::Helpers::AppSpawn::setExec(const std::string &path)
     return false;
 }
 
-bool Mantids::Helpers::AppSpawn::addOpenFDToFile(const std::string &outFile, int fd)
+bool Mantids3::Helpers::AppSpawn::addOpenFDToFile(const std::string &outFile, int fd)
 {
     return posix_spawn_file_actions_addopen (file_actionsp, fd, outFile.c_str(),
                                              O_WRONLY | O_CREAT | O_TRUNC, 0644)==0;
 }
 
-bool Mantids::Helpers::AppSpawn::redirectStdErrToStdOut()
+bool Mantids3::Helpers::AppSpawn::redirectStdErrToStdOut()
 {
     return posix_spawn_file_actions_adddup2 (file_actionsp, STDOUT_FILENO, STDERR_FILENO)==0;
 }
 
-void Mantids::Helpers::AppSpawn::addArgument(const std::string &arg)
+void Mantids3::Helpers::AppSpawn::addArgument(const std::string &arg)
 {
     arguments.push_back(arg);
 }
 
-void Mantids::Helpers::AppSpawn::addEnvironment(const std::string &env)
+void Mantids3::Helpers::AppSpawn::addEnvironment(const std::string &env)
 {
     environment.push_back(env);
 }
 
-bool Mantids::Helpers::AppSpawn::spawnProcess(bool pipeStdout, bool pipeStderr)
+bool Mantids3::Helpers::AppSpawn::spawnProcess(bool pipeStdout, bool pipeStderr)
 {
     // Create the argv...
     char ** argv = (char **)malloc( (arguments.size()+2)*sizeof(char *) );
@@ -282,7 +282,7 @@ bool Mantids::Helpers::AppSpawn::spawnProcess(bool pipeStdout, bool pipeStderr)
     return s==0;
 }
 
-void Mantids::Helpers::AppSpawn::waitUntilProcessEnds()
+void Mantids3::Helpers::AppSpawn::waitUntilProcessEnds()
 {
     int s,status;
     do
@@ -296,7 +296,7 @@ void Mantids::Helpers::AppSpawn::waitUntilProcessEnds()
     } while (!WIFEXITED(status) && !WIFSIGNALED(status));
 }
 
-std::set<int> Mantids::Helpers::AppSpawn::pollResponse()
+std::set<int> Mantids3::Helpers::AppSpawn::pollResponse()
 {
     std::set<int> r;
     if (  poll(&plist[0],plist.size(),-1)>0 )
@@ -315,7 +315,7 @@ std::set<int> Mantids::Helpers::AppSpawn::pollResponse()
     return r;
 }
 
-ssize_t Mantids::Helpers::AppSpawn::read(int fd, void *buf, size_t count)
+ssize_t Mantids3::Helpers::AppSpawn::read(int fd, void *buf, size_t count)
 {
     if (fd == STDOUT_FILENO)
         return ::read(piStdOut[0], buf, count);

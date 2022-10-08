@@ -6,7 +6,7 @@
 #include <sqlite3.h>
 #include <mutex>
 
-namespace Mantids { namespace Database {
+namespace Mantids3 { namespace Database {
 
 class SQLConnector_SQLite3 : public SQLConnector
 {

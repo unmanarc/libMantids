@@ -3,8 +3,8 @@
 
 #include <thread>
 
-using namespace Mantids::Network::Sockets;
-using namespace Mantids::Authentication;
+using namespace Mantids3::Network::Sockets;
+using namespace Mantids3::Authentication;
 
 LoginRPCClient::LoginRPCClient()
 {

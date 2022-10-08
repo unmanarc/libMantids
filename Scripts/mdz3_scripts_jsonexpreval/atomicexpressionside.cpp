@@ -2,7 +2,7 @@
 #include <boost/algorithm/string.hpp>
 #include <iostream>
 
-using namespace Mantids::Scripts::Expressions;
+using namespace Mantids3::Scripts::Expressions;
 
 using namespace std;
 
@@ -102,7 +102,7 @@ void AtomicExpressionSide::setRegexp(boost::regex *value)
     regexp = value;
 }
 
-Mantids::Scripts::Expressions::AtomicExpressionSide::eExpressionSideMode AtomicExpressionSide::getMode() const
+Mantids3::Scripts::Expressions::AtomicExpressionSide::eExpressionSideMode AtomicExpressionSide::getMode() const
 {
     return mode;
 }

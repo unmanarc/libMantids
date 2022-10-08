@@ -7,7 +7,7 @@
 // TODO: timeout callback
 
 
-using namespace Mantids::Network::Multiplexor;
+using namespace Mantids3::Network::Multiplexor;
 using Ms = std::chrono::milliseconds;
 
 LineID Socket_Multiplexer::connect(const json &connectionParams, void * multiplexedSocketLocalObject, unsigned int milliseconds)
@@ -24,7 +24,7 @@ LineID Socket_Multiplexer::connect(const json &connectionParams, void * multiple
                 && multiplexedSocket->writeU<uint8_t>(DataStructs::MPLX_LINE_CONNECT)
                 && sendOnMultiplexedSocket_LineID(localLineId)
                 && multiplexedSocket->writeU<uint32_t>(sock->getLocalWindowSize())
-                && multiplexedSocket->writeStringEx<uint32_t>( Mantids::Helpers::jsonToString(connectionParams))
+                && multiplexedSocket->writeStringEx<uint32_t>( Mantids3::Helpers::jsonToString(connectionParams))
                 )
         {
             mtLock_multiplexedSocket.unlock();

@@ -6,7 +6,7 @@
 #include <limits>
 #include <string>
 
-namespace Mantids { namespace Helpers {
+namespace Mantids3 { namespace Helpers {
 
 #define MAX_SIZE_T std::numeric_limits<std::size_t>::max()
 

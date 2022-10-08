@@ -1,6 +1,6 @@
 #include "socket_chain_protocolbase.h"
 
-using namespace Mantids::Network;
+using namespace Mantids3::Network;
 using namespace Sockets::ChainProtocols;
 
 Socket_Chain_ProtocolBase::Socket_Chain_ProtocolBase()

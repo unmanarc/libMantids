@@ -14,8 +14,8 @@
 #include <mdz3_threads/lock_shared.h>
 
 using namespace std;
-using namespace Mantids::Application::Arguments;
-using namespace Mantids::Memory::Abstract;
+using namespace Mantids3::Application::Arguments;
+using namespace Mantids3::Memory::Abstract;
 
 
 GlobalArguments::GlobalArguments()

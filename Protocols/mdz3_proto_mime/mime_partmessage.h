@@ -6,7 +6,7 @@
 
 #include <mdz3_mem/streamableobject.h>
 
-namespace Mantids { namespace Protocols { namespace MIME {
+namespace Mantids3 { namespace Protocols { namespace MIME {
 
 class MIME_PartMessage
 {

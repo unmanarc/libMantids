@@ -1,7 +1,7 @@
 #include "json.h"
 
 
-std::string Mantids::Helpers::jsonToString(const json &value)
+std::string Mantids3::Helpers::jsonToString(const json &value)
 {
     Json::StreamWriterBuilder builder;
     builder.settings_["indentation"] = "";
@@ -14,28 +14,28 @@ std::string Mantids::Helpers::jsonToString(const json &value)
     return xstrValue;
 }
 
-Mantids::Helpers::JSONReader2::JSONReader2()
+Mantids3::Helpers::JSONReader2::JSONReader2()
 {
     Json::CharReaderBuilder builder;
     reader = builder.newCharReader();
 }
 
-Mantids::Helpers::JSONReader2::~JSONReader2()
+Mantids3::Helpers::JSONReader2::~JSONReader2()
 {
     delete reader;
 }
 
-bool Mantids::Helpers::JSONReader2::parse(const std::string &document, Json::Value &root)
+bool Mantids3::Helpers::JSONReader2::parse(const std::string &document, Json::Value &root)
 {
     return reader->parse(document.c_str(),document.c_str()+document.size(),&root,&errors);
 }
 
-std::string Mantids::Helpers::JSONReader2::getFormattedErrorMessages()
+std::string Mantids3::Helpers::JSONReader2::getFormattedErrorMessages()
 {
     return errors;
 }
 
-std::list<std::string> Mantids::Helpers::jsonToStringList(const json &value, const std::string &sub)
+std::list<std::string> Mantids3::Helpers::jsonToStringList(const json &value, const std::string &sub)
 {
     std::list<std::string> r;
 

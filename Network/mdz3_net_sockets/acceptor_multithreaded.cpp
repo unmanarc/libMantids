@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdexcept>
 
-using namespace Mantids::Network::Sockets::Acceptors;
+using namespace Mantids3::Network::Sockets::Acceptors;
 using Ms = std::chrono::milliseconds;
 
 

@@ -12,7 +12,7 @@
 #include "acceptor_multithreaded.h"
 #include <mdz3_helpers/mem.h>
 
-using namespace Mantids::Network::Sockets::Acceptors;
+using namespace Mantids3::Network::Sockets::Acceptors;
 
 SAThread::SAThread()
 {

@@ -3,7 +3,7 @@
 
 #include <list>
 
-namespace Mantids { namespace Helpers {
+namespace Mantids3 { namespace Helpers {
 
 template <typename T>
 bool contains( const std::list<T>& haystack, const T& needle )

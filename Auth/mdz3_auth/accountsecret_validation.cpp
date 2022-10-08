@@ -3,7 +3,7 @@
 #include <mdz3_helpers/encoders.h>
 #include <mdz3_helpers/crypto.h>
 
-using namespace Mantids::Authentication;
+using namespace Mantids3::Authentication;
 
 
 

@@ -5,7 +5,7 @@
 #include <atomic>
 #include <mutex>
 
-namespace Mantids { namespace Network { namespace Sockets { namespace NetStreams {
+namespace Mantids3 { namespace Network { namespace Sockets { namespace NetStreams {
 
 class Bridge_Thread
 {

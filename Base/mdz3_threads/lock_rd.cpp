@@ -1,6 +1,6 @@
 #include "lock_rd.h"
 
-using namespace Mantids::Threads::Sync;
+using namespace Mantids3::Threads::Sync;
 
 Lock_RD::Lock_RD(Mutex_Shared &mutex, bool dontlock)
 {

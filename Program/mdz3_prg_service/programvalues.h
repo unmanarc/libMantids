@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Mantids { namespace Application { namespace Values {
+namespace Mantids3 { namespace Application { namespace Values {
 
 class ProgramValues
 {

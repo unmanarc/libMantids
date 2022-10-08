@@ -3,9 +3,9 @@
 
 #include <string>
 
-namespace Mantids { namespace Memory { namespace Abstract {
+namespace Mantids3 { namespace Memory { namespace Abstract {
 
-#define ABSTRACT_PTR_AS(x,y) ((Mantids::Memory::Abstract::x *)y)
+#define ABSTRACT_PTR_AS(x,y) ((Mantids3::Memory::Abstract::x *)y)
 
 class Var
 {

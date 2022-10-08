@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <mdz3_helpers/mem.h>
 
-using namespace Mantids::Network::Multiplexor;
+using namespace Mantids3::Network::Multiplexor;
 
 Socket_Multiplexer::Socket_Multiplexer()
 {

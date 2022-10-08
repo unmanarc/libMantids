@@ -1,7 +1,7 @@
 #include "mime_sub_content.h"
 #include "mdz3_mem/subparser.h"
-using namespace Mantids::Protocols::MIME;
-using namespace Mantids;
+using namespace Mantids3::Protocols::MIME;
+using namespace Mantids3;
 
 #ifdef _WIN32
 #include <windows.h>

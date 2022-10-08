@@ -8,7 +8,7 @@
 #include <random>
 #include <mdz3_helpers/mem.h>
 
-namespace Mantids { namespace Network { namespace Sockets { namespace ChainProtocols {
+namespace Mantids3 { namespace Network { namespace Sockets { namespace ChainProtocols {
 
 
 /**
@@ -16,7 +16,7 @@ namespace Mantids { namespace Network { namespace Sockets { namespace ChainProto
  *        AES-PSK Stream Cipher using XOR.
  *        Suitable for security apps (Use with TLS).
  */
-class Socket_Chain_AES  : public Mantids::Network::Sockets::Socket_StreamBase, public Socket_Chain_ProtocolBase
+class Socket_Chain_AES  : public Mantids3::Network::Sockets::Socket_StreamBase, public Socket_Chain_ProtocolBase
 {
 public:
     Socket_Chain_AES();

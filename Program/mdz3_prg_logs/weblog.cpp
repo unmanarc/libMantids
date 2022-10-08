@@ -1,6 +1,6 @@
 #include "weblog.h"
 
-using namespace Mantids::Application::Logs;
+using namespace Mantids3::Application::Logs;
 
 WebLog::WebLog()
 {

@@ -1,6 +1,6 @@
 #include "mutex_shared.h"
 #include <stdexcept>
-using namespace Mantids::Threads::Sync;
+using namespace Mantids3::Threads::Sync;
 
 Mutex_Shared::Mutex_Shared()
 {

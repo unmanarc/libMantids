@@ -3,7 +3,7 @@
 
 #include "socket_chain_protocolbase.h"
 
-namespace Mantids { namespace Network { namespace Sockets { namespace ChainProtocols {
+namespace Mantids3 { namespace Network { namespace Sockets { namespace ChainProtocols {
 
 
 class Socket_Chain_EndPointBase : public Socket_Chain_ProtocolBase

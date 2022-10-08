@@ -3,7 +3,7 @@
 
 #include "streamableobject.h"
 
-namespace Mantids { namespace Memory { namespace Containers {
+namespace Mantids3 { namespace Memory { namespace Containers {
 
 class NullContainer : public Streams::StreamableObject
 {

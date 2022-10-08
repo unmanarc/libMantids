@@ -6,7 +6,7 @@
 #include <limits>
 #include <stdexcept>
 
-using namespace Mantids::Memory::Containers;
+using namespace Mantids3::Memory::Containers;
 
 B_Base::B_Base()
 {
@@ -642,7 +642,7 @@ bool B_Base::streamTo(Memory::Streams::StreamableObject *out, Streams::Streamabl
     }
 }
 
-Mantids::Memory::Streams::StreamableObject::Status B_Base::write(const void * buf, const size_t &count, Mantids::Memory::Streams::StreamableObject::Status & wrStatUpd)
+Mantids3::Memory::Streams::StreamableObject::Status B_Base::write(const void * buf, const size_t &count, Mantids3::Memory::Streams::StreamableObject::Status & wrStatUpd)
 {
     Memory::Streams::StreamableObject::Status ret;
     std::pair<bool,uint64_t> bytesAppended = append(buf,count);

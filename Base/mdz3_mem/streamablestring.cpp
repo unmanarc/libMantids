@@ -2,7 +2,7 @@
 #include <string.h>
 #include <vector>
 
-using namespace Mantids::Memory::Streams;
+using namespace Mantids3::Memory::Streams;
 
 StreamableString::StreamableString()
 {

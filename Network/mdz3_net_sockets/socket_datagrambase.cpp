@@ -1,6 +1,6 @@
 #include "socket_datagrambase.h"
 
-using namespace Mantids::Network::Sockets;
+using namespace Mantids3::Network::Sockets;
 
 
 Socket_DatagramBase::Socket_DatagramBase()

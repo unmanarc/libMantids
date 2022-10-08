@@ -11,8 +11,8 @@
 #include <string.h>
 #include <unistd.h>
 
-using namespace Mantids;
-using namespace Mantids::Network::Sockets;
+using namespace Mantids3;
+using namespace Mantids3::Network::Sockets;
 
 Socket_StreamBase::Socket_StreamBase()
 {

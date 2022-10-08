@@ -1,7 +1,7 @@
 #include "socket_multiplexer.h"
 #include <cstdint>
 
-using namespace Mantids::Network::Multiplexor;
+using namespace Mantids3::Network::Multiplexor;
 
 bool Socket_Multiplexer::processMultiplexedSocketCommand_Plugin_JSON16()
 {
@@ -84,7 +84,7 @@ bool Socket_Multiplexer::plugin_SendJson(const std::string &pluginId, const json
         if (lock) mtLock_multiplexedSocket.unlock();
         return false;
     }
-    if (!multiplexedSocket->writeStringEx<uint32_t>( Mantids::Helpers::jsonToString( jData )  ))
+    if (!multiplexedSocket->writeStringEx<uint32_t>( Mantids3::Helpers::jsonToString( jData )  ))
     {
         if (lock) mtLock_multiplexedSocket.unlock();
         return false;

@@ -5,7 +5,7 @@
 #include "filemap.h"
 #include "b_mem.h"
 
-namespace Mantids { namespace Memory { namespace Containers {
+namespace Mantids3 { namespace Memory { namespace Containers {
 
 class B_MMAP: public B_Base
 {

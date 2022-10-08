@@ -12,7 +12,7 @@
 //#include "validation_codes.h"
 #include "methodsattributes_map.h"
 
-namespace Mantids { namespace RPC {
+namespace Mantids3 { namespace RPC {
     
 
 
@@ -25,8 +25,8 @@ public:
         std::string domainName;
         void * rpcMethodsCaller;
         void * connectionSender;
-        Mantids::Authentication::Domains *authDomains;
-        Mantids::Authentication::Session *session;
+        Mantids3::Authentication::Domains *authDomains;
+        Mantids3::Authentication::Session *session;
         std::string methodName;
         json payload;
         uint64_t requestId;
@@ -55,7 +55,7 @@ public:
         /**
          * @brief Function pointer.
          */
-        json (*rpcMethod)(void * obj, Mantids::Authentication::Manager *, Mantids::Authentication::Session * session, const json & parameters);
+        json (*rpcMethod)(void * obj, Mantids3::Authentication::Manager *, Mantids3::Authentication::Session * session, const json & parameters);
         /**
          * @brief obj object to pass
          */
@@ -89,7 +89,7 @@ public:
      * @param payloadOut Response Payload (out)
      * @return 0 if succeed, -4 if method not found.
      */
-    int runRPCMethod(Mantids::Authentication::Domains *authDomain, const std::string &domainName, Mantids::Authentication::Session *auth, const std::string & methodName, const json & payload, json *payloadOut);
+    int runRPCMethod(Mantids3::Authentication::Domains *authDomain, const std::string &domainName, Mantids3::Authentication::Session *auth, const std::string & methodName, const json & payload, json *payloadOut);
     /**
      * @brief validateRPCMethodPerms Validate that RPC Method is authorized
      * @param auth Authentication Manager
@@ -99,12 +99,12 @@ public:
      * @param reasons Fancy Response
      * @return VALIDATION_OK/VALIDATION_METHODNOTFOUND/VALIDATION_NOTAUTHORIZED codes.
      */
-    eMethodValidationCodes validateRPCMethodPerms(Authentication::Manager *auth, Mantids::Authentication::Session *session, const std::string & methodName, const std::set<uint32_t> &extraTmpIndexes, json * reasons);
+    eMethodValidationCodes validateRPCMethodPerms(Authentication::Manager *auth, Mantids3::Authentication::Session *session, const std::string & methodName, const std::set<uint32_t> &extraTmpIndexes, json * reasons);
     /**
      * @brief getMethodsAttribs Use for method initialization only.
      * @return methods required attributes
      */
-    Mantids::Authentication::MethodsAttributes_Map * getMethodsAttribs();
+    Mantids3::Authentication::MethodsAttributes_Map * getMethodsAttribs();
 
     /**
      * @brief getMethodRequireFullAuth Get if a method requires full authentication
@@ -119,9 +119,9 @@ public:
     std::string getAppName() const;
 
 private:
-    std::set<Mantids::Authentication::sApplicationAttrib> getAppAttribs(const std::set<std::string> & reqAttribs);
+    std::set<Mantids3::Authentication::sApplicationAttrib> getAppAttribs(const std::set<std::string> & reqAttribs);
 
-    json toValue(const std::set<Mantids::Authentication::sApplicationAttrib> &t);
+    json toValue(const std::set<Mantids3::Authentication::sApplicationAttrib> &t);
 
     // TODO: move to some helper
     json toValue(const std::set<std::string> &t);
@@ -136,7 +136,7 @@ private:
     std::map<std::string,bool> methodRequireFullAuth;
 
     std::string appName;
-    Mantids::Authentication::MethodsAttributes_Map methodsAttribs;
+    Mantids3::Authentication::MethodsAttributes_Map methodsAttribs;
 
     // lock for methods manipulation...
     Threads::Sync::Mutex_Shared smutexMethods;

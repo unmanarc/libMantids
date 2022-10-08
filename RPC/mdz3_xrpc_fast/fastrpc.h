@@ -9,7 +9,7 @@
 #include <mdz3_net_sockets/socket_streambase.h>
 #include <mdz3_threads/map.h>
 
-namespace Mantids { namespace RPC { namespace Fast {
+namespace Mantids3 { namespace RPC { namespace Fast {
 
 struct sFastRPCOnConnectedMethod
 {
@@ -41,7 +41,7 @@ struct sFastRPCParameters
     uint64_t requestId;
 };
 
-class FastRPC_Connection : public Mantids::Threads::Safe::MapItem
+class FastRPC_Connection : public Mantids3::Threads::Safe::MapItem
 {
 public:
     FastRPC_Connection()
@@ -51,7 +51,7 @@ public:
         terminated = false;
     }
     // Socket
-    Mantids::Network::Sockets::Socket_StreamBase * stream;
+    Mantids3::Network::Sockets::Socket_StreamBase * stream;
     Threads::Sync::Mutex * mtSocket;
     std::string key;
 
@@ -127,7 +127,7 @@ public:
      * @param callbackOnConnectedMethod On connect Method to be executed in background (new thread) when connection is accepted/processed.
      * @return 0 if remotely shutted down, or negative if connection error happened.
      */
-    int processConnection(Mantids::Network::Sockets::Socket_StreamBase * stream, const std::string & key, const sFastRPCOnConnectedMethod & callbackOnConnectedMethod = {nullptr,nullptr}, const float & keyDistFactor=1.0 );
+    int processConnection(Mantids3::Network::Sockets::Socket_StreamBase * stream, const std::string & key, const sFastRPCOnConnectedMethod & callbackOnConnectedMethod = {nullptr,nullptr}, const float & keyDistFactor=1.0 );
 
     /**
      * @brief setTimeout Timeout in milliseconds to desist to put the execution task into the threadpool
@@ -210,16 +210,16 @@ private:
     static void sendRPCAnswer(sFastRPCParameters * parameters, const std::string & answer, uint8_t execution);
 
     int processAnswer(FastRPC_Connection *connection);
-    int processQuery(Mantids::Network::Sockets::Socket_StreamBase * stream, const std::string &key, const float &priority, Threads::Sync::Mutex_Shared * mtDone, Threads::Sync::Mutex * mtSocket);
+    int processQuery(Mantids3::Network::Sockets::Socket_StreamBase * stream, const std::string &key, const float &priority, Threads::Sync::Mutex_Shared * mtDone, Threads::Sync::Mutex * mtSocket);
 
-    Mantids::Threads::Safe::Map<std::string> connectionsByKeyId;
+    Mantids3::Threads::Safe::Map<std::string> connectionsByKeyId;
 
     std::atomic<uint32_t> queuePushTimeoutInMS,maxMessageSize, remoteExecutionTimeoutInMS, remoteExecutionDisconnectedTries;
     // Methods:
     // method name -> method.
     std::map<std::string,sFastRPCMethod> methods;
     Threads::Sync::Mutex_Shared smutexMethods;
-    Mantids::Threads::Pool::ThreadPool * threadPool;
+    Mantids3::Threads::Pool::ThreadPool * threadPool;
 
     std::thread pinger;
 

@@ -21,7 +21,7 @@
 #include <mdz3_helpers/encoders.h>
 
 using namespace std;
-using namespace Mantids::Application::Logs;
+using namespace Mantids3::Application::Logs;
 
 AppLog::AppLog(unsigned int _logMode) : LogBase(_logMode)
 {

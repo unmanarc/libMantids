@@ -3,7 +3,7 @@
 
 #include <mutex>
 
-namespace Mantids { namespace Threads { namespace Sync {
+namespace Mantids3 { namespace Threads { namespace Sync {
 
 typedef std::mutex Mutex;
 #define Lock_Mutex(x) std::lock_guard(x)

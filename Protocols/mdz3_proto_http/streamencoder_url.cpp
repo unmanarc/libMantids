@@ -6,8 +6,8 @@
 #include <mdz3_mem/b_mem.h>
 #include <mdz3_mem/b_chunks.h>
 
-using namespace Mantids::Memory::Streams;
-using namespace Mantids::Memory::Streams::Encoders;
+using namespace Mantids3::Memory::Streams;
+using namespace Mantids3::Memory::Streams::Encoders;
 
 URL::URL(Memory::Streams::StreamableObject * orig)
 {
@@ -90,7 +90,7 @@ uint64_t URL::getFinalBytesWritten() const
 
 std::string URL::encodeURLStr(const std::string &url)
 {
-    Mantids::Memory::Containers::B_MEM uriDecoded( url.c_str(), url.size() );
+    Mantids3::Memory::Containers::B_MEM uriDecoded( url.c_str(), url.size() );
     Memory::Containers::B_Chunks uriEncoded;
 
     // Encode URI...

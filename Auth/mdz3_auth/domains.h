@@ -4,7 +4,7 @@
 #include <mdz3_threads/map.h>
 #include "manager.h"
 
-namespace Mantids { namespace Authentication {
+namespace Mantids3 { namespace Authentication {
 
 class Domains
 {

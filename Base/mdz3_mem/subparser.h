@@ -13,7 +13,7 @@
 #endif
 
 
-namespace Mantids { namespace Memory { namespace Streams {
+namespace Mantids3 { namespace Memory { namespace Streams {
 
 
 class SubParser
@@ -95,7 +95,7 @@ protected:
      * @param bc container with the data to be analyzed.
      * @return bytes matching the policy.
      */
-    virtual size_t ParseValidator(Mantids::Memory::Containers::B_Base & bc);
+    virtual size_t ParseValidator(Mantids3::Memory::Containers::B_Base & bc);
     /**
      * @brief Set Parse Mode
      * @param value parse mode (delimiter, size, or validator)
@@ -115,7 +115,7 @@ protected:
      * @brief Get Parsed Data Pointer
      * @return parsed data pointer.
      */
-    Mantids::Memory::Containers::B_Base * getParsedBuffer();
+    Mantids3::Memory::Containers::B_Base * getParsedBuffer();
     /**
      * @brief Set Parse Data Target Size in bytes
      * @param value Target Size in bytes
@@ -144,10 +144,10 @@ private:
     std::pair<bool,uint64_t> parseDirectDelimiter(const void * buf, size_t count);
 
     uint64_t getLastBytesInCommon(const std::string &boundary);
-    Mantids::Memory::Containers::B_Ref referenceLastBytes(const size_t &bytes);
+    Mantids3::Memory::Containers::B_Ref referenceLastBytes(const size_t &bytes);
 
-    Mantids::Memory::Containers::B_Ref parsedBuffer;
-    Mantids::Memory::Containers::B_Chunks unparsedBuffer;
+    Mantids3::Memory::Containers::B_Ref parsedBuffer;
+    Mantids3::Memory::Containers::B_Chunks unparsedBuffer;
     std::string parseDelimiter;
 
     std::string delimiterFound;

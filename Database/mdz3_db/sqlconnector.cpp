@@ -2,7 +2,7 @@
 #include <memory>
 #include <unistd.h>
 
-using namespace Mantids::Database;
+using namespace Mantids3::Database;
 
 SQLConnector::SQLConnector()
 {
@@ -121,7 +121,7 @@ bool SQLConnector::query(const std::string &preparedQuery, const std::map<std::s
     return i->getResultsOK();
 }
 
-std::shared_ptr<SQLConnector::QueryInstance> SQLConnector::qSelect(const std::string &preparedQuery, const std::map<std::string, Mantids::Memory::Abstract::Var *> &inputVars, const std::vector<Mantids::Memory::Abstract::Var *> &resultVars)
+std::shared_ptr<SQLConnector::QueryInstance> SQLConnector::qSelect(const std::string &preparedQuery, const std::map<std::string, Mantids3::Memory::Abstract::Var *> &inputVars, const std::vector<Mantids3::Memory::Abstract::Var *> &resultVars)
 {
     std::shared_ptr<SQLConnector::QueryInstance> q = createQuerySharedPTR();
 
@@ -170,7 +170,7 @@ bool SQLConnector::attachQuery(Query *query)
     return true;
 }
 
-bool Mantids::Database::SQLConnector::connect(const std::string &host, const uint16_t &port, const Mantids::Database::AuthData &auth, const std::string &dbName)
+bool Mantids3::Database::SQLConnector::connect(const std::string &host, const uint16_t &port, const Mantids3::Database::AuthData &auth, const std::string &dbName)
 {
     this->host = host;
     this->port = port;

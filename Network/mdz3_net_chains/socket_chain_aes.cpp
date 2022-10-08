@@ -13,7 +13,7 @@
 
 #include <mdz3_helpers/mem.h>
 
-using namespace Mantids::Network::Sockets::ChainProtocols;
+using namespace Mantids3::Network::Sockets::ChainProtocols;
 
 using namespace std;
 

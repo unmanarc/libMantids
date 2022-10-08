@@ -6,7 +6,7 @@
 #include "b_chunks.h"
 #include "streamableobject.h"
 
-namespace Mantids { namespace Memory { namespace Streams {
+namespace Mantids3 { namespace Memory { namespace Streams {
 
 
 /**

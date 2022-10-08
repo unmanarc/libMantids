@@ -8,8 +8,8 @@
 using namespace std;
 using namespace boost;
 using namespace boost::algorithm;
-using namespace Mantids::Protocols::HTTP::Headers;
-using namespace Mantids;
+using namespace Mantids3::Protocols::HTTP::Headers;
+using namespace Mantids3;
 
 Cookie::Cookie()
 {

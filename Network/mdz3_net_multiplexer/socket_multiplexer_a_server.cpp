@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <thread>
 
-using namespace Mantids::Network::Multiplexor;
+using namespace Mantids3::Network::Multiplexor;
 
 bool Socket_Multiplexer::multiplexedSocket_sendLineConnectionAnswer(const DataStructs::sLineID &lineId, const DataStructs::eLineAcceptAnswerMSG &msg, const uint32_t &localLineWindow)
 {
@@ -36,7 +36,7 @@ bool Socket_Multiplexer::multiplexedSocket_sendLineConnectionAnswer(const DataSt
     {
         return false;
     }
-    if (!multiplexedSocket->writeStringEx<uint32_t>(  Mantids::Helpers::jsonToString(answerValue)
+    if (!multiplexedSocket->writeStringEx<uint32_t>(  Mantids3::Helpers::jsonToString(answerValue)
                                                     ,JSON_MAX_DATA))
     {
         return false;

@@ -4,7 +4,7 @@
 #include "mdz3_mem/streamableobject.h"
 #include <mdz3_mem/subparser.h>
 
-namespace Mantids { namespace Protocols { namespace MIME {
+namespace Mantids3 { namespace Protocols { namespace MIME {
 
 
 class MIME_Sub_Content : public Memory::Streams::SubParser

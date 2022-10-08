@@ -4,7 +4,7 @@
 #include <string>
 #include <mdz3_mem/subparser.h>
 
-namespace Mantids { namespace Protocols { namespace MIME {
+namespace Mantids3 { namespace Protocols { namespace MIME {
 
 class MIME_Sub_FirstBoundary : public Memory::Streams::SubParser
 {

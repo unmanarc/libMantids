@@ -1,7 +1,7 @@
 #include "linerecv_subparser.h"
 
-using namespace Mantids::Protocols::Line2Line;
-using namespace Mantids;
+using namespace Mantids3::Protocols::Line2Line;
+using namespace Mantids3;
 
 LineRecv_SubParser::LineRecv_SubParser()
 {

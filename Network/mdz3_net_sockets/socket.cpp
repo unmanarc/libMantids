@@ -30,7 +30,7 @@
 
 #include <mdz3_helpers/mem.h>
 
-using namespace Mantids::Network::Sockets;
+using namespace Mantids3::Network::Sockets;
 
 #ifdef _WIN32
 // Init winsock when the program begins...

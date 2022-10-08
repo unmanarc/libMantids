@@ -11,7 +11,7 @@
 #include <string.h>
 
 
-using namespace Mantids::Memory::Abstract;
+using namespace Mantids3::Memory::Abstract;
 
 MACADDR::MACADDR()
 {

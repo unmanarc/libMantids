@@ -3,7 +3,7 @@
 
 #include <mdz3_mem/streamableobject.h>
 
-namespace Mantids { namespace Memory { namespace Streams { namespace Decoders {
+namespace Mantids3 { namespace Memory { namespace Streams { namespace Decoders {
 
 class URL : public Memory::Streams::StreamableObject
 {

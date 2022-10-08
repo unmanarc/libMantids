@@ -18,7 +18,7 @@ using namespace boost::algorithm;
 
 #endif
 
-using namespace Mantids::Helpers;
+using namespace Mantids3::Helpers;
 
 OS::OS()
 {

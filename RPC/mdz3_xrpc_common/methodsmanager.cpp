@@ -4,8 +4,8 @@
 
 #include <mdz3_threads/lock_shared.h>
 
-using namespace Mantids::RPC;
-using namespace Mantids;
+using namespace Mantids3::RPC;
+using namespace Mantids3;
 
 MethodsManager::MethodsManager(const std::string &appName)
 {
@@ -30,7 +30,7 @@ bool MethodsManager::addRPCMethod(const std::string &methodName, const std::set<
     return false;
 }
 
-int MethodsManager::runRPCMethod(Mantids::Authentication::Domains * authDomain, const std::string & domainName,Mantids::Authentication::Session * session, const std::string & methodName, const json & payload,  json *payloadOut)
+int MethodsManager::runRPCMethod(Mantids3::Authentication::Domains * authDomain, const std::string & domainName,Mantids3::Authentication::Session * session, const std::string & methodName, const json & payload,  json *payloadOut)
 {
     Threads::Sync::Lock_RD lock(smutexMethods);
 
@@ -38,7 +38,7 @@ int MethodsManager::runRPCMethod(Mantids::Authentication::Domains * authDomain, 
         return METHOD_RET_CODE_METHODNOTFOUND;
     else
     {
-        Mantids::Authentication::Manager * auth;
+        Mantids3::Authentication::Manager * auth;
         if ((auth=authDomain->openDomain(domainName))!=nullptr)
         {
             *payloadOut = methods[methodName].rpcMethod(methods[methodName].obj, auth, session,payload);
@@ -53,10 +53,10 @@ int MethodsManager::runRPCMethod(Mantids::Authentication::Domains * authDomain, 
     }
 }
 
-MethodsManager::eMethodValidationCodes MethodsManager::validateRPCMethodPerms(Mantids::Authentication::Manager * auth, Mantids::Authentication::Session *session, const std::string &methodName, const std::set<uint32_t> & extraTmpIndexes, json *reasons)
+MethodsManager::eMethodValidationCodes MethodsManager::validateRPCMethodPerms(Mantids3::Authentication::Manager * auth, Mantids3::Authentication::Session *session, const std::string &methodName, const std::set<uint32_t> & extraTmpIndexes, json *reasons)
 {
     std::set<uint32_t> passIndexesLeft;
-    std::set<Mantids::Authentication::sApplicationAttrib> attribsLeft;
+    std::set<Mantids3::Authentication::sApplicationAttrib> attribsLeft;
     Threads::Sync::Lock_RD lock(smutexMethods);
 
     // Check if the method exist at all:
@@ -66,7 +66,7 @@ MethodsManager::eMethodValidationCodes MethodsManager::validateRPCMethodPerms(Ma
     // If requires full authentication, check that the session report that is fully authenticated (all required ID's) and it's also a persistent session.
     if (methodRequireFullAuth[methodName])
     {
-        if (!session || !session->getIsFullyLoggedIn(Mantids::Authentication::Session::CHECK_DISALLOW_EXPIRED_PASSWORDS) || !session->getIsPersistentSession())
+        if (!session || !session->getIsFullyLoggedIn(Mantids3::Authentication::Session::CHECK_DISALLOW_EXPIRED_PASSWORDS) || !session->getIsPersistentSession())
             return VALIDATION_NOTAUTHORIZED;
     }
     // else: otherwise, the method will only be validated against authenticated attribs/indexes
@@ -86,7 +86,7 @@ MethodsManager::eMethodValidationCodes MethodsManager::validateRPCMethodPerms(Ma
 
 }
 
-Mantids::Authentication::MethodsAttributes_Map *MethodsManager::getMethodsAttribs()
+Mantids3::Authentication::MethodsAttributes_Map *MethodsManager::getMethodsAttribs()
 {
     return &methodsAttribs;
 }
@@ -97,9 +97,9 @@ bool MethodsManager::getMethodRequireFullAuth(const std::string &methodName)
     return methodRequireFullAuth[methodName];
 }
 
-std::set<Mantids::Authentication::sApplicationAttrib> MethodsManager::getAppAttribs(const std::set<std::string> &reqAttribs)
+std::set<Mantids3::Authentication::sApplicationAttrib> MethodsManager::getAppAttribs(const std::set<std::string> &reqAttribs)
 {
-    std::set<Mantids::Authentication::sApplicationAttrib> r;
+    std::set<Mantids3::Authentication::sApplicationAttrib> r;
     for (const auto &i : reqAttribs)
     {
         r.insert({appName,i});
@@ -107,7 +107,7 @@ std::set<Mantids::Authentication::sApplicationAttrib> MethodsManager::getAppAttr
     return r;
 }
 
-json MethodsManager::toValue(const std::set<Mantids::Authentication::sApplicationAttrib> &t)
+json MethodsManager::toValue(const std::set<Mantids3::Authentication::sApplicationAttrib> &t)
 {
     json x;
     int v=0;

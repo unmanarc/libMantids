@@ -14,7 +14,7 @@
 #include <mdz3_helpers/appexec.h>
 #endif
 
-namespace Mantids { namespace Network { namespace Interfaces {
+namespace Mantids3 { namespace Network { namespace Interfaces {
 
 // LICENSE WARNING: This class is licensed under GPLv2 (not LGPL) for NETIF_VIRTUAL_WIN interfaces.
 
@@ -103,8 +103,8 @@ public:
     NetIfType getNetIfType() const;
 
 #ifdef _WIN32
-    static Mantids::Helpers::AppExec::sAppExecCmd createRouteCMD( const std::vector<std::string> & routecmdopts );
-    static Mantids::Helpers::AppExec::sAppExecCmd createNetSHCMD( const std::vector<std::string> & netshcmdopts );
+    static Mantids3::Helpers::AppExec::sAppExecCmd createRouteCMD( const std::vector<std::string> & routecmdopts );
+    static Mantids3::Helpers::AppExec::sAppExecCmd createNetSHCMD( const std::vector<std::string> & netshcmdopts );
 #endif
 
 private:

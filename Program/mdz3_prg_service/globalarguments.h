@@ -9,7 +9,7 @@
 
 #include "programvalues.h"
 
-namespace Mantids { namespace Application { namespace Arguments {
+namespace Mantids3 { namespace Application { namespace Arguments {
 
 struct sProgCMDOpts {
     sProgCMDOpts()
@@ -17,17 +17,17 @@ struct sProgCMDOpts {
         defaultValueVar = nullptr;
         optChar = 0;
         mandatory = true;
-        varType = Mantids::Memory::Abstract::Var::TYPE_BOOL;
+        varType = Mantids3::Memory::Abstract::Var::TYPE_BOOL;
     }
 
     std::string defaultValue;
     std::string description;
     bool mandatory;
 
-    Mantids::Memory::Abstract::Var::Type varType;
+    Mantids3::Memory::Abstract::Var::Type varType;
 
-    Mantids::Memory::Abstract::Var * defaultValueVar;
-    std::list<Mantids::Memory::Abstract::Var *> parsedOption;
+    Mantids3::Memory::Abstract::Var * defaultValueVar;
+    std::list<Mantids3::Memory::Abstract::Var *> parsedOption;
 
     //
     std::string name;
@@ -63,13 +63,13 @@ public:
      * @param optionName Option Name (Full name)
      * @return option value (as an abstract, will match with defined varType in addCommandLineOption)
      */
-    Mantids::Memory::Abstract::Var * getCommandLineOptionValue(const std::string & optionName );
+    Mantids3::Memory::Abstract::Var * getCommandLineOptionValue(const std::string & optionName );
     /**
      * @brief getCommandLineOptionValues Get Command Line Option Values (As list of abstracts)
      * @param optionName Option Name (Full name)
      * @return option values list
      */
-    std::list<Mantids::Memory::Abstract::Var *> getCommandLineOptionValues(const std::string & optionName );
+    std::list<Mantids3::Memory::Abstract::Var *> getCommandLineOptionValues(const std::string & optionName );
 
     // Program variables.
     /**
@@ -78,13 +78,13 @@ public:
      * @param var Add Variable Pointer (abstract)
      * @return true if added, false if not
      */
-    bool addStaticVariable(const std::string & name, Mantids::Memory::Abstract::Var * var);
+    bool addStaticVariable(const std::string & name, Mantids3::Memory::Abstract::Var * var);
     /**
      * @brief getStaticVariable Get static variable
      * @param name Variable Name
      * @return nullptr if not found or pointer to Abstract Variable Pointer (will keep the same introduced pointer)
      */
-    Mantids::Memory::Abstract::Var * getStaticVariable(const std::string & name);
+    Mantids3::Memory::Abstract::Var * getStaticVariable(const std::string & name);
 
     // Print Help options
     /**
@@ -157,9 +157,9 @@ private:
 
     std::map<std::string,std::list<sProgCMDOpts *>> cmdOptions; // group->list of command options
     // TODO: multimap
-    std::map<std::string,Mantids::Memory::Abstract::Var *> variables; // variable name -> variable
+    std::map<std::string,Mantids3::Memory::Abstract::Var *> variables; // variable name -> variable
 
-    Mantids::Threads::Sync::Mutex_Shared mutex_vars;
+    Mantids3::Threads::Sync::Mutex_Shared mutex_vars;
 };
 
 }}}

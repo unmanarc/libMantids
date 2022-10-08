@@ -1,6 +1,6 @@
 #include "b_mem.h"
 
-using namespace Mantids::Memory::Containers;
+using namespace Mantids3::Memory::Containers;
 
 B_MEM::B_MEM(const void *buf, const uint32_t & len)
 {
@@ -199,6 +199,6 @@ bool B_MEM::compare2(const void *buf, const uint64_t &len, bool caseSensitive, c
     /////////////////////////////
 
     const char * memoryToBeCompared = linearMem + offset;
-    return !Mantids::Helpers::Mem::memicmp2(memoryToBeCompared, buf, len,caseSensitive);
+    return !Mantids3::Helpers::Mem::memicmp2(memoryToBeCompared, buf, len,caseSensitive);
 }
 

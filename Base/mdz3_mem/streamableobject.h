@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <limits>
 
-namespace Mantids { namespace Memory { namespace Streams {
+namespace Mantids3 { namespace Memory { namespace Streams {
 
 /**
  * StreamableObject base class

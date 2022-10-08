@@ -9,7 +9,7 @@
 #include <atomic>
 #include <thread>
 
-namespace Mantids { namespace Network { namespace Sockets { namespace NetStreams {
+namespace Mantids3 { namespace Network { namespace Sockets { namespace NetStreams {
 
 /**
  * @brief The Bridge class connect two pipe stream sockets.

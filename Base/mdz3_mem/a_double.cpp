@@ -2,7 +2,7 @@
 #include <stdexcept>      // std::invalid_argument
 #include <mdz3_threads/lock_shared.h>
 
-using namespace Mantids::Memory::Abstract;
+using namespace Mantids3::Memory::Abstract;
 
 DOUBLE::DOUBLE()
 {

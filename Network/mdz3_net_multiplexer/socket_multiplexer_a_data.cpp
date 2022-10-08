@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <sys/types.h>
 
-using namespace Mantids::Network::Multiplexor;
+using namespace Mantids3::Network::Multiplexor;
 
 bool Socket_Multiplexer::multiplexedSocket_sendLineData(const DataStructs::sLineID &lineId, void *data, const uint16_t &datalen)
 {

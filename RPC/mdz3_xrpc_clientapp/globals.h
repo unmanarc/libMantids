@@ -95,27 +95,27 @@ public:
 
     ///////////////////////////////////////
     // LOGS...
-    static Mantids::Application::Logs::AppLog *getAppLog();
-    static void setAppLog(Mantids::Application::Logs::AppLog *value);
+    static Mantids3::Application::Logs::AppLog *getAppLog();
+    static void setAppLog(Mantids3::Application::Logs::AppLog *value);
 
 
-    static Mantids::RPC::RPCClientImpl *getRpcImpl();
-    static void setRpcImpl(Mantids::RPC::RPCClientImpl *value);
+    static Mantids3::RPC::RPCClientImpl *getRpcImpl();
+    static void setRpcImpl(Mantids3::RPC::RPCClientImpl *value);
 
 
 
-    static Mantids::Helpers::Mem::xBinContainer *getMasterKey();
-    static void setMasterKey(Mantids::Helpers::Mem::xBinContainer *newMasterKey);
+    static Mantids3::Helpers::Mem::xBinContainer *getMasterKey();
+    static void setMasterKey(Mantids3::Helpers::Mem::xBinContainer *newMasterKey);
 
 protected:
     static boost::property_tree::ptree pLocalConfig;
 
 private:
-    static Mantids::Helpers::Mem::xBinContainer * masterKey;
+    static Mantids3::Helpers::Mem::xBinContainer * masterKey;
 
     // LOGS:
-    static Mantids::Application::Logs::AppLog * applog;
-    static Mantids::RPC::RPCClientImpl * rpcImpl;
+    static Mantids3::Application::Logs::AppLog * applog;
+    static Mantids3::RPC::RPCClientImpl * rpcImpl;
 };
 
 #endif // GLOBALS_H

@@ -4,13 +4,13 @@
 #include <mdz3_net_sockets/socket_streambase.h>
 #include "socket_chain_protocolbase.h"
 
-namespace Mantids { namespace Network { namespace Sockets { namespace ChainProtocols {
+namespace Mantids3 { namespace Network { namespace Sockets { namespace ChainProtocols {
 
 /**
  * @brief The SocketChainXOR class
  *        Proof of concept of socket transformation, don't use for security applications.
  */
-class Socket_Chain_XOR : public Mantids::Network::Sockets::Socket_StreamBase, public Socket_Chain_ProtocolBase
+class Socket_Chain_XOR : public Mantids3::Network::Sockets::Socket_StreamBase, public Socket_Chain_ProtocolBase
 {
 public:
     Socket_Chain_XOR();

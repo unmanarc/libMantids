@@ -9,7 +9,7 @@
 #include <set>
 #include <mutex>
 
-namespace Mantids { namespace Application { namespace Logs {
+namespace Mantids3 { namespace Application { namespace Logs {
 
 
 

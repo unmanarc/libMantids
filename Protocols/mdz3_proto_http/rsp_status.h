@@ -4,7 +4,7 @@
 #include <mdz3_mem/subparser.h>
 #include "common_version.h"
 
-namespace Mantids { namespace Protocols { namespace HTTP {
+namespace Mantids3 { namespace Protocols { namespace HTTP {
 
 struct sHTTP_StatusCode
 {

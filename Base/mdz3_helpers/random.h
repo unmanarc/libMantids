@@ -4,7 +4,7 @@
 #include <string>
 #include <random>
 
-namespace Mantids { namespace Helpers {
+namespace Mantids3 { namespace Helpers {
 
 class Random
 {

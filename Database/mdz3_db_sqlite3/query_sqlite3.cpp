@@ -5,7 +5,7 @@
 
 #include <stdexcept>
 
-using namespace Mantids::Database;
+using namespace Mantids3::Database;
 
 Query_SQLite3::Query_SQLite3()
 {

@@ -4,8 +4,8 @@
 
 #include <stdexcept>
 
-using namespace Mantids::RPC::Web;
-using namespace Mantids;
+using namespace Mantids3::RPC::Web;
+using namespace Mantids3;
 
 SessionsManager::SessionsManager()
 {
@@ -54,7 +54,7 @@ void SessionsManager::setSessionExpirationTime(const uint32_t &value)
     sessionExpirationTime = value;
 }
 
-std::string SessionsManager::createWebSession(Mantids::Authentication::Session *session)
+std::string SessionsManager::createWebSession(Mantids3::Authentication::Session *session)
 {
     auto userDomain = session->getUserDomainPair();
     {
@@ -71,7 +71,7 @@ std::string SessionsManager::createWebSession(Mantids::Authentication::Session *
         }
     }
 
-    std::string sessionId = Mantids::Helpers::Random::createRandomString(12) + ":" + Mantids::Helpers::Random::createRandomString(12);
+    std::string sessionId = Mantids3::Helpers::Random::createRandomString(12) + ":" + Mantids3::Helpers::Random::createRandomString(12);
     WebSession * webSession = new WebSession;
     session->setSessionId(sessionId);
     webSession->authSession = session;

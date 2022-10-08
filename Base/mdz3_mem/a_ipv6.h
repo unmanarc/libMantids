@@ -10,7 +10,7 @@
 #endif
 #include <mdz3_threads/mutex_shared.h>
 
-namespace Mantids { namespace Memory { namespace Abstract {
+namespace Mantids3 { namespace Memory { namespace Abstract {
 
 class IPV6: public Var
 {

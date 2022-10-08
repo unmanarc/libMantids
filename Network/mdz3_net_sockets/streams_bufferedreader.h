@@ -3,7 +3,7 @@
 
 #include "socket_streambase.h"
 
-namespace Mantids { namespace Network { namespace Sockets { namespace NetStreams {
+namespace Mantids3 { namespace Network { namespace Sockets { namespace NetStreams {
 
 
 class BufferedReader

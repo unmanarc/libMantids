@@ -6,7 +6,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 
 using namespace std;
-using namespace Mantids::Scripts::Expressions;
+using namespace Mantids3::Scripts::Expressions;
 
 AtomicExpression::AtomicExpression(std::vector<string> *staticTexts) : left(staticTexts), right(staticTexts)
 {

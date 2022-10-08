@@ -3,7 +3,7 @@
 #include <mdz3_threads/lock_shared.h>
 
 #include <stdexcept>      // std::invalid_argument
-using namespace Mantids::Memory::Abstract;
+using namespace Mantids3::Memory::Abstract;
 
 PTR::PTR()
 {

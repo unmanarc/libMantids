@@ -1,8 +1,8 @@
 #include "fastrpc.h"
 #include <mdz3_threads/lock_shared.h>
 
-using namespace Mantids::RPC::Fast;
-using namespace Mantids;
+using namespace Mantids3::RPC::Fast;
+using namespace Mantids3;
 using Ms = std::chrono::milliseconds;
 using S = std::chrono::seconds;
 
@@ -22,7 +22,7 @@ void fastRPCPingerThread( FastRPC * obj )
 
 FastRPC::FastRPC(uint32_t threadsCount, uint32_t taskQueues)
 {
-    threadPool = new Mantids::Threads::Pool::ThreadPool(threadsCount, taskQueues);
+    threadPool = new Mantids3::Threads::Pool::ThreadPool(threadsCount, taskQueues);
 
     finished = false;
 
@@ -163,7 +163,7 @@ int FastRPC::processAnswer(FastRPC_Connection * connection)
         {
             connection->executionStatus[requestId] = executionStatus;
 
-            Mantids::Helpers::JSONReader2 reader;
+            Mantids3::Helpers::JSONReader2 reader;
             bool parsingSuccessful = reader.parse( payloadBytes, connection->answers[requestId] );
             if (parsingSuccessful)
             {
@@ -218,7 +218,7 @@ int FastRPC::processQuery(Network::Sockets::Socket_StreamBase *stream, const std
 
     ////////////////////////////////////////////////////////////
     // Process / Inject task:
-    Mantids::Helpers::JSONReader2 reader;
+    Mantids3::Helpers::JSONReader2 reader;
     sFastRPCParameters * params = new sFastRPCParameters;
     params->requestId = requestId;
     params->methodName = methodName;

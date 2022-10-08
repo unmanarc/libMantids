@@ -9,8 +9,8 @@
 using namespace std;
 using namespace boost;
 using namespace boost::algorithm;
-using namespace Mantids::Protocols::HTTP::Request;
-using namespace Mantids;
+using namespace Mantids3::Protocols::HTTP::Request;
+using namespace Mantids3;
 
 Cookies_ClientSide::Cookies_ClientSide()
 {

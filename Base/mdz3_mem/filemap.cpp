@@ -24,7 +24,7 @@
 
 #include <mdz3_helpers/mem.h>
 
-using namespace Mantids::Memory::Containers;
+using namespace Mantids3::Memory::Containers;
 
 /**
  * @brief emptyMap Virtual Memory Space used for empty file maps..
@@ -170,7 +170,7 @@ std::string FileMap::getCurrentFileName() const
 
 bool FileMap::mmapDisplace(const uint64_t &offsetBytes)
 {
-    Mantids::Helpers::Mem::memmove64(mmapAddr, mmapAddr+offsetBytes, fileOpenSize-offsetBytes);
+    Mantids3::Helpers::Mem::memmove64(mmapAddr, mmapAddr+offsetBytes, fileOpenSize-offsetBytes);
     return mmapTruncate(fileOpenSize-offsetBytes);
 }
 
@@ -193,8 +193,8 @@ std::pair<bool, uint64_t> FileMap::mmapPrepend(const void *buf, const uint64_t &
     /////////////////////////////
     uint64_t curOpenSize = fileOpenSize;
     if (!mmapTruncate(fileOpenSize+count)) return std::make_pair(false,(uint64_t)0);
-    Mantids::Helpers::Mem::memmove64(mmapAddr,mmapAddr+count,curOpenSize);
-    Mantids::Helpers::Mem::memcpy64(mmapAddr,buf,count);
+    Mantids3::Helpers::Mem::memmove64(mmapAddr,mmapAddr+count,curOpenSize);
+    Mantids3::Helpers::Mem::memcpy64(mmapAddr,buf,count);
     return std::make_pair(true,count);
 }
 

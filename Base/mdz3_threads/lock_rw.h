@@ -3,7 +3,7 @@
 
 #include "mutex_shared.h"
 
-namespace Mantids { namespace Threads { namespace Sync {
+namespace Mantids3 { namespace Threads { namespace Sync {
 
 class Lock_RW
 {

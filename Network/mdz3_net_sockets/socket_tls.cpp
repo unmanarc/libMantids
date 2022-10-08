@@ -29,7 +29,7 @@
 #endif
 
 using namespace std;
-using namespace Mantids::Network::Sockets;
+using namespace Mantids3::Network::Sockets;
 
 Socket_TLS::Socket_TLS() : keys(&bIsServer)
 {
@@ -441,7 +441,7 @@ string Socket_TLS::getTLSConnectionProtocolVersion()
     return SSL_get_version(sslh);
 }
 
-Mantids::Network::Sockets::Socket_StreamBase * Socket_TLS::acceptConnection()
+Mantids3::Network::Sockets::Socket_StreamBase * Socket_TLS::acceptConnection()
 {
     char remotePair[INET6_ADDRSTRLEN];
 

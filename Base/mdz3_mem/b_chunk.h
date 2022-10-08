@@ -6,7 +6,7 @@
 
 #include <mdz3_helpers/mem.h>
 
-namespace Mantids { namespace Memory { namespace Containers {
+namespace Mantids3 { namespace Memory { namespace Containers {
 
 struct BinaryContainerChunk {
     /**

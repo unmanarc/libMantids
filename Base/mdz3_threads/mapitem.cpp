@@ -1,6 +1,6 @@
 #include "mapitem.h"
 
-using namespace Mantids::Threads::Safe;
+using namespace Mantids3::Threads::Safe;
 
 MapItem::MapItem()
 {

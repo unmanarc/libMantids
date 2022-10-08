@@ -8,8 +8,8 @@
 
 using namespace boost;
 using namespace boost::algorithm;
-using namespace Mantids::Protocols::MIME;
-using namespace Mantids;
+using namespace Mantids3::Protocols::MIME;
+using namespace Mantids3;
 using namespace std;
 
 MIME_Sub_Header::MIME_Sub_Header()
@@ -175,7 +175,7 @@ void MIME_Sub_Header::parseSubValues(MIME_HeaderOption * opt, const std::string 
     std::vector<std::string> vStaticTexts;
     std::string sVarValues = strName;
     // TODO: find a way to do this easier...
-    std::string secureReplace = Mantids::Helpers::Random::createRandomString(16);
+    std::string secureReplace = Mantids3::Helpers::Random::createRandomString(16);
     opt->setOrigValue(sVarValues);
 
     boost::trim(sVarValues);

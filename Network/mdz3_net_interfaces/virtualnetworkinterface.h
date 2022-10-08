@@ -10,7 +10,7 @@
 #include <windows.h>
 #endif
 
-namespace Mantids { namespace Network { namespace Interfaces {
+namespace Mantids3 { namespace Network { namespace Interfaces {
 
 // LICENSE WARNING: This class is licensed under GPLv2 (not LGPL) for WIN32 applications.
 

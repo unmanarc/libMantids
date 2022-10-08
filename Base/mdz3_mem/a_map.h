@@ -7,7 +7,7 @@
 #include <mdz3_threads/mutex_shared.h>
 
 // TODO: limits...
-namespace Mantids { namespace Memory { namespace Abstract {
+namespace Mantids3 { namespace Memory { namespace Abstract {
 
 class Map
 {
@@ -22,14 +22,14 @@ public:
      */
     void set(const std::string & varName, Map * vars);
 
-    void setFromString(const std::string & varName, Mantids::Memory::Abstract::Var::Type varType, const std::string & str);
+    void setFromString(const std::string & varName, Mantids3::Memory::Abstract::Var::Type varType, const std::string & str);
     /**
      * @brief set Set variable.
      *               The variable will be destroyed
      * @param varName variable name.
      * @param var variable value.
      */
-    void set(const std::string & varName, Mantids::Memory::Abstract::Var * var);
+    void set(const std::string & varName, Mantids3::Memory::Abstract::Var * var);
     /**
      * @brief getAsString Get variable as string.
      * @param varName variable name.
@@ -46,7 +46,7 @@ public:
      * @param varName variable name.
      * @return nullptr if not found,  Abstract if found.
      */
-    Mantids::Memory::Abstract::Var * get(const std::string & varName);
+    Mantids3::Memory::Abstract::Var * get(const std::string & varName);
 
     Map * getSubMap(const std::string & varName);
 
@@ -54,7 +54,7 @@ public:
     std::list<std::string> getVarListKeys();
 
 private:
-    std::map<std::string, Mantids::Memory::Abstract::Var *> vars;
+    std::map<std::string, Mantids3::Memory::Abstract::Var *> vars;
     std::map<std::string, Map *> varsSubMap;
 
     Threads::Sync::Mutex_Shared mutex;

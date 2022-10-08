@@ -15,7 +15,7 @@
 # define ntohll(x) (((uint64_t)ntohl((x) & 0xFFFFFFFF) << 32) | ntohl((x) >> 32))
 #endif
 
-using namespace Mantids::Network::Sockets;
+using namespace Mantids3::Network::Sockets;
 
 Socket_StreamBaseReader::Socket_StreamBaseReader()
 {

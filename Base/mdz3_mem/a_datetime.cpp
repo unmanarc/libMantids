@@ -10,7 +10,7 @@
 #include <windows.h>
 #endif
 
-using namespace Mantids::Memory::Abstract;
+using namespace Mantids3::Memory::Abstract;
 using namespace std;
 
 DATETIME::DATETIME()

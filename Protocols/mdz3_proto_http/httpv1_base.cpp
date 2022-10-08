@@ -1,7 +1,7 @@
 #include "httpv1_base.h"
 
-using namespace Mantids::Protocols::HTTP;
-using namespace Mantids;
+using namespace Mantids3::Protocols::HTTP;
+using namespace Mantids3;
 
 HTTPv1_Base::HTTPv1_Base(bool clientMode, Memory::Streams::StreamableObject *sobject) : Memory::Streams::Parser(sobject,clientMode)
 {
@@ -12,7 +12,7 @@ HTTPv1_Base::HTTPv1_Base(bool clientMode, Memory::Streams::StreamableObject *sob
     initSubParser(&serverResponse.status);
     initSubParser(&serverResponse.headers);
     initSubParser(&serverResponse.content);
-    setInternalProductVersion("Mantids::HTTP","(+https://github.com/unmanarc/libMantids)");
+    setInternalProductVersion("Mantids3::HTTP","(+https://github.com/unmanarc/libMantids)");
 }
 
 bool HTTPv1_Base::initProtocol()

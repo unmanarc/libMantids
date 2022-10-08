@@ -8,7 +8,7 @@
 #include <list>
 #include <mdz3_auth/session.h>
 
-namespace Mantids { namespace RPC { namespace Web {
+namespace Mantids3 { namespace RPC { namespace Web {
 
 class ResourcesFilter
 {
@@ -95,7 +95,7 @@ public:
     bool loadFile(const std::string & filePath);
     void addFilter(const sFilter & filter);
 
-    sFilterEvaluation evaluateAction(const std::string & uri, Mantids::Authentication::Session *hSession, Authentication::Manager *authorizer);
+    sFilterEvaluation evaluateAction(const std::string & uri, Mantids3::Authentication::Session *hSession, Authentication::Manager *authorizer);
 private:
 
     std::list<sFilter> filters;

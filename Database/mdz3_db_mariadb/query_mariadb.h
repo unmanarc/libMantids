@@ -5,7 +5,7 @@
 #include <mysql.h>
 #include <vector>
 
-namespace Mantids { namespace Database {
+namespace Mantids3 { namespace Database {
 
 class Query_MariaDB : public Query
 {

@@ -1,6 +1,6 @@
 #include "mime_partmessage.h"
 
-using namespace Mantids::Protocols::MIME;
+using namespace Mantids3::Protocols::MIME;
 
 
 MIME_PartMessage::MIME_PartMessage()

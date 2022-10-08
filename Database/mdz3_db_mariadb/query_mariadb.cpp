@@ -17,7 +17,7 @@
 typedef bool my_bool;
 #endif
 
-using namespace Mantids::Database;
+using namespace Mantids3::Database;
 
 Query_MariaDB::Query_MariaDB()
 {

@@ -3,7 +3,7 @@
 
 #include <map>
 
-namespace Mantids { namespace Helpers {
+namespace Mantids3 { namespace Helpers {
 
 template <typename Y,typename T>
 bool contains( const std::map<T,Y>& haystack, const T& needle )

@@ -20,13 +20,13 @@
 #define realpath(N,R) _fullpath((R),(N),_MAX_PATH)
 #endif
 
-using namespace Mantids::Application::Logs;
-using namespace Mantids::Protocols;
-using namespace Mantids::Protocols::HTTP;
-using namespace Mantids::Memory;
-using namespace Mantids::RPC::Web;
-using namespace Mantids::RPC;
-using namespace Mantids;
+using namespace Mantids3::Application::Logs;
+using namespace Mantids3::Protocols;
+using namespace Mantids3::Protocols::HTTP;
+using namespace Mantids3::Memory;
+using namespace Mantids3::RPC::Web;
+using namespace Mantids3::RPC;
+using namespace Mantids3;
 using namespace std;
 
 WebClientHandler::WebClientHandler(void *parent, Memory::Streams::StreamableObject *sock) : HTTPv1_Server(sock)
@@ -47,7 +47,7 @@ WebClientHandler::~WebClientHandler()
 {
 }
 
-void WebClientHandler::setAuthenticators(Mantids::Authentication::Domains *authenticator)
+void WebClientHandler::setAuthenticators(Mantids3::Authentication::Domains *authenticator)
 {
     authDomains = authenticator;
 }
@@ -237,7 +237,7 @@ Status::eRetCode WebClientHandler::procResource_HTMLIEngine( const std::string &
     if (boost::starts_with(sRealFullPath,"MEM:"))
     {
         // Mem-Static resource.
-        fileContent = ((Mantids::Memory::Containers::B_MEM *)getResponseDataStreamer())->toString();
+        fileContent = ((Mantids3::Memory::Containers::B_MEM *)getResponseDataStreamer())->toString();
         serverResponse.setDataStreamer(nullptr,false);
     }
     else
@@ -519,14 +519,14 @@ Status::eRetCode WebClientHandler::procJAPI_Session()
         // CHANGE MY ACCOUNT PASSWORD...
         else if (webSession && authSession && // exist a websession+authSession
                  webSession->bAuthTokenConfirmed && // The session is CSRF Confirmed/Obtained
-                 authSession->getIsFullyLoggedIn(Mantids::Authentication::Session::CHECK_ALLOW_EXPIRED_PASSWORDS) && // All required login passwords passed the authorization
+                 authSession->getIsFullyLoggedIn(Mantids3::Authentication::Session::CHECK_ALLOW_EXPIRED_PASSWORDS) && // All required login passwords passed the authorization
                  sMode == "CHPASSWD") // CHPASSWD command
             eHTTPResponseRetCode = procJAPI_Session_CHPASSWD(credentials);
         /////////////////////////////////////////////////////////////////
         // TEST MY ACCOUNT PASSWORD...
         else if (webSession && authSession && // exist a websession+authSession
                  webSession->bAuthTokenConfirmed && // The session is CSRF Confirmed/Obtained
-                 authSession->getIsFullyLoggedIn(Mantids::Authentication::Session::CHECK_ALLOW_EXPIRED_PASSWORDS) && // All required login passwords passed the authorization
+                 authSession->getIsFullyLoggedIn(Mantids3::Authentication::Session::CHECK_ALLOW_EXPIRED_PASSWORDS) && // All required login passwords passed the authorization
                  sMode == "TESTPASSWD") // TESTPASSWD command
             eHTTPResponseRetCode = procJAPI_Session_TESTPASSWD(credentials);
         /////////////////////////////////////////////////////////////////
@@ -534,7 +534,7 @@ Status::eRetCode WebClientHandler::procJAPI_Session()
         // GET MY ACCOUNT PASSWORD LIST/DESCRIPTION...
         else if (webSession && authSession && // exist a websession+authSession
                  webSession->bAuthTokenConfirmed && // The session is CSRF Confirmed/Obtained
-                 authSession->getIsFullyLoggedIn(Mantids::Authentication::Session::CHECK_ALLOW_EXPIRED_PASSWORDS) && // All required login passwords passed the authorization
+                 authSession->getIsFullyLoggedIn(Mantids3::Authentication::Session::CHECK_ALLOW_EXPIRED_PASSWORDS) && // All required login passwords passed the authorization
                  sMode == "PASSWDLIST") // PASSWDLIST command
             eHTTPResponseRetCode = procJAPI_Session_PASSWDLIST();
         /////////////////////////////////////////////////////////////////
@@ -609,7 +609,7 @@ Status::eRetCode WebClientHandler::procResource_File(MultiAuths *extraAuths)
 
         // If there is any session (hSession), then get the authorizer from the session
         // if not, the authorizer is null.
-        Mantids::Authentication::Manager * authorizer = authSession?authDomains->openDomain(authSession->getAuthDomain()) : nullptr;
+        Mantids3::Authentication::Manager * authorizer = authSession?authDomains->openDomain(authSession->getAuthDomain()) : nullptr;
 
         // if there is any resource filter, evaluate the sRealRelativePath with the action to be taken for that file
         // it will proccess this according to the authorization session
@@ -704,7 +704,7 @@ Status::eRetCode WebClientHandler::procJAPI_Session_CSRFTOKEN()
 
 Status::eRetCode WebClientHandler::procJAPI_Session_LOGIN(const Authentication & auth)
 {
-    Mantids::Authentication::Reason authReason;
+    Mantids3::Authentication::Reason authReason;
     uint64_t uMaxAge;
     Memory::Streams::StreamableJSON * jPayloadOutStr = new Memory::Streams::StreamableJSON;
     jPayloadOutStr->setFormatted(useFormattedJSONOutput);
@@ -784,7 +784,7 @@ Status::eRetCode WebClientHandler::procJAPI_Session_LOGIN(const Authentication &
 
 Status::eRetCode WebClientHandler::procJAPI_Session_POSTLOGIN(const Authentication &auth)
 {
-    Mantids::Authentication::Reason authReason;
+    Mantids3::Authentication::Reason authReason;
     Memory::Streams::StreamableJSON * jPayloadOutStr = new Memory::Streams::StreamableJSON;
     jPayloadOutStr->setFormatted(useFormattedJSONOutput);
     HTTP::Status::eRetCode eHTTPResponseRetCode = HTTP::Status::S_401_UNAUTHORIZED;
@@ -856,7 +856,7 @@ Status::eRetCode WebClientHandler::procJAPI_Exec(MultiAuths *extraAuths,
     HTTP::Status::eRetCode eHTTPResponseRetCode = HTTP::Status::S_404_NOT_FOUND;
 
     json jPayloadIn;
-    Mantids::Helpers::JSONReader2 reader;
+    Mantids3::Helpers::JSONReader2 reader;
 
     std::string  userName   = clientRequest.getVars(HTTP_VARS_POST)->getStringValue("user");
     std::string domainName  = clientRequest.getVars(HTTP_VARS_POST)->getStringValue("domain");
@@ -892,19 +892,19 @@ Status::eRetCode WebClientHandler::procJAPI_Exec(MultiAuths *extraAuths,
     std::set<uint32_t> extraTmpIndexes;
     for (const uint32_t & passIdx : extraAuths->getAuthenticationsIdxs())
     {
-        Mantids::Authentication::Reason authReason=temporaryAuthentication( userName,
+        Mantids3::Authentication::Reason authReason=temporaryAuthentication( userName,
                                                                             domainName,
                                                                             extraAuths->getAuthentication(passIdx) );
 
         // Include the pass idx in the Extra TMP Index.
-        if ( Mantids::Authentication::IS_PASSWORD_AUTHENTICATED( authReason ) )
+        if ( Mantids3::Authentication::IS_PASSWORD_AUTHENTICATED( authReason ) )
         {
-            log(LEVEL_INFO, "rpcServer", 2048, "Adding valid in-execution authentication factor {method=%s,idx=%d,reason=%s}", sMethodName.c_str(),passIdx,Mantids::Authentication::getReasonText(authReason));
+            log(LEVEL_INFO, "rpcServer", 2048, "Adding valid in-execution authentication factor {method=%s,idx=%d,reason=%s}", sMethodName.c_str(),passIdx,Mantids3::Authentication::getReasonText(authReason));
             extraTmpIndexes.insert(passIdx);
         }
         else
         {
-            log(LEVEL_WARN, "rpcServer", 2048, "Rejecting invalid in-execution authentication factor {method=%s,idx=%d,reason=%s}", sMethodName.c_str(),passIdx,Mantids::Authentication::getReasonText(authReason));
+            log(LEVEL_WARN, "rpcServer", 2048, "Rejecting invalid in-execution authentication factor {method=%s,idx=%d,reason=%s}", sMethodName.c_str(),passIdx,Mantids3::Authentication::getReasonText(authReason));
         }
     }
 
@@ -926,7 +926,7 @@ Status::eRetCode WebClientHandler::procJAPI_Exec(MultiAuths *extraAuths,
                 authSession->updateLastActivity();
 
             log(LEVEL_INFO, "rpcServer", 2048, "Executing Web Method {method=%s}", sMethodName.c_str());
-            log(LEVEL_DEBUG, "rpcServer", 8192, "Executing Web Method - debugging parameters {method=%s,params=%s}", sMethodName.c_str(),Mantids::Helpers::jsonToString(jPayloadIn).c_str());
+            log(LEVEL_DEBUG, "rpcServer", 8192, "Executing Web Method - debugging parameters {method=%s,params=%s}", sMethodName.c_str(),Mantids3::Helpers::jsonToString(jPayloadIn).c_str());
 
             auto start = chrono::high_resolution_clock::now();
             auto finish = chrono::high_resolution_clock::now();
@@ -934,21 +934,21 @@ Status::eRetCode WebClientHandler::procJAPI_Exec(MultiAuths *extraAuths,
 
             switch (methodsManager->runRPCMethod(authDomains,domainName, authSession, sMethodName, jPayloadIn, jPayloadOutStr->getValue()))
             {
-            case Mantids::RPC::MethodsManager::METHOD_RET_CODE_SUCCESS:
+            case Mantids3::RPC::MethodsManager::METHOD_RET_CODE_SUCCESS:
 
                 finish = chrono::high_resolution_clock::now();
                 elapsed = finish - start;
 
                 log(LEVEL_INFO, "rpcServer", 2048, "Web Method executed OK {method=%s, elapsedMS=%f}", sMethodName.c_str(),elapsed.count());
-                log(LEVEL_DEBUG, "rpcServer", 8192, "Web Method executed OK - debugging parameters {method=%s,params=%s}", sMethodName.c_str(),Mantids::Helpers::jsonToString(jPayloadOutStr->getValue()).c_str());
+                log(LEVEL_DEBUG, "rpcServer", 8192, "Web Method executed OK - debugging parameters {method=%s,params=%s}", sMethodName.c_str(),Mantids3::Helpers::jsonToString(jPayloadOutStr->getValue()).c_str());
 
                 eHTTPResponseRetCode = HTTP::Status::S_200_OK;
                 break;
-            case Mantids::RPC::MethodsManager::METHOD_RET_CODE_METHODNOTFOUND:
+            case Mantids3::RPC::MethodsManager::METHOD_RET_CODE_METHODNOTFOUND:
                 log(LEVEL_ERR, "rpcServer", 2048, "Web Method not found {method=%s}", sMethodName.c_str());
                 eHTTPResponseRetCode = HTTP::Status::S_404_NOT_FOUND;
                 break;
-            case Mantids::RPC::MethodsManager::METHOD_RET_CODE_INVALIDDOMAIN:
+            case Mantids3::RPC::MethodsManager::METHOD_RET_CODE_INVALIDDOMAIN:
                 // This code should never be executed... <
                 log(LEVEL_ERR, "rpcServer", 2048, "Domain not found during web method execution {method=%s}", sMethodName.c_str());
                 eHTTPResponseRetCode = HTTP::Status::S_404_NOT_FOUND;
@@ -963,7 +963,7 @@ Status::eRetCode WebClientHandler::procJAPI_Exec(MultiAuths *extraAuths,
         {
             // not enough permissions.
             (*(jPayloadOutStr->getValue()))["auth"]["reasons"] = reasons;
-            log(LEVEL_ERR, "rpcServer", 8192, "Not authorized to execute method {method=%s,reasons=%s}", sMethodName.c_str(),Mantids::Helpers::jsonToString(reasons).c_str());
+            log(LEVEL_ERR, "rpcServer", 8192, "Not authorized to execute method {method=%s,reasons=%s}", sMethodName.c_str(),Mantids3::Helpers::jsonToString(reasons).c_str());
             eHTTPResponseRetCode = HTTP::Status::S_401_UNAUTHORIZED;
         }break;
         case MethodsManager::VALIDATION_METHODNOTFOUND:
@@ -1021,7 +1021,7 @@ Status::eRetCode WebClientHandler::procJAPI_Session_CHPASSWD(const Authenticatio
     auto domainAuthenticator = authDomains->openDomain(authSession->getAuthDomain());
     if (domainAuthenticator)
     {
-        Mantids::Authentication::sClientDetails clientDetails;
+        Mantids3::Authentication::sClientDetails clientDetails;
         clientDetails.sIPAddr = userIP;
         clientDetails.sTLSCommonName = userTLSCommonName;
         clientDetails.sUserAgent = clientRequest.userAgent;
@@ -1032,7 +1032,7 @@ Status::eRetCode WebClientHandler::procJAPI_Session_CHPASSWD(const Authenticatio
         {
             // TODO: alternative/configurable password storage...
             // TODO: check password policy.
-            Mantids::Authentication::Secret newSecretData = Mantids::Authentication::createNewSecret(newAuth.getPassword(),Mantids::Authentication::FN_SSHA256);
+            Mantids3::Authentication::Secret newSecretData = Mantids3::Authentication::createNewSecret(newAuth.getPassword(),Mantids3::Authentication::FN_SSHA256);
 
             (*(jPayloadOutStr->getValue()))["ok"] = domainAuthenticator->accountChangeAuthenticatedSecret(appName,
                                                                                                           authSession->getAuthUser(),
@@ -1051,7 +1051,7 @@ Status::eRetCode WebClientHandler::procJAPI_Session_CHPASSWD(const Authenticatio
         }
         else
         {
-            log(LEVEL_ERR, "rpcServer", 2048, "Password change failed, bad incomming credentials {idx=%d,reason=%s}",credIdx,Mantids::Authentication::getReasonText(authReason));
+            log(LEVEL_ERR, "rpcServer", 2048, "Password change failed, bad incomming credentials {idx=%d,reason=%s}",credIdx,Mantids3::Authentication::getReasonText(authReason));
 
             // Mark to Destroy the session if the chpasswd is invalid...
             bDestroySession = true;
@@ -1084,7 +1084,7 @@ Status::eRetCode WebClientHandler::procJAPI_Session_TESTPASSWD(const Authenticat
     auto domainAuthenticator = authDomains->openDomain(authSession->getAuthDomain());
     if (domainAuthenticator)
     {
-        Mantids::Authentication::sClientDetails clientDetails;
+        Mantids3::Authentication::sClientDetails clientDetails;
         clientDetails.sIPAddr = userIP;
         clientDetails.sTLSCommonName = userTLSCommonName;
         clientDetails.sUserAgent = clientRequest.userAgent;
@@ -1098,7 +1098,7 @@ Status::eRetCode WebClientHandler::procJAPI_Session_TESTPASSWD(const Authenticat
         }
         else
         {
-            log(LEVEL_ERR, "rpcServer", 2048, "Password validation failed, bad incomming credentials {idx=%d,reason=%s}",auth.getPassIndex(),Mantids::Authentication::getReasonText(authReason));
+            log(LEVEL_ERR, "rpcServer", 2048, "Password validation failed, bad incomming credentials {idx=%d,reason=%s}",auth.getPassIndex(),Mantids3::Authentication::getReasonText(authReason));
 
             // Mark to destroy the session if the test password is invalid...
             bDestroySession = true;
@@ -1132,7 +1132,7 @@ Status::eRetCode WebClientHandler::procJAPI_Session_PASSWDLIST()
     auto domainAuthenticator = authDomains->openDomain(authSession->getAuthDomain());
     if (domainAuthenticator)
     {
-        std::map<uint32_t, Mantids::Authentication::Secret_PublicData> publics = domainAuthenticator->getAccountAllSecretsPublicData(authSession->getAuthUser());
+        std::map<uint32_t, Mantids3::Authentication::Secret_PublicData> publics = domainAuthenticator->getAccountAllSecretsPublicData(authSession->getAuthUser());
 
         uint32_t ix=0;
         for (const auto & i : publics)
@@ -1170,7 +1170,7 @@ void WebClientHandler::setUserIP(const std::string &value)
     userIP = value;
 }
 
-std::string WebClientHandler::persistentAuthentication(const string &userName, const string &domainName, const Authentication &authData, Mantids::Authentication::Session *lAuthSession, Mantids::Authentication::Reason * authReason)
+std::string WebClientHandler::persistentAuthentication(const string &userName, const string &domainName, const Authentication &authData, Mantids3::Authentication::Session *lAuthSession, Mantids3::Authentication::Reason * authReason)
 {
     json payload;
     std::string sessionId;
@@ -1179,33 +1179,33 @@ std::string WebClientHandler::persistentAuthentication(const string &userName, c
     // Don't allow other than 0 idx in the first auth. (Return empty session ID with internal error.)
     if (!lAuthSession && authData.getPassIndex()!=0)
     {
-        *authReason = Mantids::Authentication::REASON_INTERNAL_ERROR;
+        *authReason = Mantids3::Authentication::REASON_INTERNAL_ERROR;
         return sessionId;
     }
 
     // Next, if the requested domain is not valid,
-    *authReason = Mantids::Authentication::REASON_INVALID_DOMAIN;
+    *authReason = Mantids3::Authentication::REASON_INVALID_DOMAIN;
 
     auto domainAuthenticator = authDomains->openDomain(domainName);
     if (domainAuthenticator)
     {
 
-        Mantids::Authentication::sClientDetails clientDetails;
+        Mantids3::Authentication::sClientDetails clientDetails;
         clientDetails.sIPAddr = userIP;
         clientDetails.sTLSCommonName = userTLSCommonName;
         clientDetails.sUserAgent = clientRequest.userAgent;
 
-        *authReason = domainAuthenticator->authenticate(appName,clientDetails,userName,authData.getPassword(),authData.getPassIndex(), Mantids::Authentication::MODE_PLAIN,"",&stAccountPassIndexesUsedForLogin);
+        *authReason = domainAuthenticator->authenticate(appName,clientDetails,userName,authData.getPassword(),authData.getPassIndex(), Mantids3::Authentication::MODE_PLAIN,"",&stAccountPassIndexesUsedForLogin);
 
         authDomains->releaseDomain(domainName);
     }
 
-    if ( Mantids::Authentication::IS_PASSWORD_AUTHENTICATED( *authReason ) )
+    if ( Mantids3::Authentication::IS_PASSWORD_AUTHENTICATED( *authReason ) )
     {
         // If not exist an authenticated session, create a new one.
         if (!lAuthSession)
         {
-            lAuthSession = new Mantids::Authentication::Session(appName);
+            lAuthSession = new Mantids3::Authentication::Session(appName);
             lAuthSession->setIsPersistentSession(true);
             lAuthSession->registerPersistentAuthentication(userName,domainName,authData.getPassIndex(),*authReason);
 
@@ -1234,16 +1234,16 @@ std::string WebClientHandler::persistentAuthentication(const string &userName, c
     return sessionId;
 }
 
-Mantids::Authentication::Reason WebClientHandler::temporaryAuthentication( const std::string & userName, const std::string & domainName,const Authentication &authData)
+Mantids3::Authentication::Reason WebClientHandler::temporaryAuthentication( const std::string & userName, const std::string & domainName,const Authentication &authData)
 {
-    Mantids::Authentication::Reason eReason;
+    Mantids3::Authentication::Reason eReason;
 
     auto auth = authDomains->openDomain(domainName);
     if (!auth)
-        eReason = Mantids::Authentication::REASON_INVALID_DOMAIN;
+        eReason = Mantids3::Authentication::REASON_INVALID_DOMAIN;
     else
     {
-        Mantids::Authentication::sClientDetails clientDetails;
+        Mantids3::Authentication::sClientDetails clientDetails;
         clientDetails.sIPAddr = userIP;
         clientDetails.sTLSCommonName = userTLSCommonName;
         clientDetails.sUserAgent = clientRequest.userAgent;

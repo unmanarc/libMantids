@@ -9,7 +9,7 @@
 // TODO: reuse the connection?...
 // TODO: header: :scheme:https (begins with :)
 
-namespace Mantids { namespace Protocols { namespace HTTP {
+namespace Mantids3 { namespace Protocols { namespace HTTP {
 
 class HTTPv1_Client : public HTTPv1_Base
 {

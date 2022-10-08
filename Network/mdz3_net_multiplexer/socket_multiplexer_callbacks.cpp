@@ -1,6 +1,6 @@
 #include "socket_multiplexer_callbacks.h"
 
-using namespace Mantids::Network::Multiplexor;
+using namespace Mantids3::Network::Multiplexor;
 
 Socket_Multiplexer_Callbacks::Socket_Multiplexer_Callbacks()
 {

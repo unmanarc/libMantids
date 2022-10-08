@@ -10,7 +10,7 @@
 //# include <postgresql/libpq-fe.h>
 //#endif
 
-namespace Mantids { namespace Database {
+namespace Mantids3 { namespace Database {
 
 class SQLConnector_PostgreSQL : public SQLConnector
 {

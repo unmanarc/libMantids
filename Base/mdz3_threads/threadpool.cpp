@@ -3,7 +3,7 @@
 #include <mdz3_helpers/random.h>
 #include <iostream>
 
-using namespace Mantids::Threads::Pool;
+using namespace Mantids3::Threads::Pool;
 
 
 ThreadPool::ThreadPool(uint32_t threadsCount, uint32_t taskQueues)
@@ -125,7 +125,7 @@ ThreadPool::TasksQueue *ThreadPool::getRandomTaskQueueWithElements()
     for (size_t i=0; i<queues.size(); ++i) fullVector.push_back(i);
     std::uniform_int_distribution<size_t> dis;
     mutexRandom.lock();
-    Mantids::Helpers::Random::safe_random_shuffle(fullVector.begin(), fullVector.end(),static_cast<size_t>(dis(lRand)));
+    Mantids3::Helpers::Random::safe_random_shuffle(fullVector.begin(), fullVector.end(),static_cast<size_t>(dis(lRand)));
     mutexRandom.unlock();
 
     // Iterate full Vector...
@@ -152,7 +152,7 @@ size_t ThreadPool::getRandomQueueByKey(const std::string &key, const float &prio
 
     // Randomize the full vector using the hash of key
     for (size_t i=0; i<queues.size(); ++i) fullVector.push_back(i);
-    Mantids::Helpers::Random::safe_random_shuffle(fullVector.begin(), fullVector.end(), hash_fn(key));
+    Mantids3::Helpers::Random::safe_random_shuffle(fullVector.begin(), fullVector.end(), hash_fn(key));
 
     // Copy the first n-elements (based on priority)
     for (size_t i=0;i<elements;i++) reducedVector.push_back(fullVector[i]);

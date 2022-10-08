@@ -12,7 +12,7 @@
 #include <openssl/err.h>
 #include <openssl/ssl.h>
 
-namespace Mantids { namespace Network { namespace Sockets {
+namespace Mantids3 { namespace Network { namespace Sockets {
 
 /**
  * TCP Socket Class

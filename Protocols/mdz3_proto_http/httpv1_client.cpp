@@ -8,8 +8,8 @@
 
 using namespace boost;
 using namespace boost::algorithm;
-using namespace Mantids::Protocols::HTTP;
-using namespace Mantids;
+using namespace Mantids3::Protocols::HTTP;
+using namespace Mantids3;
 
 HTTPv1_Client::HTTPv1_Client(Memory::Streams::StreamableObject *sobject) : HTTPv1_Base(true,sobject)
 {

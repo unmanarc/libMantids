@@ -1,6 +1,6 @@
 #include "nullcontainer.h"
 
-using namespace Mantids::Memory::Containers;
+using namespace Mantids3::Memory::Containers;
 
 NullContainer::NullContainer()
 {
@@ -12,7 +12,7 @@ bool NullContainer::streamTo(Memory::Streams::StreamableObject *, Streams::Strea
     return false;
 }
 
-Mantids::Memory::Streams::StreamableObject::Status NullContainer::write(const void *, const size_t &count, Streams::StreamableObject::Status &)
+Mantids3::Memory::Streams::StreamableObject::Status NullContainer::write(const void *, const size_t &count, Streams::StreamableObject::Status &)
 {
     bytes+=count;
     return true;

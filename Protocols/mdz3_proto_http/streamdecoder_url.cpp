@@ -3,8 +3,8 @@
 #include <mdz3_mem/b_mem.h>
 #include <mdz3_mem/b_chunks.h>
 
-using namespace Mantids::Memory::Streams;
-using namespace Mantids::Memory::Streams::Decoders;
+using namespace Mantids3::Memory::Streams;
+using namespace Mantids3::Memory::Streams::Decoders;
 
 URL::URL(Memory::Streams::StreamableObject * orig)
 {
@@ -187,7 +187,7 @@ void URL::writeEOF(bool )
 
 std::string URL::decodeURLStr(const std::string &url)
 {
-    Mantids::Memory::Containers::B_MEM uriEncoded( url.c_str(), url.size() );
+    Mantids3::Memory::Containers::B_MEM uriEncoded( url.c_str(), url.size() );
     Memory::Containers::B_Chunks uriDecoded;
 
     // Decode URI (maybe it's url encoded)...

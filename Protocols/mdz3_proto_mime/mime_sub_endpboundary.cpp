@@ -1,7 +1,7 @@
 #include "mime_sub_endpboundary.h"
 
-using namespace Mantids::Protocols::MIME;
-using namespace Mantids;
+using namespace Mantids3::Protocols::MIME;
+using namespace Mantids3;
 
 MIME_Sub_EndPBoundary::MIME_Sub_EndPBoundary()
 {

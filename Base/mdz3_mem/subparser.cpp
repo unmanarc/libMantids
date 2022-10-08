@@ -3,7 +3,7 @@
 
 
 
-using namespace Mantids::Memory::Streams;
+using namespace Mantids3::Memory::Streams;
 
 
 SubParser::SubParser()
@@ -80,7 +80,7 @@ std::pair<bool,uint64_t> SubParser::writeIntoParser(const void *buf, size_t coun
     return std::make_pair(false,(uint64_t)0);
 }
 
-size_t SubParser::ParseValidator(Mantids::Memory::Containers::B_Base &bc)
+size_t SubParser::ParseValidator(Mantids3::Memory::Containers::B_Base &bc)
 {
     return std::numeric_limits<size_t>::max();
 }
@@ -100,7 +100,7 @@ void SubParser::setParseDelimiter(const std::string &value)
     parseDelimiter = value;
 }
 
-Mantids::Memory::Containers::B_Base *SubParser::getParsedBuffer()
+Mantids3::Memory::Containers::B_Base *SubParser::getParsedBuffer()
 {
     return &parsedBuffer;
 }
@@ -414,7 +414,7 @@ uint64_t SubParser::getLastBytesInCommon(const std::string &boundary)
     size_t maxBoundary = unparsedBuffer.size()>(boundary.size()-1)?(boundary.size()-1) : unparsedBuffer.size();
     for (size_t v=maxBoundary; v!=0; v--)
     {
-        Mantids::Memory::Containers::B_Ref ref = referenceLastBytes(v);
+        Mantids3::Memory::Containers::B_Ref ref = referenceLastBytes(v);
         char * toCmp = ((char *)malloc(ref.size()));
         ref.copyOut(toCmp,ref.size());
         if (!memcmp(toCmp,boundary.c_str(),ref.size()))
@@ -427,9 +427,9 @@ uint64_t SubParser::getLastBytesInCommon(const std::string &boundary)
     return 0;
 }
 
-Mantids::Memory::Containers::B_Ref SubParser::referenceLastBytes(const size_t &bytes)
+Mantids3::Memory::Containers::B_Ref SubParser::referenceLastBytes(const size_t &bytes)
 {
-    Mantids::Memory::Containers::B_Ref r;
+    Mantids3::Memory::Containers::B_Ref r;
     r.reference(&unparsedBuffer, unparsedBuffer.size()-bytes);
     return r;
 }

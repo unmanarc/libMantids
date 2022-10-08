@@ -6,7 +6,7 @@
 
 #include "socket_multiplexed_line.h"
 
-namespace Mantids { namespace Network { namespace Multiplexor { namespace DataStructs {
+namespace Mantids3 { namespace Network { namespace Multiplexor { namespace DataStructs {
 
 enum eConnectFailedReason {
     E_CONN_FAILED=0x00,
@@ -69,7 +69,7 @@ struct sServerConnectionFinishedCallback
 
 }}}}
 
-namespace Mantids { namespace Network { namespace Multiplexor {
+namespace Mantids3 { namespace Network { namespace Multiplexor {
 
 class Socket_Multiplexer_Callbacks
 {

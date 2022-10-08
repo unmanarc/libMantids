@@ -4,7 +4,7 @@
 #include <string>
 #include "common_date.h"
 
-namespace Mantids { namespace Protocols { namespace HTTP { namespace Headers {
+namespace Mantids3 { namespace Protocols { namespace HTTP { namespace Headers {
 
 class Cookie
 {

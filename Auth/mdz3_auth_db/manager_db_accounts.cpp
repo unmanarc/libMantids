@@ -11,9 +11,9 @@
 #include <mdz3_mem/a_uint64.h>
 #include <mdz3_mem/a_var.h>
 
-using namespace Mantids::Authentication;
-using namespace Mantids::Memory;
-using namespace Mantids::Database;
+using namespace Mantids3::Authentication;
+using namespace Mantids3::Memory;
+using namespace Mantids3::Database;
 
 bool Manager_DB::accountAdd(const std::string &sAccountName, const Secret &secretData, const sAccountDetails &accountDetails, time_t expirationDate, const sAccountAttribs &accountAttribs, const std::string &sCreatorAccountName)
 {
@@ -53,7 +53,7 @@ bool Manager_DB::accountAdd(const std::string &sAccountName, const Secret &secre
                                     {":hash",new Abstract::STRING(secretData.hash)},
                                     {":expiration",new Abstract::DATETIME(secretData.expiration)},
                                     {":function",new Abstract::INT32(secretData.passwordFunction)},
-                                    {":salt",new Abstract::STRING(Mantids::Helpers::Encoders::toHex(secretData.ssalt,4))},
+                                    {":salt",new Abstract::STRING(Mantids3::Helpers::Encoders::toHex(secretData.ssalt,4))},
                                     {":forcedExpiration",new Abstract::BOOL(secretData.forceExpiration)},
                                     {":steps",new Abstract::UINT32(secretData.gAuthSteps)}
                                 }
@@ -164,7 +164,7 @@ bool Manager_DB::accountChangeSecret(const std::string &sAccountName, const Secr
                                    {":hash",new Abstract::STRING(passwordData.hash)},
                                    {":expiration",new Abstract::DATETIME(passwordData.expiration)},
                                    {":function",new Abstract::UINT32(passwordData.passwordFunction)},
-                                   {":salt",new Abstract::STRING(Mantids::Helpers::Encoders::toHex(passwordData.ssalt,4))},
+                                   {":salt",new Abstract::STRING(Mantids3::Helpers::Encoders::toHex(passwordData.ssalt,4))},
                                    {":forcedExpiration",new Abstract::BOOL(passwordData.forceExpiration)},
                                    {":steps",new Abstract::UINT32(passwordData.gAuthSteps)}
                                });
@@ -649,7 +649,7 @@ Secret Manager_DB::retrieveSecret(const std::string &sAccountName, uint32_t pass
         ret.passwordFunction = (Authentication::Function)function.getValue();
         ret.expiration = expiration.getValue();
         ret.badAttempts = badAttempts.getValue();
-        Mantids::Helpers::Encoders::fromHex(salt.getValue(),ret.ssalt,4);
+        Mantids3::Helpers::Encoders::fromHex(salt.getValue(),ret.ssalt,4);
         ret.hash = hash.getValue();
     }
     return ret;

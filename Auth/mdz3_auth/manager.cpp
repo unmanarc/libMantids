@@ -3,7 +3,7 @@
 #include <mdz3_threads/lock_shared.h>
 #include <mdz3_helpers/random.h>
 
-using namespace Mantids::Authentication;
+using namespace Mantids3::Authentication;
 
 
 Manager::Manager()
@@ -21,7 +21,7 @@ bool Manager::initAccounts()
     // create the default account.
     Secret secretData;
     secretData.forceExpiration = true;
-    secretData.hash = Mantids::Helpers::Random::createRandomString(16);
+    secretData.hash = Mantids3::Helpers::Random::createRandomString(16);
 
     return accountAdd("admin",  // UserName
                       secretData, // Secret Info
@@ -123,7 +123,7 @@ Reason Manager::authenticate(const std::string &appName, const sClientDetails &c
 
 std::string Manager::genRandomConfirmationToken()
 {
-    return Mantids::Helpers::Random::createRandomString(64);
+    return Mantids3::Helpers::Random::createRandomString(64);
 }
 
 uint32_t Manager::getBAuthPolicyMaxTries()

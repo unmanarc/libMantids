@@ -2,7 +2,7 @@
 #include "b_ref.h"
 
 
-using namespace Mantids::Memory::Streams;
+using namespace Mantids3::Memory::Streams;
 
 Parser::Parser(Memory::Streams::StreamableObject *value, bool clientMode)
 {

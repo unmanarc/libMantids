@@ -9,7 +9,7 @@
 #include <openssl/aes.h>
 #include <sys/types.h>
 
-using namespace Mantids::Helpers;
+using namespace Mantids3::Helpers;
 
 
 std::string Crypto::AES256EncryptB64(const unsigned char * input, uint32_t inputLen, const char * key, uint32_t keyLen, bool * ok)

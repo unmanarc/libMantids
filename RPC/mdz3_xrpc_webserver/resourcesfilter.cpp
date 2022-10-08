@@ -4,7 +4,7 @@
 #include <boost/algorithm/string/case_conv.hpp>
 
 using namespace boost;
-using namespace Mantids::RPC::Web;
+using namespace Mantids3::RPC::Web;
 
 ResourcesFilter::ResourcesFilter()
 {
@@ -88,12 +88,12 @@ bool ResourcesFilter::loadFile(const std::string &filePath)
     return true;
 }
 
-void Mantids::RPC::Web::ResourcesFilter::addFilter(const sFilter &filter)
+void Mantids3::RPC::Web::ResourcesFilter::addFilter(const sFilter &filter)
 {
     filters.push_back(filter);
 }
 
-Mantids::RPC::Web::ResourcesFilter::sFilterEvaluation ResourcesFilter::evaluateAction(const std::string &uri, Mantids::Authentication::Session * hSession, Mantids::Authentication::Manager * authorizer)
+Mantids3::RPC::Web::ResourcesFilter::sFilterEvaluation ResourcesFilter::evaluateAction(const std::string &uri, Mantids3::Authentication::Session * hSession, Mantids3::Authentication::Manager * authorizer)
 {
     sFilterEvaluation evalRet;
 

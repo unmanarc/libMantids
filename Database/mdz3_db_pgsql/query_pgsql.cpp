@@ -6,7 +6,7 @@
 
 #include <stdexcept>
 
-using namespace Mantids::Database;
+using namespace Mantids3::Database;
 
 Query_PostgreSQL::Query_PostgreSQL()
 {

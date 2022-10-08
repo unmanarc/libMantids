@@ -6,7 +6,7 @@
 #include <string>
 #include "mem.h"
 
-namespace Mantids { namespace Helpers {
+namespace Mantids3 { namespace Helpers {
 
 
 class Crypto

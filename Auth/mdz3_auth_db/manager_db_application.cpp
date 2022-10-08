@@ -10,10 +10,10 @@
 #include <mdz3_mem/a_var.h>
 #include <mdz3_mem/a_uint64.h>
 
-using namespace Mantids::Authentication;
-using namespace Mantids::Memory;
-using namespace Mantids::Database;
-using namespace Mantids::Helpers;
+using namespace Mantids3::Authentication;
+using namespace Mantids3::Memory;
+using namespace Mantids3::Database;
+using namespace Mantids3::Helpers;
 
 bool Manager_DB::applicationAdd(const std::string &appName, const std::string &applicationDescription, const std::string & sAppKey, const std::string & sOwnerAccountName)
 {

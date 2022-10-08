@@ -18,7 +18,7 @@ typedef Json::Value json;
 #define JSON_ASUINT64(j,x,def) (j[x].isUInt64()?j[x].asUInt64():def)
 #define JSON_ISARRAY(j,x) (j.isMember(x) && j[x].isArray())
 
-namespace Mantids { namespace Helpers {
+namespace Mantids3 { namespace Helpers {
     std::string jsonToString(const json &value);
     std::list<std::string> jsonToStringList(const json &value, const std::string & sub="");
     // deprecated JSONReader replacement:

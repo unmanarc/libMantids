@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Mantids { namespace Authentication  {
+namespace Mantids3 { namespace Authentication  {
 
 enum Mode
 {

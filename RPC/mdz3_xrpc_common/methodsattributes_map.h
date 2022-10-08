@@ -10,7 +10,7 @@
 
 #include <mdz3_auth/accountsecret_validation.h>
 
-namespace Mantids { namespace Authentication {
+namespace Mantids3 { namespace Authentication {
 
 class MethodsAttributes_Map
 {

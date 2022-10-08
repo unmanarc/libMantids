@@ -4,7 +4,7 @@
 #include <utility>
 #include <mdz3_net_sockets/socket_streambase.h>
 
-namespace Mantids { namespace Network { namespace Sockets { namespace ChainProtocols {
+namespace Mantids3 { namespace Network { namespace Sockets { namespace ChainProtocols {
 
 
 class Socket_Chain_ProtocolBase
@@ -14,7 +14,7 @@ public:
     virtual ~Socket_Chain_ProtocolBase();
 
     virtual bool isEndPoint();
-    std::pair<Mantids::Network::Sockets::Socket_StreamBase *, Mantids::Network::Sockets::Socket_StreamBase*> makeSocketChainPair();
+    std::pair<Mantids3::Network::Sockets::Socket_StreamBase *, Mantids3::Network::Sockets::Socket_StreamBase*> makeSocketChainPair();
     bool isServerMode() const;
     void setIsServerMode(bool value);
 

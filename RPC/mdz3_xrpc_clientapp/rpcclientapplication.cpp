@@ -14,8 +14,8 @@
 #endif
 
 using namespace std;
-using namespace Mantids::RPC;
-using namespace Mantids::Application;
+using namespace Mantids3::RPC;
+using namespace Mantids3::Application;
 
 void RPCClientApplication::_shutdown()
 {
@@ -23,7 +23,7 @@ void RPCClientApplication::_shutdown()
     rpcShutdown();
 }
 
-void RPCClientApplication::_initvars(int argc, char *argv[], Mantids::Application::Arguments::GlobalArguments *globalArguments)
+void RPCClientApplication::_initvars(int argc, char *argv[], Mantids3::Application::Arguments::GlobalArguments *globalArguments)
 {
     // init program vars.
     globalArguments->setInifiniteWaitAtEnd(true);
@@ -43,11 +43,11 @@ void RPCClientApplication::_initvars(int argc, char *argv[], Mantids::Applicatio
     defaultConfigDir = std::string(folderProgramFiles) + dirSlash + defaultConfigDir;
 #endif
 
-    globalArguments->addCommandLineOption("Service Options", 'c', "config-dir" , "Configuration directory"  , defaultConfigDir, Mantids::Memory::Abstract::Var::TYPE_STRING );
-    globalArguments->addCommandLineOption("Encoding", 0, "encode" , "Encode Configuration String"  , "", Mantids::Memory::Abstract::Var::TYPE_STRING );
+    globalArguments->addCommandLineOption("Service Options", 'c', "config-dir" , "Configuration directory"  , defaultConfigDir, Mantids3::Memory::Abstract::Var::TYPE_STRING );
+    globalArguments->addCommandLineOption("Encoding", 0, "encode" , "Encode Configuration String"  , "", Mantids3::Memory::Abstract::Var::TYPE_STRING );
 }
 
-bool RPCClientApplication::_config(int argc, char *argv[], Mantids::Application::Arguments::GlobalArguments *globalArguments)
+bool RPCClientApplication::_config(int argc, char *argv[], Mantids3::Application::Arguments::GlobalArguments *globalArguments)
 {
     if ( !globalArguments->getCommandLineOptionValue("encode")->toString().empty() )
     {
@@ -66,9 +66,9 @@ bool RPCClientApplication::_config(int argc, char *argv[], Mantids::Application:
             configPath = configDir + "/config.ini";
 #endif
     // process config here.
-    unsigned int logMode = Mantids::Application::Logs::MODE_STANDARD;
+    unsigned int logMode = Mantids3::Application::Logs::MODE_STANDARD;
 
-    Logs::AppLog initLog(Mantids::Application::Logs::MODE_STANDARD);
+    Logs::AppLog initLog(Mantids3::Application::Logs::MODE_STANDARD);
     initLog.setPrintEmptyFields(true);
     initLog.setUserAlignSize(1);
     initLog.setUsingAttributeName(false);
@@ -108,7 +108,7 @@ bool RPCClientApplication::_config(int argc, char *argv[], Mantids::Application:
     /////////////////////////////////////////////////////////////////////////
     // LOGS OPTIONS
     // Use syslog option:
-    if ( Globals::getLC_LogsUsingSyslog() ) logMode|=Mantids::Application::Logs::MODE_SYSLOG;
+    if ( Globals::getLC_LogsUsingSyslog() ) logMode|=Mantids3::Application::Logs::MODE_SYSLOG;
     // Applog instance
     Globals::setAppLog(new Logs::AppLog(logMode));
     LOG_APP->setPrintEmptyFields(true);
@@ -126,7 +126,7 @@ bool RPCClientApplication::_config(int argc, char *argv[], Mantids::Application:
     return rpcConfig(argc,argv,globalArguments);
 }
 
-int RPCClientApplication::_start(int argc, char *argv[], Mantids::Application::Arguments::GlobalArguments *globalArguments)
+int RPCClientApplication::_start(int argc, char *argv[], Mantids3::Application::Arguments::GlobalArguments *globalArguments)
 {
     auto masterKey = Globals::getMasterKey();
 
@@ -149,7 +149,7 @@ int RPCClientApplication::_start(int argc, char *argv[], Mantids::Application::A
             {
                 bool ok = false;
                 // Load Key
-                Mantids::Helpers::Crypto::AES256DecryptB64( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_C2PSKSharedKeyFile() )
+                Mantids3::Helpers::Crypto::AES256DecryptB64( Mantids3::Helpers::File::loadFileIntoString( Globals::getLC_C2PSKSharedKeyFile() )
                                                                             ,(char *)masterKey->data,masterKey->len,&ok
                                                                             );
 
@@ -188,7 +188,7 @@ int RPCClientApplication::_start(int argc, char *argv[], Mantids::Application::A
             {
                 bool ok = false;
                 // Load Key
-                keyPassPhrase = Mantids::Helpers::Crypto::AES256DecryptB64( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
+                keyPassPhrase = Mantids3::Helpers::Crypto::AES256DecryptB64( Mantids3::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
                                                                             ,(char *)masterKey->data,masterKey->len,&ok
                                                                             );
                 if (!ok)

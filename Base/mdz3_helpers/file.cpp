@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-std::string Mantids::Helpers::File::loadFileIntoString(const std::string &file, bool *ok)
+std::string Mantids3::Helpers::File::loadFileIntoString(const std::string &file, bool *ok)
 {
     if (ok)
         *ok = false;
@@ -22,7 +22,7 @@ std::string Mantids::Helpers::File::loadFileIntoString(const std::string &file, 
     return fileContent;
 }
 
-bool Mantids::Helpers::File::loadStringIntoFile(const std::string &file, const std::string &content)
+bool Mantids3::Helpers::File::loadStringIntoFile(const std::string &file, const std::string &content)
 {
     std::ofstream outfile;
     outfile.open(file, std::ios_base::out);

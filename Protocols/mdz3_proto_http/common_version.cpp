@@ -9,9 +9,9 @@
 using namespace std;
 using namespace boost;
 using namespace boost::algorithm;
-using namespace Mantids::Protocols::HTTP;
-using namespace Mantids::Protocols::HTTP::Common;
-using namespace Mantids;
+using namespace Mantids3::Protocols::HTTP;
+using namespace Mantids3::Protocols::HTTP::Common;
+using namespace Mantids3;
 
 Version::Version()
 {

@@ -9,7 +9,7 @@
 #define INET6_ADDRSTRLEN 46
 #endif
 
-namespace Mantids { namespace Protocols { namespace HTTP {
+namespace Mantids3 { namespace Protocols { namespace HTTP {
 
 
 class HTTPv1_Server : public HTTPv1_Base
@@ -115,7 +115,7 @@ public:
      * @brief setResponseRedirect Redirect site to another URL
      * @param location URL string
      */
-    Mantids::Protocols::HTTP::Status::eRetCode setResponseRedirect(const std::string & location, bool temporary = true);
+    Mantids3::Protocols::HTTP::Status::eRetCode setResponseRedirect(const std::string & location, bool temporary = true);
     /**
      * @brief getCurrentFileExtension Get Current File Extension
      * @return File Extension
@@ -135,8 +135,8 @@ public:
     bool getIsSecure() const;
     void setIsSecure(bool value);
 
-    void addStaticContent(const std::string & path, Mantids::Memory::Containers::B_MEM * contentElement);
-    void setStaticContentElements(const std::map<std::string, Mantids::Memory::Containers::B_MEM *> &value);
+    void addStaticContent(const std::string & path, Mantids3::Memory::Containers::B_MEM * contentElement);
+    void setStaticContentElements(const std::map<std::string, Mantids3::Memory::Containers::B_MEM *> &value);
 
     static std::string htmlEncode(const std::string& rawStr);
 
@@ -167,7 +167,7 @@ protected:
     *                             is available (GET/Options/Post Data).
     * @return true
     */
-    virtual Mantids::Protocols::HTTP::Status::eRetCode procHTTPClientContent()
+    virtual Mantids3::Protocols::HTTP::Status::eRetCode procHTTPClientContent()
     {
         return HTTP::Status::S_200_OK;
     }
@@ -190,7 +190,7 @@ private:
 
     bool answer(Memory::Streams::StreamableObject::Status &wrStat);
 
-    std::map<std::string,Mantids::Memory::Containers::B_MEM *> staticContentElements;
+    std::map<std::string,Mantids3::Memory::Containers::B_MEM *> staticContentElements;
 
     bool badAnswer;
     Memory::Streams::StreamableObject::Status ansBytes;

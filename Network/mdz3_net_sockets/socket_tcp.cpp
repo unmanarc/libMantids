@@ -20,8 +20,8 @@
 #include <unistd.h>
 #include <errno.h>
 
-using namespace Mantids::Network;
-using namespace Mantids::Network::Sockets;
+using namespace Mantids3::Network;
+using namespace Mantids3::Network::Sockets;
 
 Socket_TCP::Socket_TCP()
 {

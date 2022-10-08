@@ -13,7 +13,7 @@
 #include "authdata.h"
 #include "query.h"
 
-namespace Mantids { namespace Database {
+namespace Mantids3 { namespace Database {
 
 class SQLConnector
 {

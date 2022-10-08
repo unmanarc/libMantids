@@ -6,12 +6,12 @@
 #include <mdz3_xrpc_fast/fastrpc.h>
 #include <stdexcept>
 
-namespace Mantids { namespace Authentication {
+namespace Mantids3 { namespace Authentication {
 
-class FastRPCImpl : public Mantids::RPC::Fast::FastRPC
+class FastRPCImpl : public Mantids3::RPC::Fast::FastRPC
 {
 public:
-    FastRPCImpl(uint32_t threadsCount = 16, uint32_t taskQueues = 24) : Mantids::RPC::Fast::FastRPC(threadsCount,taskQueues)
+    FastRPCImpl(uint32_t threadsCount = 16, uint32_t taskQueues = 24) : Mantids3::RPC::Fast::FastRPC(threadsCount,taskQueues)
     {
     }
     virtual ~FastRPCImpl()
@@ -21,10 +21,10 @@ public:
 protected:
     // TODO: report back to the manager_remote.
 
-    void eventUnexpectedAnswerReceived(Mantids::RPC::Fast::FastRPC_Connection *connection, const std::string &answer) override
+    void eventUnexpectedAnswerReceived(Mantids3::RPC::Fast::FastRPC_Connection *connection, const std::string &answer) override
     {
     }
-    void eventFullQueueDrop(Mantids::RPC::Fast::sFastRPCParameters * params) override
+    void eventFullQueueDrop(Mantids3::RPC::Fast::sFastRPCParameters * params) override
     {
     }
     void eventRemotePeerDisconnected(const std::string &connectionKey, const std::string &methodName, const json &payload) override
@@ -217,7 +217,7 @@ public:
      * @param stream connection
      * @return
      */
-    int processFastRPCConnection(Mantids::Network::Sockets::Socket_StreamBase *stream);
+    int processFastRPCConnection(Mantids3::Network::Sockets::Socket_StreamBase *stream);
 protected:
     bool accountValidateDirectAttribute(const std::string & , const sApplicationAttrib &) override {throw std::runtime_error("Remote Login - NOT IMPLEMENTED"); return false; }
     Secret retrieveSecret(const std::string &, uint32_t , bool * , bool * ) override { throw std::runtime_error("Remote Login - NOT IMPLEMENTED"); Secret s; return s; }

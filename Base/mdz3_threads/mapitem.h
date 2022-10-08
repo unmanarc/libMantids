@@ -3,7 +3,7 @@
 
 #include <atomic>
 
-namespace Mantids { namespace Threads { namespace Safe {
+namespace Mantids3 { namespace Threads { namespace Safe {
 
 
 class MapItem

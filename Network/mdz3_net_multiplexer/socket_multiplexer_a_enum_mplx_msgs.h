@@ -1,7 +1,7 @@
 #ifndef SOCKET_MULTIPLEXER_A_ENUM_MPLX_MSGS
 #define SOCKET_MULTIPLEXER_A_ENUM_MPLX_MSGS
 
-namespace Mantids { namespace Network { namespace Multiplexor { namespace DataStructs {
+namespace Mantids3 { namespace Network { namespace Multiplexor { namespace DataStructs {
 
 enum eMultiplexedSocketMessage {
     MPLX_MSG_CLOSE             =0x00,

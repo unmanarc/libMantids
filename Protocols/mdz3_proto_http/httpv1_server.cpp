@@ -27,8 +27,8 @@
 using namespace std;
 using namespace boost;
 using namespace boost::algorithm;
-using namespace Mantids::Protocols::HTTP;
-using namespace Mantids;
+using namespace Mantids3::Protocols::HTTP;
+using namespace Mantids3;
 
 HTTPv1_Server::HTTPv1_Server(Memory::Streams::StreamableObject *sobject) : HTTPv1_Base(false, sobject)
 {
@@ -269,7 +269,7 @@ bool HTTPv1_Server::getLocalFilePathFromURI2(string sServerDir, sLocalRequestedF
         }
         else
         {
-            Mantids::Memory::Containers::B_MMAP * bFile = new Mantids::Memory::Containers::B_MMAP;
+            Mantids3::Memory::Containers::B_MMAP * bFile = new Mantids3::Memory::Containers::B_MMAP;
             if (bFile->referenceFile(sFullComputedPath.c_str(),true,false))
             {
                 // File Found / Readable.
@@ -714,7 +714,7 @@ bool HTTPv1_Server::answer(Memory::Streams::StreamableObject::Status &wrStat)
     return true;
 }
 
-void HTTPv1_Server::setStaticContentElements(const std::map<std::string, Mantids::Memory::Containers::B_MEM *> &value)
+void HTTPv1_Server::setStaticContentElements(const std::map<std::string, Mantids3::Memory::Containers::B_MEM *> &value)
 {
     staticContentElements = value;
 }

@@ -1,6 +1,6 @@
 #include "streams_bridge_thread.h"
 
-using namespace Mantids::Network::Sockets;
+using namespace Mantids3::Network::Sockets;
 using namespace NetStreams;
 
 Bridge_Thread::Bridge_Thread()

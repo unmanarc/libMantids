@@ -2,8 +2,8 @@
 #include <limits>
 #include <iostream>
 
-using namespace Mantids::Memory::Streams;
-using namespace Mantids;
+using namespace Mantids3::Memory::Streams;
+using namespace Mantids3;
 
 StreamableJSON::StreamableJSON()
 {
@@ -16,7 +16,7 @@ bool StreamableJSON::streamTo(Memory::Streams::StreamableObject *out, Memory::St
 {
     Memory::Streams::StreamableObject::Status cur;
     if (!formatted)
-        strValue = Mantids::Helpers::jsonToString(root);
+        strValue = Mantids3::Helpers::jsonToString(root);
     else
         strValue = root.toStyledString();
     return (cur = out->writeFullStream(strValue.c_str(), strValue.size(), wrStatUpd)).succeed;
@@ -63,7 +63,7 @@ std::string StreamableJSON::getString()
 
 json *StreamableJSON::processValue()
 {
-    Mantids::Helpers::JSONReader2 reader;
+    Mantids3::Helpers::JSONReader2 reader;
     bool parsingSuccessful = reader.parse( strValue, root );
     if ( !parsingSuccessful )
         return nullptr;

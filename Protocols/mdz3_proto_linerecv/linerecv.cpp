@@ -1,6 +1,6 @@
 #include "linerecv.h"
 
-using namespace Mantids::Protocols::Line2Line;
+using namespace Mantids3::Protocols::Line2Line;
 
 LineRecv::LineRecv(Memory::Streams::StreamableObject *sobject) : Memory::Streams::Parser(sobject,false)
 {

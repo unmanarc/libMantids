@@ -11,7 +11,7 @@
 #include "mime_sub_endpboundary.h"
 
 
-namespace Mantids { namespace Protocols { namespace MIME {
+namespace Mantids3 { namespace Protocols { namespace MIME {
 
 
 class MIME_Message : public Memory::Abstract::Vars, public Memory::Streams::Parser

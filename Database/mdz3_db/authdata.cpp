@@ -1,6 +1,6 @@
 #include "authdata.h"
 
-using namespace Mantids::Database;
+using namespace Mantids3::Database;
 
 AuthData::AuthData()
 {

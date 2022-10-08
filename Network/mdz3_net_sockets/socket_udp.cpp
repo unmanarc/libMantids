@@ -16,7 +16,7 @@
 #include <arpa/inet.h>
 #endif
 
-using namespace Mantids::Network::Sockets;
+using namespace Mantids3::Network::Sockets;
 
 
 Socket_UDP::Socket_UDP()

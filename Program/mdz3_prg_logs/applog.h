@@ -4,7 +4,7 @@
 #include "logbase.h"
 
 
-namespace Mantids { namespace Application { namespace Logs {
+namespace Mantids3 { namespace Application { namespace Logs {
 /*
 struct sLogElement {
     int id,severity;

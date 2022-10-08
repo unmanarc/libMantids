@@ -2,7 +2,7 @@
 #define PASSWORD_MODES_H
 
 #include <stdint.h>
-namespace Mantids { namespace Authentication {
+namespace Mantids3 { namespace Authentication {
 
 enum Function
 {

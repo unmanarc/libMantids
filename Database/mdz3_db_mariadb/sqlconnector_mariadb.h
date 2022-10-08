@@ -5,7 +5,7 @@
 #include <mdz3_db/sqlconnector.h>
 #include "query_mariadb.h"
 
-namespace Mantids { namespace Database {
+namespace Mantids3 { namespace Database {
 
 class SQLConnector_MariaDB : public SQLConnector
 {

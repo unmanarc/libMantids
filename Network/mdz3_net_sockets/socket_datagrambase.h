@@ -11,7 +11,7 @@
 #include <netinet/in.h>
 #endif
 
-namespace Mantids { namespace Network { namespace Sockets {
+namespace Mantids3 { namespace Network { namespace Sockets {
 
 class Socket_DatagramBase : public Socket
 {

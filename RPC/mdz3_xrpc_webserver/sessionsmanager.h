@@ -6,7 +6,7 @@
 #include <mdz3_threads/garbagecollector.h>
 #include <mdz3_helpers/random.h>
 
-namespace Mantids { namespace RPC { namespace Web {
+namespace Mantids3 { namespace RPC { namespace Web {
 
 class WebSession : public Threads::Safe::MapItem
 {
@@ -15,8 +15,8 @@ public:
     {
         authSession = nullptr;
         bAuthTokenConfirmed = false;
-        sCSRFAuthConfirmToken = Mantids::Helpers::Random::createRandomString(32);
-        sCSRFToken = Mantids::Helpers::Random::createRandomString(32);
+        sCSRFAuthConfirmToken = Mantids3::Helpers::Random::createRandomString(32);
+        sCSRFToken = Mantids3::Helpers::Random::createRandomString(32);
     }
     ~WebSession() { delete authSession; }
 
@@ -30,7 +30,7 @@ public:
         return bAuthTokenConfirmed;
     }
 
-    Mantids::Authentication::Session * authSession;
+    Mantids3::Authentication::Session * authSession;
     std::string sCSRFAuthConfirmToken, sCSRFToken;
     std::atomic<bool> bAuthTokenConfirmed;
 };
@@ -58,7 +58,7 @@ public:
      * @param session Session element to be introduced to the session pool
      * @return Session ID
      */
-    std::string createWebSession(Mantids::Authentication::Session * session);
+    std::string createWebSession(Mantids3::Authentication::Session * session);
 
     /**
      * @brief destroySession destroy the session element and session ID

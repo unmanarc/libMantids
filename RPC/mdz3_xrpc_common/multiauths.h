@@ -6,7 +6,7 @@
 #include <mdz3_mem/subparser.h>
 #include "authentication.h"
 
-namespace Mantids { namespace RPC {
+namespace Mantids3 { namespace RPC {
 
 class MultiAuths
 {

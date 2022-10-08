@@ -3,7 +3,7 @@
 
 #include <string>
 #include <mdz3_helpers/json.h>
-namespace Mantids { namespace RPC {
+namespace Mantids3 { namespace RPC {
 
 /**
  * @brief The Authentication class

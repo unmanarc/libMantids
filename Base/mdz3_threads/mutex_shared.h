@@ -3,7 +3,7 @@
 
 #include <pthread.h>
 
-namespace Mantids { namespace Threads { namespace Sync {
+namespace Mantids3 { namespace Threads { namespace Sync {
 
 class Mutex_Shared
 {

@@ -4,7 +4,7 @@
 #include "streamableobject.h"
 #include <string>
 
-namespace Mantids { namespace Memory { namespace Streams {
+namespace Mantids3 { namespace Memory { namespace Streams {
 
 /**
  * @brief The StreamableString class (NOTE: not thread-safe for R/W)

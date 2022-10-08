@@ -1,9 +1,9 @@
 #include "socket_chain.h"
 #include <thread>
 
-using namespace Mantids::Network::Sockets;
+using namespace Mantids3::Network::Sockets;
 
-Socket_Chain::Socket_Chain(Mantids::Network::Sockets::Socket_StreamBase *_baseSocket, bool _deleteBaseSocketOnExit)
+Socket_Chain::Socket_Chain(Mantids3::Network::Sockets::Socket_StreamBase *_baseSocket, bool _deleteBaseSocketOnExit)
 {
     endPointReached = false;
     deleteBaseSocketOnExit = _deleteBaseSocketOnExit;
@@ -85,9 +85,9 @@ bool Socket_Chain::getLayerWriteResultValue(size_t layer, bool fwd)
     return ((sChainVectorItem *)socketLayers[layer])->w1[fwd?0:1];
 }
 
-std::pair<Mantids::Network::Sockets::Socket_StreamBase *, Mantids::Network::Sockets::Socket_StreamBase *> Socket_Chain::getSocketPairLayer(size_t layer)
+std::pair<Mantids3::Network::Sockets::Socket_StreamBase *, Mantids3::Network::Sockets::Socket_StreamBase *> Socket_Chain::getSocketPairLayer(size_t layer)
 {
-    std::pair <Mantids::Network::Sockets::Socket_StreamBase *, Mantids::Network::Sockets::Socket_StreamBase *> bar;
+    std::pair <Mantids3::Network::Sockets::Socket_StreamBase *, Mantids3::Network::Sockets::Socket_StreamBase *> bar;
 
     if (layer>=socketLayers.size())
         return std::make_pair (nullptr,nullptr);
@@ -107,7 +107,7 @@ bool Socket_Chain::addToChain(ChainProtocols::Socket_Chain_ProtocolBase *chainEl
                              );
 }
 
-bool Socket_Chain::addToChain(std::pair<Mantids::Network::Sockets::Socket_StreamBase *, Mantids::Network::Sockets::Socket_StreamBase *> sockPairs, bool deleteFirstSocketOnExit, bool deleteSecondSocketOnExit, bool modeServer, bool detached, bool endPMode)
+bool Socket_Chain::addToChain(std::pair<Mantids3::Network::Sockets::Socket_StreamBase *, Mantids3::Network::Sockets::Socket_StreamBase *> sockPairs, bool deleteFirstSocketOnExit, bool deleteSecondSocketOnExit, bool modeServer, bool detached, bool endPMode)
 {
     if (endPointReached) return false;
     if (endPMode) endPointReached = true;
@@ -168,21 +168,21 @@ bool Socket_Chain::addToChain(std::pair<Mantids::Network::Sockets::Socket_Stream
 bool Socket_Chain::isConnected()
 {
     if (socketLayers.size() == 0 && !baseSocket) return false;
-    Mantids::Network::Sockets::Socket_StreamBase * curSocket = !socketLayers.size()? baseSocket : ((sChainVectorItem *)socketLayers[socketLayers.size()-1])->sock[0];
+    Mantids3::Network::Sockets::Socket_StreamBase * curSocket = !socketLayers.size()? baseSocket : ((sChainVectorItem *)socketLayers[socketLayers.size()-1])->sock[0];
     return curSocket->isConnected() && baseSocket->isConnected();
 }
 
 int Socket_Chain::shutdownSocket(int mode)
 {
     if (socketLayers.size() == 0 && !baseSocket) return -1;
-    Mantids::Network::Sockets::Socket_StreamBase * curSocket = !socketLayers.size()? baseSocket : ((sChainVectorItem *)socketLayers[socketLayers.size()-1])->sock[0];
+    Mantids3::Network::Sockets::Socket_StreamBase * curSocket = !socketLayers.size()? baseSocket : ((sChainVectorItem *)socketLayers[socketLayers.size()-1])->sock[0];
     return curSocket->shutdownSocket(mode);
 }
 
 int Socket_Chain::partialRead(void *data, const uint32_t & datalen)
 {
     if (socketLayers.size() == 0 && !baseSocket) return -1;
-    Mantids::Network::Sockets::Socket_StreamBase * curSocket = !socketLayers.size()? baseSocket : ((sChainVectorItem *)socketLayers[socketLayers.size()-1])->sock[0];
+    Mantids3::Network::Sockets::Socket_StreamBase * curSocket = !socketLayers.size()? baseSocket : ((sChainVectorItem *)socketLayers[socketLayers.size()-1])->sock[0];
     int x = curSocket->partialRead(data,datalen);
     if (x<=0)
         return x;
@@ -192,7 +192,7 @@ int Socket_Chain::partialRead(void *data, const uint32_t & datalen)
 int Socket_Chain::partialWrite(const void *data, const uint32_t &datalen)
 {
     if (socketLayers.size() == 0 && !baseSocket) return -1;
-    Mantids::Network::Sockets::Socket_StreamBase * curSocket = !socketLayers.size()? baseSocket : ((sChainVectorItem *)socketLayers[socketLayers.size()-1])->sock[0];
+    Mantids3::Network::Sockets::Socket_StreamBase * curSocket = !socketLayers.size()? baseSocket : ((sChainVectorItem *)socketLayers[socketLayers.size()-1])->sock[0];
     int x = curSocket->partialWrite(data,datalen);
     if (x<=0)
         return x;

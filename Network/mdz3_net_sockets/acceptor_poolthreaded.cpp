@@ -1,8 +1,8 @@
 #include "acceptor_poolthreaded.h"
 #include <string.h>
 
-using namespace Mantids::Network;
-using namespace Mantids::Network::Sockets::Acceptors;
+using namespace Mantids3::Network;
+using namespace Mantids3::Network::Sockets::Acceptors;
 
 void PoolThreaded::init()
 {
@@ -70,7 +70,7 @@ PoolThreaded::~PoolThreaded()
 
 void PoolThreaded::run()
 {
-    this->pool = new Mantids::Threads::Pool::ThreadPool(threadsCount,taskQueues);
+    this->pool = new Mantids3::Threads::Pool::ThreadPool(threadsCount,taskQueues);
     pool->start();
     for(;;)
     {

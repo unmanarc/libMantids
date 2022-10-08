@@ -8,7 +8,7 @@
 
 #include "atomicexpressionside.h"
 
-namespace Mantids { namespace Scripts { namespace Expressions {
+namespace Mantids3 { namespace Scripts { namespace Expressions {
 
 
 

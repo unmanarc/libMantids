@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Mantids { namespace Helpers {
+namespace Mantids3 { namespace Helpers {
 
 struct sLocalSysInfo
 {

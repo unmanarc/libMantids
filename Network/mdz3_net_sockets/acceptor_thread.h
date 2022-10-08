@@ -4,7 +4,7 @@
 #include <thread>
 #include "socket_streambase.h"
 
-namespace Mantids { namespace Network { namespace Sockets { namespace Acceptors {
+namespace Mantids3 { namespace Network { namespace Sockets { namespace Acceptors {
 
 /**
  * Class for managing the client on his thread.

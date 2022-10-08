@@ -7,7 +7,7 @@
 #include <mutex>
 #include <atomic>
 
-namespace Mantids { namespace Authentication {
+namespace Mantids3 { namespace Authentication {
 
 
 struct sAuthenticationPolicy

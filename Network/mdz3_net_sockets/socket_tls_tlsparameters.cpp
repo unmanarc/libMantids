@@ -9,7 +9,7 @@
 #include <stdexcept>
 
 using namespace std;
-using namespace Mantids::Network::Sockets;
+using namespace Mantids3::Network::Sockets;
 
 #ifdef _WIN32
 #define FS_DIRSLASH "\\"
@@ -481,7 +481,7 @@ bool Socket_TLS::TLSKeyParameters::loadCAFromPEMMemory(const char *caCrtPEMData,
 #endif
 
     sTLSCertificateAuthorityPath =
-            fsDirectoryPath + std::string(FS_DIRSLASH) + "ca_" + (suffix? std::string(suffix) : Mantids::Helpers::Random::createRandomHexString(8)) + ".crt";
+            fsDirectoryPath + std::string(FS_DIRSLASH) + "ca_" + (suffix? std::string(suffix) : Mantids3::Helpers::Random::createRandomHexString(8)) + ".crt";
 
     Memory::Streams::StreamableFile sFile;
     if (sFile.open( sTLSCertificateAuthorityPath.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0600 )==-1)

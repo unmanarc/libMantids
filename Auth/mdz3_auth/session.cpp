@@ -4,7 +4,7 @@
 #include <mdz3_helpers/random.h>
 #include <mdz3_threads/lock_shared.h>
 
-using namespace Mantids::Authentication;
+using namespace Mantids3::Authentication;
 
 
 
@@ -223,7 +223,7 @@ void Session::setLastActivity(const time_t &value)
 
 std::string Session::createNewSessionIDStr()
 {
-    return Mantids::Helpers::Random::createRandomString(32);
+    return Mantids3::Helpers::Random::createRandomString(32);
 }
 
 void Session::setAuthUser(const std::string &value)

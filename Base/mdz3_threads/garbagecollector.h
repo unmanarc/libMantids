@@ -6,7 +6,7 @@
 #include <condition_variable>
 #include <mutex>
 
-namespace Mantids { namespace Threads {
+namespace Mantids3 { namespace Threads {
 
 class GarbageCollector
 {

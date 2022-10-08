@@ -10,7 +10,7 @@
 #include <mdz3_helpers/mem.h>
 #include <string.h>
 
-using namespace Mantids::Memory::Abstract;
+using namespace Mantids3::Memory::Abstract;
 
 IPV4::IPV4()
 {

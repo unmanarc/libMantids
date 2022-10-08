@@ -2,7 +2,7 @@
 #include "mdz3_threads/lock_rd.h"
 #include "mdz3_threads/lock_rw.h"
 
-using namespace Mantids::Authentication;
+using namespace Mantids3::Authentication;
 
 Session_Vars::Session_Vars()
 {

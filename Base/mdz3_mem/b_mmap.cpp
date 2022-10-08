@@ -3,7 +3,7 @@
 #include <sys/timeb.h>
 #include <random>
 
-using namespace Mantids::Memory::Containers;
+using namespace Mantids3::Memory::Containers;
 
 #ifdef _WIN32
 #define FS_DIRSLASH "\\"

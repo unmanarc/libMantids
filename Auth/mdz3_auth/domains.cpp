@@ -1,7 +1,7 @@
 #include "domains.h"
 
-using namespace Mantids::Authentication;
-using namespace Mantids;
+using namespace Mantids3::Authentication;
+using namespace Mantids3;
 
 Domains::Domains()
 {

@@ -5,7 +5,7 @@
 #include <mdz3_threads/lock_shared.h>
 
 
-using namespace Mantids::Network::Multiplexor;
+using namespace Mantids3::Network::Multiplexor;
 
 Socket_Multiplexed_Line::Socket_Multiplexed_Line()
 {

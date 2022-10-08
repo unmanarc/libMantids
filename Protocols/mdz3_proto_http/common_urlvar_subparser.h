@@ -3,7 +3,7 @@
 
 #include <mdz3_mem/subparser.h>
 
-namespace Mantids { namespace Protocols { namespace HTTP { namespace Common {
+namespace Mantids3 { namespace Protocols { namespace HTTP { namespace Common {
 
 class URLVar_SubParser : public Memory::Streams::SubParser
 {

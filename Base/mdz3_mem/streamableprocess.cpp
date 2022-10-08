@@ -2,17 +2,17 @@
 #ifndef _WIN32
 #include <string.h>
 
-Mantids::Memory::Streams::StreamableProcess::StreamableProcess(Helpers::AppSpawn *spawner)
+Mantids3::Memory::Streams::StreamableProcess::StreamableProcess(Helpers::AppSpawn *spawner)
 {
     this->spawner = spawner;
 }
 
-Mantids::Memory::Streams::StreamableProcess::~StreamableProcess()
+Mantids3::Memory::Streams::StreamableProcess::~StreamableProcess()
 {
     delete this->spawner;
 }
 
-bool Mantids::Memory::Streams::StreamableProcess::streamTo(StreamableObject *out, Status &wrStatUpd)
+bool Mantids3::Memory::Streams::StreamableProcess::streamTo(StreamableObject *out, Status &wrStatUpd)
 {
     Status cur;
     for (;;)
@@ -64,10 +64,10 @@ bool Mantids::Memory::Streams::StreamableProcess::streamTo(StreamableObject *out
    return true;
 }
 
-Mantids::Memory::Streams::StreamableObject::Status Mantids::Memory::Streams::StreamableProcess::write(const void *buf, const size_t &count, Status &wrStatUpd)
+Mantids3::Memory::Streams::StreamableObject::Status Mantids3::Memory::Streams::StreamableProcess::write(const void *buf, const size_t &count, Status &wrStatUpd)
 {
     // TODO:
-    Mantids::Memory::Streams::StreamableObject::Status status;
+    Mantids3::Memory::Streams::StreamableObject::Status status;
     status.succeed = false;
     status.finish = false;
     return status;

@@ -11,7 +11,7 @@
 
 #include <mdz3_threads/mapitem.h>
 
-namespace Mantids { namespace Authentication {
+namespace Mantids3 { namespace Authentication {
 
 struct sApplicationAttrib {
     bool operator<(const sApplicationAttrib & x) const
@@ -27,7 +27,7 @@ struct sClientDetails {
     std::string sIPAddr,sExtraData,sTLSCommonName,sUserAgent;
 };
 
-class AccountSecret_Validation : public Mantids::Threads::Safe::MapItem
+class AccountSecret_Validation : public Mantids3::Threads::Safe::MapItem
 {
 public:
     AccountSecret_Validation();

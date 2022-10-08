@@ -7,7 +7,7 @@
 #include <mdz3_mem/b_base.h>
 #include <mdz3_proto_mime/mime_message.h>
 
-namespace Mantids { namespace Protocols { namespace HTTP { namespace Common {
+namespace Mantids3 { namespace Protocols { namespace HTTP { namespace Common {
 
 class Content : public Memory::Streams::SubParser
 {

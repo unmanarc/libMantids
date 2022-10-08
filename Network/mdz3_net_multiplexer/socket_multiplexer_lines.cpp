@@ -2,7 +2,7 @@
 #include "socket_multiplexer.h"
 #include <mdz3_threads/lock_shared.h>
 
-using namespace Mantids::Network::Multiplexor;
+using namespace Mantids3::Network::Multiplexor;
 
 Socket_Multiplexer_Lines::Socket_Multiplexer_Lines()
 {

@@ -18,7 +18,7 @@
 #define HTTP_PRODUCT_VERSION_MAJOR 0
 #define HTTP_PRODUCT_VERSION_MINOR 4
 
-namespace Mantids { namespace Protocols { namespace HTTP {
+namespace Mantids3 { namespace Protocols { namespace HTTP {
 
 
 class HTTPv1_Base : public Memory::Streams::Parser
@@ -126,7 +126,7 @@ public:
         /**
          * @brief clientRequest - URL Request (Request type, URL, GET Vars, and HTTP version)
          */
-        Mantids::Protocols::HTTP::Request::RequestLine requestLine;
+        Mantids3::Protocols::HTTP::Request::RequestLine requestLine;
         /**
          * @brief content - Content Data.
          */
@@ -237,7 +237,7 @@ public:
         /**
          * @brief code Response - Server code response. (HTTP Version, Response code, message)
          */
-        Mantids::Protocols::HTTP::Status status;
+        Mantids3::Protocols::HTTP::Status status;
         /**
          * @brief content - Content Data.
          */

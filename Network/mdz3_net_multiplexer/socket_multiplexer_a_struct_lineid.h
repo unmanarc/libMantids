@@ -6,7 +6,7 @@
 
 #define NULL_LINE std::numeric_limits<LineID>::max()
 
-namespace Mantids { namespace Network { namespace Multiplexor { namespace DataStructs {
+namespace Mantids3 { namespace Network { namespace Multiplexor { namespace DataStructs {
 
 struct sLineID
 {

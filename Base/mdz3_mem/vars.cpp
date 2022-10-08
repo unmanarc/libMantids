@@ -1,6 +1,6 @@
 #include "vars.h"
 
-using namespace Mantids::Memory::Abstract;
+using namespace Mantids3::Memory::Abstract;
 
 Vars::Vars()
 {

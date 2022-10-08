@@ -3,7 +3,7 @@
 #include <string.h>
 
 using namespace std;
-using namespace Mantids::Helpers;
+using namespace Mantids3::Helpers;
 
 unsigned char Mem::cmpMatrix[] =
 {

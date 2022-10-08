@@ -17,7 +17,7 @@
 #include <mdz3_helpers/mem.h>
 
 
-namespace Mantids { namespace Authentication {
+namespace Mantids3 { namespace Authentication {
 
 
 struct Secret_PublicData
@@ -46,7 +46,7 @@ struct Secret_PublicData
         std::map<std::string,std::string> r;
         r["VERSION"] = "1";
         r["PMODE"] = std::to_string(passwordFunction);
-        r["SALT"] = Mantids::Helpers::Encoders::toHex(ssalt,4);
+        r["SALT"] = Mantids3::Helpers::Encoders::toHex(ssalt,4);
         r["EXPIRATION"] = std::to_string(expiration);
         r["FORCE_EXPIRATION"] = std::string(forceExpiration?"1":"0");
         r["BAD_ATTEMPTS"] = badAttempts;
@@ -67,7 +67,7 @@ struct Secret_PublicData
     {
         if ( mget( mp, "VERSION" ) != "1" ) return false;
 
-        Mantids::Helpers::Encoders::fromHex(mget(mp,"SALT"),ssalt,4);
+        Mantids3::Helpers::Encoders::fromHex(mget(mp,"SALT"),ssalt,4);
         expiration = strtoull(mget(mp,"EXPIRATION").c_str(), nullptr, 10);
         forceExpiration = strtoul(mget(mp,"FORCE_EXPIRATION").c_str(), nullptr, 10)?true:false;
 
@@ -147,7 +147,7 @@ struct Secret
         r["VERSION"] = "1";
         r["PMODE"] = std::to_string(passwordFunction);
         r["HASH"] = hash;
-        r["SALT"] = Mantids::Helpers::Encoders::toHex(ssalt,4);
+        r["SALT"] = Mantids3::Helpers::Encoders::toHex(ssalt,4);
         r["EXPIRATION"] = std::to_string(expiration);
         r["FORCE_EXPIRATION"] = std::string(forceExpiration?"1":"0");
         r["GAUTH_STEPS"] = std::to_string(gAuthSteps);
@@ -166,7 +166,7 @@ struct Secret
         if ( mget( mp, "VERSION" ) != "1" ) return false;
 
         hash = mget(mp,"HASH");
-        Mantids::Helpers::Encoders::fromHex(mget(mp,"SALT"),ssalt,4);
+        Mantids3::Helpers::Encoders::fromHex(mget(mp,"SALT"),ssalt,4);
         expiration = strtoull(mget(mp,"EXPIRATION").c_str(), nullptr, 10);
         forceExpiration = strtoul(mget(mp,"FORCE_EXPIRATION").c_str(), nullptr, 10)?true:false;
         gAuthSteps = strtoul(mget(mp,"GAUTH_STEPS").c_str(), nullptr, 10);
@@ -249,12 +249,12 @@ static Secret createNewSecret(const std::string & passwordInput, const Function 
     } break;
     case FN_SSHA256:
     {
-        Mantids::Helpers::Random::createRandomSalt32(r.ssalt);
+        Mantids3::Helpers::Random::createRandomSalt32(r.ssalt);
         r.hash = Helpers::Crypto::calcSSHA256(passwordInput, r.ssalt);
     } break;
     case FN_SSHA512:
     {
-        Mantids::Helpers::Random::createRandomSalt32(r.ssalt);
+        Mantids3::Helpers::Random::createRandomSalt32(r.ssalt);
         r.hash = Helpers::Crypto::calcSSHA512(passwordInput, r.ssalt);
     } break;
     case FN_GAUTHTIME:

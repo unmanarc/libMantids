@@ -6,12 +6,12 @@
 #include <mdz3_helpers/appexec.h>
 #include "streamableobject.h"
 
-namespace Mantids { namespace Memory { namespace Streams {
+namespace Mantids3 { namespace Memory { namespace Streams {
 
 class StreamableProcess : public Memory::Streams::StreamableObject
 {
 public:
-    StreamableProcess(Mantids::Helpers::AppSpawn * spawner);
+    StreamableProcess(Mantids3::Helpers::AppSpawn * spawner);
     ~StreamableProcess();
     /**
      * Retrieve Stream to another Streamable.
@@ -23,7 +23,7 @@ public:
 
 private:
     bool streamStdOut,streamStdErr;
-    Mantids::Helpers::AppSpawn * spawner;
+    Mantids3::Helpers::AppSpawn * spawner;
 };
 
 }}}

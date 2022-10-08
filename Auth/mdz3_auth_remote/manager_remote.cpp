@@ -1,7 +1,7 @@
 #include "manager_remote.h"
 
-using namespace Mantids::Authentication;
-using namespace Mantids::RPC;
+using namespace Mantids3::Authentication;
+using namespace Mantids3::RPC;
 
 #define CKEY "SERVER"
 
@@ -301,7 +301,7 @@ json Manager_Remote::getStaticContent()
     return fastRPC->runRemoteRPCMethod(CKEY,"getStaticContent",payload,nullptr);
 }
 
-int Manager_Remote::processFastRPCConnection(Mantids::Network::Sockets::Socket_StreamBase *stream)
+int Manager_Remote::processFastRPCConnection(Mantids3::Network::Sockets::Socket_StreamBase *stream)
 {
     return fastRPC->processConnection(stream,CKEY);
 }

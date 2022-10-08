@@ -9,11 +9,11 @@
 
 // TODO: statistics
 
-namespace Mantids { namespace Network { namespace Sockets { namespace Acceptors {
+namespace Mantids3 { namespace Network { namespace Sockets { namespace Acceptors {
 /**
  * @brief The PoolThreaded class
  */
-class PoolThreaded : public Mantids::Threads::Threaded
+class PoolThreaded : public Mantids3::Threads::Threaded
 {
 public:
 
@@ -155,7 +155,7 @@ private:
 
     void init();
 
-    Mantids::Threads::Pool::ThreadPool * pool;
+    Mantids3::Threads::Pool::ThreadPool * pool;
     Sockets::Socket_StreamBase * acceptorSocket;
 
     _callbackConnectionRB callbackOnConnect;

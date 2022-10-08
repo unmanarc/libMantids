@@ -22,7 +22,7 @@
 #include <mdz3_helpers/mem.h>
 
 
-using namespace Mantids::Network::Interfaces;
+using namespace Mantids3::Network::Interfaces;
 
 VirtualNetworkInterface::VirtualNetworkInterface()
 {

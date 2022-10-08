@@ -19,7 +19,7 @@
 #include "a_varchar.h"
 #include "a_datetime.h"
 
-using namespace Mantids::Memory::Abstract;
+using namespace Mantids3::Memory::Abstract;
 
 Var::Var()
 {

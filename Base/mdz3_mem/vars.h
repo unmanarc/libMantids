@@ -7,7 +7,7 @@
 #include <list>
 #include <set>
 
-namespace Mantids { namespace Memory { namespace Abstract {
+namespace Mantids3 { namespace Memory { namespace Abstract {
 
 class Vars
 {
@@ -52,13 +52,13 @@ public:
      * @param varName variable name
      * @return first memory container abstract
      */
-    virtual Mantids::Memory::Streams::StreamableObject * getValue(const std::string & varName) = 0;
+    virtual Mantids3::Memory::Streams::StreamableObject * getValue(const std::string & varName) = 0;
     /**
      * @brief getValues Get all the memory containers associated with a variable name
      * @param varName variable name
      * @return list of memory containers abstracts
      */
-    virtual std::list<Mantids::Memory::Streams::StreamableObject *> getValues(const std::string & varName) = 0;
+    virtual std::list<Mantids3::Memory::Streams::StreamableObject *> getValues(const std::string & varName) = 0;
     /**
      * @brief getKeysList Get a set of all the registered variable names
      * @return set of all registered variable names

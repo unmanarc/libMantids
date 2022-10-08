@@ -1,7 +1,7 @@
 #include "streamablefile.h"
 #include <fcntl.h>
 
-using namespace Mantids::Memory::Streams;
+using namespace Mantids3::Memory::Streams;
 
 StreamableFile::StreamableFile(int _rd_fd, int _wr_fd)
 {

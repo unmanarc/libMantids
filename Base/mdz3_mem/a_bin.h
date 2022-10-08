@@ -5,7 +5,7 @@
 #include <mdz3_threads/mutex_shared.h>
 #include <string.h>
 
-namespace Mantids { namespace Memory { namespace Abstract {
+namespace Mantids3 { namespace Memory { namespace Abstract {
 
 
 class BINARY : public Var

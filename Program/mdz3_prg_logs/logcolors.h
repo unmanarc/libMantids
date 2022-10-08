@@ -1,7 +1,7 @@
 #ifndef LOGCOLORS_H
 #define LOGCOLORS_H
 
-namespace Mantids { namespace Application { namespace Logs {
+namespace Mantids3 { namespace Application { namespace Logs {
 
 enum eLogColors
 {

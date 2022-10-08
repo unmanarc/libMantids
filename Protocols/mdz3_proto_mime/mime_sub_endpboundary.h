@@ -3,7 +3,7 @@
 
 #include <mdz3_mem/subparser.h>
 
-namespace Mantids { namespace Protocols { namespace MIME {
+namespace Mantids3 { namespace Protocols { namespace MIME {
 
 
 #define ENDP_STAT_UNINITIALIZED -1

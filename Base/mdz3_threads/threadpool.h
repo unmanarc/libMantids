@@ -9,7 +9,7 @@
 #include <map>
 #include <condition_variable>
 
-namespace Mantids { namespace Threads {
+namespace Mantids3 { namespace Threads {
 
 namespace Pool {
 

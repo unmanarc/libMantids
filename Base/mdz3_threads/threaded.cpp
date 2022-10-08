@@ -1,7 +1,7 @@
 #include "threaded.h"
 #include <iostream>
 
-using namespace Mantids::Threads;
+using namespace Mantids3::Threads;
 
 Threaded::Threaded()
 {

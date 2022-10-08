@@ -1,6 +1,6 @@
 #include "streamablenull.h"
 
-using namespace Mantids::Memory::Streams;
+using namespace Mantids3::Memory::Streams;
 
 StreamableNull::StreamableNull()
 {

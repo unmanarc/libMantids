@@ -10,7 +10,7 @@
 #include <mdz3_threads/lock_shared.h>
 #include <mdz3_helpers/mem.h>
 
-using namespace Mantids::Memory::Abstract;
+using namespace Mantids3::Memory::Abstract;
 
 IPV6::IPV6()
 {

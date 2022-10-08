@@ -25,7 +25,7 @@
 #include <mdz3_helpers/appexec.h>
 
 
-using namespace Mantids::Network::Interfaces;
+using namespace Mantids3::Network::Interfaces;
 
 NetIfConfig::NetIfConfig()
 {
@@ -129,14 +129,14 @@ bool NetIfConfig::apply()
 #else
     if (changeIPv4Addr)
     {
-        auto i = Mantids::Helpers::AppExec::blexec(createNetSHCMD({"interface",
+        auto i = Mantids3::Helpers::AppExec::blexec(createNetSHCMD({"interface",
                                                                "ipv4",
                                                                "set",
                                                                "address",
                                                                std::string("name="+std::to_string(adapterIndex)),
                                                                "static",
-                                                               Mantids::Memory::Abstract::IPV4::_toString(address),
-                                                               Mantids::Memory::Abstract::IPV4::_toString(netmask)
+                                                               Mantids3::Memory::Abstract::IPV4::_toString(address),
+                                                               Mantids3::Memory::Abstract::IPV4::_toString(netmask)
                                                               }));
         if (i.error==0)
             changeIPv4Addr = false;
@@ -149,7 +149,7 @@ bool NetIfConfig::apply()
 
     if (changeMTU)
     {
-        auto i = Mantids::Helpers::AppExec::blexec(createNetSHCMD({"interface",
+        auto i = Mantids3::Helpers::AppExec::blexec(createNetSHCMD({"interface",
                                                                "ipv4",
                                                                "set",
                                                                "interface",
@@ -212,17 +212,17 @@ NetIfConfig::NetIfType NetIfConfig::getNetIfType() const
 
 #ifdef _WIN32
 
-Mantids::Helpers::AppExec::sAppExecCmd NetIfConfig::createRouteCMD(const std::vector<std::string> &routecmdopts)
+Mantids3::Helpers::AppExec::sAppExecCmd NetIfConfig::createRouteCMD(const std::vector<std::string> &routecmdopts)
 {
-    Mantids::Helpers::AppExec::sAppExecCmd x;
+    Mantids3::Helpers::AppExec::sAppExecCmd x;
     x.arg0 = getRouteExecPath();
     x.args = routecmdopts;
     return x;
 }
 
-Mantids::Helpers::AppExec::sAppExecCmd NetIfConfig::createNetSHCMD(const std::vector<std::string> &netshcmdopts)
+Mantids3::Helpers::AppExec::sAppExecCmd NetIfConfig::createNetSHCMD(const std::vector<std::string> &netshcmdopts)
 {
-    Mantids::Helpers::AppExec::sAppExecCmd x;
+    Mantids3::Helpers::AppExec::sAppExecCmd x;
     x.arg0 = getNetSHExecPath();
     x.args = netshcmdopts;
     return x;
