@@ -27,6 +27,8 @@ project(${PROJECT_NAME} VERSION ${SVERSION} DESCRIPTION "Mini-Advanced Network T
 include(GNUInstallDirs)
 ##############################################################################################################################
 
+option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
+
 #############################################################################################################################
 # Subprojects:
 ADD_SUBDIRECTORY(Base)
