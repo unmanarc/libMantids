@@ -108,6 +108,7 @@ sLocalSysInfo OS::getLocalSysInfo()
                     x.osVersion += " (Kernel " + std::string(kernelFullVersion) + ")";
                 }
 
+                free(kernelFullVersion);
             }
         }
         infile.close();
