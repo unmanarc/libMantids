@@ -645,7 +645,9 @@ Status::eRetCode WebClientHandler::procResource_File(MultiAuths *extraAuths)
     // If the URL is going to process the Interactive HTML Engine,
     // and the document content is text/html, then, process it as HTMLIEngine:
     if ( useHTMLIEngine && serverResponse.contentType == "text/html" ) // The content type has changed during the map.
-        procResource_HTMLIEngine(fileInfo.sRealFullPath,extraAuths);
+    {
+        ret = procResource_HTMLIEngine(fileInfo.sRealFullPath,extraAuths);
+    }
 
     // And if the file is not found and there are redirections, set the redirection:
     if (ret==HTTP::Status::S_404_NOT_FOUND && !redirectOn404.empty())
