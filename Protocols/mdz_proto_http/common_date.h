@@ -3,6 +3,7 @@
 
 #include <time.h>
 #include <string>
+#include <stdint.h>
 
 namespace Mantids { namespace Protocols { namespace HTTP { namespace Common {
 
