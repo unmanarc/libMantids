@@ -2,6 +2,7 @@
 #define ABSTRACTVAR_H
 
 #include <string>
+#include <stdint.h>
 
 namespace Mantids { namespace Memory { namespace Abstract {
 

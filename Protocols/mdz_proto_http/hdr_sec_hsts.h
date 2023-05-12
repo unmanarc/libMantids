@@ -2,6 +2,8 @@
 #define HTTP_SECURITY_HSTS_H
 
 #include <string>
+#include <stdint.h>
+
 namespace Mantids { namespace Protocols { namespace HTTP { namespace Headers { namespace Security {
 
 class HSTS
