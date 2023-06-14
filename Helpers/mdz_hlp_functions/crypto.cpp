@@ -10,9 +10,7 @@
 #include <sys/types.h>
 
 using namespace Mantids::Helpers;
-
-
-std::string Crypto::AES256EncryptB64(const unsigned char * input, uint32_t inputLen, const char * key, uint32_t keyLen, bool * ok)
+std::string Crypto::AES256EncryptB64_v0(const unsigned char *input, uint32_t inputLen, const char *key, uint32_t keyLen, int ivLength, bool *ok)
 {
     std::string out;
     if (ok)
@@ -35,7 +33,7 @@ std::string Crypto::AES256EncryptB64(const unsigned char * input, uint32_t input
         // Initialize the encryption...
         if ((err = EVP_EncryptInit_ex(ctx, EVP_aes_256_gcm(), nullptr, derivedKey, salt)) == 1)
         {
-            if (EVP_CIPHER_CTX_ctrl(ctx, EVP_CTRL_GCM_SET_IVLEN, 16, NULL))
+            if (EVP_CIPHER_CTX_ctrl(ctx, EVP_CTRL_GCM_SET_IVLEN, ivLength, NULL))
             {
                 int len;
                 uint32_t cipherOutLength = 32;
@@ -67,17 +65,7 @@ std::string Crypto::AES256EncryptB64(const unsigned char * input, uint32_t input
     return out;
 }
 
-std::string Crypto::AES256EncryptB64(const std::string &input, const char *key, uint32_t keyLen, bool *ok)
-{
-    return AES256EncryptB64((unsigned char *)input.c_str(),input.length(),key,keyLen,ok);
-}
-
-std::string Crypto::AES256EncryptB64(const std::string &input,  const std::string &key, bool *ok)
-{
-    return AES256EncryptB64((unsigned char *)input.c_str(),input.length(),key.c_str(),key.length(),ok);
-}
-
-std::shared_ptr<Mem::xBinContainer> Crypto::AES256DecryptB64ToBin(const std::string &input, const char *key, uint32_t keyLen, bool *ok)
+std::shared_ptr<Mem::xBinContainer> Crypto::AES256DecryptB64ToBin_v0(const std::string &input, const char *key, uint32_t keyLen, int ivLength, bool *ok)
 {
     if (ok)
         *ok = false;
@@ -89,7 +77,7 @@ std::shared_ptr<Mem::xBinContainer> Crypto::AES256DecryptB64ToBin(const std::str
 
     auto dec = Helpers::Encoders::fromBase64ToBin(input);
 
-    if (dec->data && dec->cur>=32)
+    if (dec->data && dec->usedSize>=32)
     {
         uint8_t salt[128/8],derivedKey[256/8],gcmTag[16];
         unsigned char * encryptedData = ((unsigned char *)dec->data)+32;
@@ -109,18 +97,18 @@ std::shared_ptr<Mem::xBinContainer> Crypto::AES256DecryptB64ToBin(const std::str
             // Initialize the encryption...
             if ((err = EVP_DecryptInit_ex(ctx, EVP_aes_256_gcm(), nullptr, derivedKey, salt)) == 1)
             {
-                if (EVP_CIPHER_CTX_ctrl(ctx, EVP_CTRL_GCM_SET_IVLEN, 16, NULL))
+                if (EVP_CIPHER_CTX_ctrl(ctx, EVP_CTRL_GCM_SET_IVLEN, ivLength, NULL))
                 {
                     int len=-1;
-                    if (EVP_DecryptUpdate(ctx, (unsigned char *) r->data, &len,  (unsigned char *) dec->data+32, dec->cur-32 ) == 1 && len>=0)
+                    if (EVP_DecryptUpdate(ctx, (unsigned char *) r->data, &len,  (unsigned char *) dec->data+32, dec->usedSize-32 ) == 1 && len>=0)
                     {
-                        r->cur+=len;
+                        r->usedSize+=len;
 
                         if (EVP_CIPHER_CTX_ctrl(ctx, EVP_CTRL_GCM_SET_TAG, 16, (void*)gcmTag))
                         {
-                            if ((err = EVP_DecryptFinal_ex(ctx, (unsigned char *) r->data + r->cur, &len)) == 1 && len>=0)
+                            if ((err = EVP_DecryptFinal_ex(ctx, (unsigned char *) r->data + r->usedSize, &len)) == 1 && len>=0)
                             {
-                                r->cur += len;
+                                r->usedSize += len;
 
                                 // OK...
                                 if (ok)
@@ -141,6 +129,41 @@ std::shared_ptr<Mem::xBinContainer> Crypto::AES256DecryptB64ToBin(const std::str
     return r;
 }
 
+std::string Crypto::AES256EncryptB64(const unsigned char * input, uint32_t inputLen, const char * key, uint32_t keyLen, bool * ok)
+{
+    return Crypto::AES256EncryptB64_v0(input, inputLen,key, keyLen, 16, ok);
+}
+
+std::string Crypto::AES256EncryptB64(const std::string &input, const char *key, uint32_t keyLen, bool *ok)
+{
+    return AES256EncryptB64((unsigned char *)input.c_str(),input.length(),key,keyLen,ok);
+}
+
+std::string Crypto::AES256EncryptB64(const std::string &input,  const std::string &key, bool *ok)
+{
+    return AES256EncryptB64((unsigned char *)input.c_str(),input.length(),key.c_str(),key.length(),ok);
+}
+
+std::string Crypto::AES256EncryptB64v2(const unsigned char *input, uint32_t inputLen, const char *key, uint32_t keyLen, bool *ok)
+{
+    return Crypto::AES256EncryptB64_v0(input, inputLen,key, keyLen, 12, ok);
+}
+
+std::string Crypto::AES256EncryptB64v2(const std::string &input, const char *key, uint32_t keyLen, bool *ok)
+{
+    return AES256EncryptB64v2((unsigned char *)input.c_str(),input.length(),key,keyLen,ok);
+}
+
+std::string Crypto::AES256EncryptB64v2(const std::string &input, const std::string &key, bool *ok)
+{
+    return AES256EncryptB64v2((unsigned char *)input.c_str(),input.length(),key.c_str(),key.length(),ok);
+}
+
+
+std::shared_ptr<Mem::xBinContainer> Crypto::AES256DecryptB64ToBin(const std::string &input, const char *key, uint32_t keyLen, bool *ok)
+{
+    return AES256DecryptB64ToBin_v0(input,key,keyLen,16,ok);
+}
 
 std::string Crypto::AES256DecryptB64(const std::string &input,  const char * key, uint32_t keyLen, bool *ok)
 {
@@ -149,6 +172,22 @@ std::string Crypto::AES256DecryptB64(const std::string &input,  const char * key
 std::string Crypto::AES256DecryptB64(const std::string &input,  const std::string & key, bool *ok)
 {
     return AES256DecryptB64ToBin(input,key.c_str(),key.length(),ok)->toString();
+}
+
+std::shared_ptr<Mem::xBinContainer> Crypto::AES256DecryptB64ToBinv2(const std::string &input, const char *key, uint32_t keyLen, bool *ok)
+{
+    return AES256DecryptB64ToBin_v0(input,key,keyLen,12,ok);
+}
+
+std::string Crypto::AES256DecryptB64v2(const std::string &input, const char *key, uint32_t keyLen, bool *ok)
+{
+    return AES256DecryptB64ToBinv2(input,key,keyLen,ok)->toString();
+}
+
+std::string Crypto::AES256DecryptB64v2(const std::string &input, const std::string &key, bool *ok)
+{
+    return AES256DecryptB64ToBinv2(input,key.c_str(),key.length(),ok)->toString();
+
 }
 
 std::string Crypto::calcSHA256(const std::string &password)
@@ -196,3 +235,4 @@ std::string Crypto::calcSSHA512(const std::string &password, const unsigned char
     SHA512_Final ( buffer_sha2, &sha2);
     return Encoders::toHex(buffer_sha2,SHA512_DIGEST_LENGTH);
 }
+
