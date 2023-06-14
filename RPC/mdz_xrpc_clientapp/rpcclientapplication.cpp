@@ -54,7 +54,7 @@ bool RPCClientApplication::_config(int argc, char *argv[], Mantids::Application:
         auto masterKey = Globals::getMasterKey();
         sleep(1);
         bool ok;
-        printf("%s\n", Helpers::Crypto::AES256EncryptB64(globalArguments->getCommandLineOptionValue("encode")->toString(),(char *)masterKey->data,masterKey->len,&ok).c_str());
+        printf("%s\n", Helpers::Crypto::AES256EncryptB64(globalArguments->getCommandLineOptionValue("encode")->toString(),(char *)masterKey->data,masterKey->usedSize,&ok).c_str());
         fflush(stdout);
         exit(0);
     }
@@ -172,7 +172,7 @@ int RPCClientApplication::_start(int argc, char *argv[], Mantids::Application::A
                 bool ok = false;
                 // Load Key
                 keyPassPhrase = Mantids::Helpers::Crypto::AES256DecryptB64( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
-                                                                            ,(char *)masterKey->data,masterKey->len,&ok
+                                                                           ,(char *)masterKey->data,masterKey->usedSize,&ok
                                                                             );
                 if (!ok)
                 {

@@ -43,22 +43,25 @@ class Mem
 public:
     Mem();
 
-    struct xBinContainer
+    class xBinContainer
     {
+    public:
         xBinContainer(const char * data , const uint64_t &len);
         xBinContainer(const uint64_t &len);
         ~xBinContainer();
 
         std::string toString()
         {
-            std::string r((char *)data,len);
+            std::string r((char *)data,usedSize);
             return r;
         }
 
         void operator+=( const unsigned char & c );
 
-        void * data;
-        uint64_t len, cur;
+        void * data = nullptr;
+        uint64_t usedSize = 0;
+    private:
+        uint64_t containerLength = 0;
     };
 
     static bool icharcmp(unsigned char c1,unsigned  char c2);

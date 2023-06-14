@@ -71,7 +71,7 @@ void RPCClientImpl::runRPClient()
                 bool ok = false;
                 // Load Key
                 std::string keyPassPhrase = Mantids::Helpers::Crypto::AES256DecryptB64( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
-                                                                            ,(char *)masterKey->data,masterKey->len,&ok
+                                                                                       ,(char *)masterKey->data,masterKey->usedSize,&ok
                                                                             );
 
                 if (!sockRPCClient.keys.loadPrivateKeyFromPEMFileEP(  privKeyPath.c_str(), keyPassPhrase.c_str() ))
@@ -276,7 +276,7 @@ RPCClientImpl::PSKIdKey RPCClientImpl::loadPSK()
     }
     else
     {
-        std::string tokenizedKey = Mantids::Helpers::Crypto::AES256DecryptB64( encryptedKey,(char *)masterKey->data,masterKey->len,&ok );
+        std::string tokenizedKey = Mantids::Helpers::Crypto::AES256DecryptB64( encryptedKey,(char *)masterKey->data,masterKey->usedSize,&ok );
         std::vector<std::string> keyParts;
         split(keyParts,tokenizedKey,is_any_of(":"),token_compress_on);
         if (!ok || keyParts.size()!=2)
