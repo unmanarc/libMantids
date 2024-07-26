@@ -1,3 +1,3 @@
-ADD_SUBDIRECTORY(mdz_proto_http)
 ADD_SUBDIRECTORY(mdz_proto_linerecv)
 ADD_SUBDIRECTORY(mdz_proto_mime)
+ADD_SUBDIRECTORY(mdz_proto_http)
