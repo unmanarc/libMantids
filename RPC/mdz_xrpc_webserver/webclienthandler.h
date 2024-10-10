@@ -10,7 +10,6 @@
 #include <mdz_xrpc_common/multiauths.h>
 
 #include <mdz_prg_logs/rpclog.h>
-#include <mutex>
 
 namespace Mantids { namespace RPC { namespace Web {
 
@@ -59,6 +58,16 @@ private:
 
     Protocols::HTTP::Status::eRetCode procResource_File(MultiAuths *extraAuths);
     Protocols::HTTP::Status::eRetCode procResource_HTMLIEngine(const std::string &sRealFullPath, MultiAuths *extraAuths);
+
+
+    void procResource_HTMLIEngineInclude(const std::string &sRealFullPath, std::string & fileContent);
+    void procResource_HTMLIEngineJFUNC(std::string & fileContent, MultiAuths *extraAuths);
+    void procResource_HTMLIEngineJGETVAR(const std::string &sRealFullPath, std::string &fileContent);
+    void procResource_HTMLIEngineJPOSTVAR(const std::string &sRealFullPath, std::string &fileContent);
+    void procResource_HTMLIEngineJSESSVAR(const std::string &sRealFullPath, std::string &fileContent);
+    void procResource_HTMLIEngineJVAR(const std::string &sRealFullPath, std::string &fileContent);
+
+
 
     Protocols::HTTP::Status::eRetCode procJAPI_Session();
     Protocols::HTTP::Status::eRetCode procJAPI_Session_AUTHINFO();

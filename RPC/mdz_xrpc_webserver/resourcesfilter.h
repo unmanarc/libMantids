@@ -1,8 +1,15 @@
 #ifndef RESOURCESFILTER_H
 #define RESOURCESFILTER_H
 
-#define BOOST_BIND_GLOBAL_PLACEHOLDERS 1
+
+#ifdef USE_STD_REGEX
+#include <regex>
+#else
 #include <boost/regex.hpp>
+#endif
+
+
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS 1
 
 #include <string>
 #include <list>
@@ -45,7 +52,11 @@ public:
             for ( const auto &i : regexs )
             {
                 this->sRegexs.push_back(i);
+#ifdef USE_STD_REGEX
+                this->regexs.push_back( std::regex(i.c_str(),std::regex_constants::extended ));
+#else
                 this->regexs.push_back( boost::regex(i.c_str(),boost::regex::extended ));
+#endif
             }
             this->redirectLocation = redirectLocation;
             this->action = action;
@@ -86,7 +97,11 @@ public:
                         "Action: " + actionToString(action);
         }
 
+#ifdef USE_STD_REGEX
+        std::list<std::regex> regexs;
+#else
         std::list<boost::regex> regexs;
+#endif
         std::string redirectLocation;
         std::list<std::string> reqAttrib, rejAttrib, sRegexs;
         eFilterActions action;

@@ -3,6 +3,13 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/algorithm/string/case_conv.hpp>
 
+#ifdef USE_STD_REGEX
+#include <regex>
+#else
+#include <boost/regex.hpp>
+#endif
+
+
 using namespace boost;
 using namespace Mantids::RPC::Web;
 
@@ -137,10 +144,18 @@ Mantids::RPC::Web::ResourcesFilter::sFilterEvaluation ResourcesFilter::evaluateA
        /* printf("\nRule %d match attributes, checking regex.\n", ruleId);
         fflush(stdout);
 */
-        boost::cmatch what;
+#ifdef USE_STD_REGEX
+        std::smatch what;  // std::smatch para std::regex
+#else
+        boost::cmatch what;  // boost::cmatch para boost::regex
+#endif
         for (const auto & i : filter.regexs)
         {
-            if (boost::regex_match(uri.c_str(), what, i))
+#ifdef USE_STD_REGEX
+            if (std::regex_match(uri, what, i))// std::regex_match
+#else
+            if (boost::regex_match(uri.c_str(), what, i)) // boost::regex_match
+#endif
             {
               /*  printf("Rule %d match regex, returning action.\n", ruleId);
                 fflush(stdout);
