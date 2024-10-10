@@ -43,6 +43,15 @@ cd ../libMantids-BuildWin32
 mingw32-make.exe -j12 install
 ```
 
+and if you are using a recent MSYS that does not comes with boost::regex, you can do as follow:
+
+```
+cmake . -DUSE_STD_REGEX=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX:PATH=$HOME/ROOT -DCMAKE_INSTALL_LIBDIR=lib -B../libMantids-BuildWin32 -DCMAKE_C_COMPILER=/mingw64/bin/gcc.exe -DCMAKE_CXX_COMPILER=/mingw64/bin/g++.exe -G "MinGW Makefiles"
+cd ../libMantids-BuildWin32
+mingw32-make.exe -j12 install
+```
+
+
 
 Note: please replace `$HOME/ROOT` prefix installation for your own target dir.
 
