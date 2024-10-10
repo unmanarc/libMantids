@@ -1,11 +1,12 @@
 #include "jsoneval.h"
 
-#include <boost/regex.hpp>
+
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/algorithm/string.hpp>
 
 #include <cctype>
 #include <clocale>
+#include <regex>
 
 using namespace std;
 using namespace Mantids::Scripts::Expressions;
@@ -57,24 +58,30 @@ bool JSONEval::compile(std::string expr)
     boost::trim(expr);
     expression = expr;
 
-    boost::match_flag_type flags = boost::match_default;
-
     // PRECOMPILE _STATIC_TEXT
-    boost::regex exStaticText("\"(?<STATIC_TEXT>[^\"]*)\"");
-    boost::match_results<string::const_iterator> whatStaticText;
-    for (string::const_iterator start = expr.begin(), end =  expr.end();
-         boost::regex_search(start, end, whatStaticText, exStaticText, flags);
-         start = expr.begin(), end =  expr.end())
-    {
+    std::regex exStaticText("\"([^\"]*)\"");  // Using std::regex for C++11
+    std::smatch whatStaticText;
+    std::string::const_iterator start = expr.begin();
+    std::string::const_iterator end = expr.end();
+
+    // Loop through the matches
+    while (std::regex_search(start, end, whatStaticText, exStaticText)) {
         uint64_t pos = staticTexts->size();
         char _staticmsg[128];
 #ifdef _WIN32
-        snprintf(_staticmsg,sizeof(_staticmsg),"_STATIC_%llu",pos);
+        snprintf(_staticmsg, sizeof(_staticmsg), "_STATIC_%llu", pos);
 #else
-        snprintf(_staticmsg,sizeof(_staticmsg),"_STATIC_%lu",pos);
-#endif
-        staticTexts->push_back(string(whatStaticText[1].first, whatStaticText[1].second));
-        boost::replace_all(expr,"\"" + string(whatStaticText[1].first, whatStaticText[1].second) + "\"" ,_staticmsg);
+        snprintf(_staticmsg, sizeof(_staticmsg), "_STATIC_%lu", pos);
+#endif \
+    // Store matched static text
+        staticTexts->push_back(std::string(whatStaticText[1].first, whatStaticText[1].second));
+
+        // Replace the matched part in the original string using boost::replace_all
+        boost::replace_all(expr, "\"" + std::string(whatStaticText[1].first, whatStaticText[1].second) + "\"", _staticmsg);
+
+        // Reset iterators after replacement to rescan the modified string
+        start = expr.begin();  // Restart from the beginning of the string
+        end = expr.end();      // and re-adjust the end
     }
 
     if (expr.find('\"') != std::string::npos)

@@ -1,7 +1,6 @@
 #include "atomicexpressionside.h"
 #include <boost/algorithm/string.hpp>
 #include <json/value.h>
-#include <iostream>
 
 using namespace Mantids::Scripts::Expressions;
 
@@ -92,15 +91,26 @@ set<string> AtomicExpressionSide::resolve(const json &v, bool resolveRegex, bool
     }
 }
 
+#ifdef USE_STD_REGEX
+std::regex *AtomicExpressionSide::getRegexp() const
+{
+    return regexp;
+}
+void AtomicExpressionSide::setRegexp(std::regex *value)
+{
+    regexp = value;
+}
+#else
 boost::regex *AtomicExpressionSide::getRegexp() const
 {
     return regexp;
 }
-
 void AtomicExpressionSide::setRegexp(boost::regex *value)
 {
     regexp = value;
 }
+#endif
+
 
 Mantids::Scripts::Expressions::AtomicExpressionSide::eExpressionSideMode AtomicExpressionSide::getMode() const
 {
@@ -111,8 +121,12 @@ set<string> AtomicExpressionSide::recompileRegex(const string &r, bool ignoreCas
 {
     if (!regexp)
     {
+#ifdef USE_STD_REGEX
+        regexp = new std::regex(r, ignoreCase ? (std::regex_constants::extended | std::regex_constants::icase) : std::regex_constants::extended);
+#else
         regexp = new boost::regex(r.c_str(),
                                   ignoreCase? (boost::regex::extended|boost::regex::icase) : (boost::regex::extended) );
+#endif
     }
     return {};
 }

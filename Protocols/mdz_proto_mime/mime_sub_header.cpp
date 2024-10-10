@@ -1,10 +1,11 @@
 #include "mime_sub_header.h"
-#include <boost/regex.hpp>
+
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/split.hpp>
 
 #include <mdz_hlp_functions/random.h>
+#include <regex>
 
 using namespace boost;
 using namespace boost::algorithm;
@@ -180,27 +181,35 @@ void MIME_Sub_Header::parseSubValues(MIME_HeaderOption * opt, const std::string 
 
     boost::trim(sVarValues);
 
-    boost::match_flag_type flags = boost::match_default;
+    // Use C++11 regex
+    std::regex exStaticText("\"([^\"]*)\"");
+    std::smatch whatStaticText;
+    std::string::const_iterator start = sVarValues.begin();
+    std::string::const_iterator end = sVarValues.end();
 
-    // PRECOMPILE _STATIC_TEXT
-    boost::regex exStaticText("\"(?<STATIC_TEXT>[^\"]*)\"");
-    boost::match_results<string::const_iterator> whatStaticText;
-    for (string::const_iterator start = sVarValues.begin(), end =  sVarValues.end();
-         boost::regex_search(start, end, whatStaticText, exStaticText, flags);
-         start = sVarValues.begin(), end =  sVarValues.end())
-    {
+    // Loop through the matches
+    while (std::regex_search(start, end, whatStaticText, exStaticText)) {
         uint64_t pos = vStaticTexts.size();
         char _staticmsg[128];
 
+// Construct the static message
 #ifdef _WIN32
-        snprintf(_staticmsg,sizeof(_staticmsg),"_STATIC_%s_%llu",secureReplace.c_str(),pos);
+        snprintf(_staticmsg, sizeof(_staticmsg), "_STATIC_%s_%llu", secureReplace.c_str(), pos);
 #else
-        snprintf(_staticmsg,sizeof(_staticmsg),"_STATIC_%s_%lu",secureReplace.c_str(),pos);
+        snprintf(_staticmsg, sizeof(_staticmsg), "_STATIC_%s_%lu", secureReplace.c_str(), pos);
 #endif
 
-        vStaticTexts.push_back(string(whatStaticText[1].first, whatStaticText[1].second));
-        boost::replace_all(sVarValues,"\"" + string(whatStaticText[1].first, whatStaticText[1].second) + "\"" ,_staticmsg);
+        // Add the matched static text to the vector
+        vStaticTexts.push_back(std::string(whatStaticText[1].first, whatStaticText[1].second));
+
+        // Replace the matched text in the string using boost::replace_all
+        boost::replace_all(sVarValues, "\"" + std::string(whatStaticText[1].first, whatStaticText[1].second) + "\"", _staticmsg);
+
+        // Reset the start iterator to continue searching in the modified string
+        start = sVarValues.begin();  // Restart from the beginning of the modified string
+        end = sVarValues.end();
     }
+
 
     vector<string> vValues;
     split(vValues,sVarValues,is_any_of(";"),token_compress_on);

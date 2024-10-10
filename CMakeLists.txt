@@ -16,6 +16,9 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 
 option(BUILD_SHARED_LIBS "Enable building the library as a shared library instead of a static one." ON)
+# Create an option to toggle between C++11 and C++17 for regex handling
+option(USE_STD_REGEX "Use std::regex from C++17 if Boost regex is not available" OFF)
+
 ##############################################################################################################################
 
 ##############################################################################################################################

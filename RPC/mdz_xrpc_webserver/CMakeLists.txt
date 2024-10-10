@@ -79,18 +79,26 @@ target_include_directories(${LIB_NAME} PUBLIC ${JSONCPP_INCLUDE_DIRS})
 target_link_libraries(${LIB_NAME} ${JSONCPP_LIBRARIES})
 
 
-
-find_library (
-    BOOST_REGEX_LIB
-    NAMES boost_regex-mt-x32 libboost_regex-mt-x32 boost_regex-mt libboost_regex-mt boost_regex libboost_regex # what to look for
-)
-if (NOT BOOST_REGEX_LIB)
-    message("ERROR: Did not found lib BOOST_REGEX_LIB")
+######################################
+# Set the C++ standard according to what is available.
+if (USE_STD_REGEX)
+    set(CMAKE_CXX_STANDARD 17)
+    add_definitions(-DUSE_STD_REGEX)  # Define a flag for the preprocessor
 else()
-    message("-- BOOST_REGEX_LIB found at [${BOOST_REGEX_LIB}] for ${LIB_NAME}")
-endif()
+    set(CMAKE_CXX_STANDARD 11)
+    # Add Boost if required
 
-target_link_libraries(${LIB_NAME} ${BOOST_REGEX_LIB})
+    # Find Boost and ensure that regex is available
+    find_package(Boost COMPONENTS regex REQUIRED)
+
+    # If Boost regex is not found, show an error and stop
+    if(NOT Boost_REGEX_FOUND)
+        message(FATAL_ERROR "Boost::regex not found. Please enable USE_STD_REGEX or install Boost with regex.")
+    endif()
+
+    include_directories(${Boost_INCLUDE_DIRS})
+    target_link_libraries(${LIB_NAME} ${Boost_LIBRARIES})
+endif()
 
 
 
