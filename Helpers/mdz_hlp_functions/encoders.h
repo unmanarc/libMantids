@@ -69,7 +69,6 @@ public:
 
     // Hex Helpers
     static char toHexPair(char value, char part);
-    static bool isHexChar(char v);
     static char hexToValue(char v);
 private:
     static bool getIfMustBeURLEncoded(char c, const eURLEncodingType &urlEncodingType);

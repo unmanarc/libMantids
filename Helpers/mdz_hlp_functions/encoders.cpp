@@ -285,7 +285,7 @@ string Encoders::fromURL(const string &urlEncodedStr)
 
     for (size_t i=0; i<urlEncodedStr.size();i++)
     {
-        if ( urlEncodedStr[i] == '%' && i+3<=urlEncodedStr.size() && isHexChar(urlEncodedStr[i+1]) && isHexChar(urlEncodedStr[i+2]) )
+        if ( urlEncodedStr[i] == '%' && i+3<=urlEncodedStr.size() && isxdigit(urlEncodedStr[i+1]) && isxdigit(urlEncodedStr[i+2]) )
         {
             char v = hexToValue(urlEncodedStr[i+1])*0x10 + hexToValue(urlEncodedStr[i+2]);
             r+=v;
@@ -363,11 +363,6 @@ char Encoders::toHexPair(char value, char part)
     if (value >= 0x0 && value <=0x9) return '0'+value;
     if (value >= 0xA && value <=0xF) return 'A'+value-0xA;
     return '0';
-}
-
-bool Encoders::isHexChar(char v)
-{
-    return (v>='0' && v<='9') || (v>='A' && v<='F');
 }
 
 char Encoders::hexToValue(char v)
