@@ -38,6 +38,35 @@ public:
     static std::string toHex(const unsigned char *data, size_t len);
     static void fromHex(const std::string &hexValue, unsigned char *data, size_t maxlen);
 
+    static unsigned char hexPairToByte(const char *bytes );
+
+
+    /**
+     * @brief Replaces hexadecimal codes within the content string with their corresponding ASCII characters.
+     *
+     * This function scans the input string `content` for patterns matching the format `\0xXX`, where `XX`
+     * represents two hexadecimal characters. When such a pattern is found, it is replaced with the
+     * corresponding ASCII character.
+     *
+     * @param content Reference to a `std::string` that will be modified by replacing hexadecimal codes with ASCII characters.
+     *
+     * The function performs the following steps:
+     * - It iteratively searches for occurrences of the pattern `\0x` followed by two hexadecimal characters.
+     * - For each match, it verifies that the two characters following `\0x` are valid hexadecimal digits.
+     * - If valid, it converts these two hexadecimal characters into an `unsigned char` using the `hexPairToByte` function.
+     * - The matched pattern is then replaced by the resulting ASCII character within the string.
+     * - If no valid hexadecimal pair is found, it advances to continue the search.
+     *
+     * Example usage:
+     * @code
+     * std::string text = "Example \\0x41 text";
+     * Encoders::replaceHexCodes(text);
+     * // text now contains "Example A text"
+     * @endcode
+     */
+    static void replaceHexCodes(std::string &content);
+
+
     // Hex Helpers
     static char toHexPair(char value, char part);
     static bool isHexChar(char v);

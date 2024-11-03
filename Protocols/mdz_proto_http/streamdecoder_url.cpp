@@ -1,4 +1,5 @@
 #include "streamdecoder_url.h"
+#include "mdz_hlp_functions/encoders.h"
 
 #include <mdz_mem_vars/b_mem.h>
 #include <mdz_mem_vars/b_chunks.h>
@@ -75,7 +76,7 @@ StreamableObject::Status URL::write(const void *buf, const size_t &count, Status
             bytes[1]=*(((unsigned char *)buf)+pos);
             pos++;
             filled = 2;
-            if (!isHexByte(bytes[1]))
+            if (!isxdigit(bytes[1]))
             {
                 // If malformed: flush byte 0,1 from the URL Encoding stack:
                 // Write original 2 bytes... and set filled to 0.
@@ -94,7 +95,7 @@ StreamableObject::Status URL::write(const void *buf, const size_t &count, Status
             // Return to normal operation...
             pos++;
 
-            if (!isHexByte(bytes[2]))
+            if (!isxdigit(bytes[2]))
             {
                 // If malformed: flush the byte 0,1,2 from the URL Encoding stack:
                 // Write original 3 bytes...
@@ -111,7 +112,7 @@ StreamableObject::Status URL::write(const void *buf, const size_t &count, Status
                 // If not malformed... perform the transform from hex to uchar (URL Decoding)
                 filled = 0;
                 unsigned char val[2];
-                val[0] = hex2uchar();
+                val[0] = Helpers::Encoders::hexPairToByte( (char *) bytes+1 );
                 // Transmit the decoded byte back to the decoded stream.
                 if (!(cur+=orig->writeFullStream(val,1, wrStat)).succeed)
                 {
@@ -151,26 +152,6 @@ StreamableObject::Status URL::flushBytes(Status & wrStat)
     auto x= orig->writeFullStream(bytes,filled, wrStat);
     filled = 0;
     return x;
-}
-
-inline unsigned char URL::hex2uchar()
-{
-    return get16Value(bytes[1])*0x10+get16Value(bytes[2]);
-}
-
-inline bool URL::isHexByte(unsigned char byte)
-{
-    return  (byte>='A' && byte<='F') ||
-            (byte>='a' && byte<='f') ||
-            (byte>='0' && byte<='9');
-}
-
-inline unsigned char URL::get16Value(unsigned char byte)
-{
-    if (byte>='A' && byte<='F') return byte-'A'+10;
-    else if (byte>='a' && byte<='f') return byte-'a'+10;
-    else if (byte>='0' && byte<='9') return byte-'0';
-    return 0;
 }
 
 uint64_t URL::getFinalBytesWritten() const

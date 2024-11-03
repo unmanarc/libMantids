@@ -1,4 +1,5 @@
 #include "webclienthandler.h"
+#include "mdz_hlp_functions/encoders.h"
 #include "mdz_proto_http/rsp_status.h"
 #include "mdz_xrpc_common/methodsmanager.h"
 
@@ -191,51 +192,6 @@ void replaceTagByJVar(std::string &content, const std::string &tag, const json &
         boost::replace_all(content, tag, str);
     else
         boost::replace_first(content, tag, str);
-}
-
-inline unsigned char get16Value(unsigned char byte)
-{
-    if (byte >= 'A' && byte <= 'F')
-        return byte - 'A' + 10;
-    else if (byte >= 'a' && byte <= 'f')
-        return byte - 'a' + 10;
-    else if (byte >= '0' && byte <= '9')
-        return byte - '0';
-    return 0;
-}
-
-inline unsigned char hex2uchar(const std::string &t1, const std::string &t2)
-{
-    return get16Value(t1.c_str()[0]) * 0x10 + get16Value(t2.c_str()[0]);
-}
-
-// Nueva función para reemplazar códigos hexadecimales sin usar regex
-void replaceHexCodes(std::string &content)
-{
-    size_t pos = 0;
-
-    // Búsqueda manual del patrón "\\0x" seguido de dos caracteres hexadecimales
-    while ((pos = content.find("\\0x", pos)) != std::string::npos)
-    {
-        // Verificar que haya dos caracteres hexadecimales después de "\\0x"
-        if (pos + 4 < content.size() && std::isxdigit(content[pos + 3]) && std::isxdigit(content[pos + 4]))
-        {
-            // Obtener los dos caracteres hexadecimales
-            std::string v1(1, content[pos + 3]);
-            std::string v2(1, content[pos + 4]);
-
-            // Convertir los dos caracteres hexadecimales a un carácter
-            unsigned char replSrc = hex2uchar(v1, v2);
-
-            // Reemplazar el patrón "\\0xXX" por el carácter correspondiente
-            content.replace(pos, 5, std::string(1, replSrc));
-        }
-        else
-        {
-            // Avanzar si no se encuentra un patrón válido
-            pos += 3;
-        }
-    }
 }
 
 // TODO: documentar los privilegios cargados de un usuario
@@ -523,7 +479,7 @@ void WebClientHandler::procResource_HTMLIEngineJFUNC(std::string &fileContent, M
 
         // Third group: function input/parameters (e.g., "param")
         std::string functionInput = whatStaticText[3].str();
-        replaceHexCodes(functionInput);
+        Helpers::Encoders::replaceHexCodes(functionInput);
 
         Memory::Streams::StreamableJSON jPayloadOutStr;
         procJAPI_Exec(extraAuths, functionName, functionInput, &jPayloadOutStr);
