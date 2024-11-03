@@ -22,9 +22,6 @@ private:
     size_t getPlainBytesSize(const unsigned char * buf, size_t count, unsigned char *byteDetected);
     Status flushBytes(Status &wrStat);
 
-    inline unsigned char hex2uchar();
-    inline bool isHexByte(unsigned char b);
-    inline unsigned char get16Value(unsigned char byte);
     unsigned char bytes[3];
     uint8_t filled;
 
