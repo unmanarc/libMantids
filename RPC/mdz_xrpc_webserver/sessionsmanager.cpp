@@ -116,10 +116,20 @@ WebSession *SessionsManager::openSession(const std::string &sessionID, uint64_t 
     WebSession *xs;
     if ((xs=(WebSession *)sessions.openElement(sessionID))!=nullptr)
     {
+        uint64_t lastActivity = xs->authSession->getLastActivity();
+
         if (xs->authSession->isLastActivityExpired(sessionExpirationTime))
+        {
             *maxAge = 0;
+        }
         else
-            *maxAge = (xs->authSession->getLastActivity()+sessionExpirationTime)-time(nullptr);
+        {
+            uint64_t expirationTime = lastActivity + sessionExpirationTime;
+            uint64_t currentTime = static_cast<uint64_t>(time(nullptr));
+
+            // Ensure no underflow
+            *maxAge = (expirationTime > currentTime) ? (expirationTime - currentTime) : 0;
+        }
         return xs;
     }
     return nullptr;

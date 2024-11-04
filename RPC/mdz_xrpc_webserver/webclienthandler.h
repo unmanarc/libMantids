@@ -104,7 +104,7 @@ private:
     // Current Session Vars:
     WebSession * webSession;
     Mantids::Authentication::Session *authSession;
-    uint64_t uSessionMaxAge;
+    uint64_t uSessionMaxAge = 0;
     std::string sSessionId;
     bool bDestroySession;
     bool bReleaseSessionHandler;
