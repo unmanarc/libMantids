@@ -1,6 +1,6 @@
 #include "session_vars.h"
-#include "mdz_thr_mutex/lock_rd.h"
-#include "mdz_thr_mutex/lock_rw.h"
+#include <mdz_thr_mutex/lock_rd.h>
+#include <mdz_thr_mutex/lock_rw.h>
 
 using namespace Mantids::Authentication;
 

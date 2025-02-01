@@ -6,7 +6,7 @@
 #include <map>
 
 #include "common_urlvar_subparser.h"
-#include "mdz_mem_vars/streamableobject.h"
+#include <mdz_mem_vars/streamableobject.h>
 
 namespace Mantids { namespace Protocols { namespace HTTP { namespace Common {
 

@@ -1,8 +1,8 @@
 #include "mime_message.h"
-#include "mdz_hlp_functions/crypto.h"
-#include "mdz_hlp_functions/random.h"
-#include "mdz_mem_vars/b_chunks.h"
-#include "mdz_mem_vars/streamableobject.h"
+#include <mdz_hlp_functions/crypto.h>
+#include <mdz_hlp_functions/random.h>
+#include <mdz_mem_vars/b_chunks.h>
+#include <mdz_mem_vars/streamableobject.h>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string.hpp>
 
