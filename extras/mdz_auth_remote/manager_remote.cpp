@@ -117,7 +117,7 @@ std::set<uint32_t> Manager_Remote::passIndexesUsedByAccount(const std::string & 
     {
         for ( uint32_t i = 0; i< answer.size(); i++ )
         {
-            r.insert(JSON_ASUINT(answer,i,0));
+            r.insert(JSON_ARRAY_ASUINT(answer,i,0));
         }
     }
     return r;
@@ -133,7 +133,7 @@ std::set<uint32_t> Manager_Remote::passIndexesRequiredForLogin()
     {
         for ( uint32_t i = 0; i< answer.size(); i++ )
         {
-            r.insert(JSON_ASUINT(answer,i,0));
+            r.insert(JSON_ARRAY_ASUINT(answer,i,0));
         }
     }
     return r;
@@ -442,7 +442,7 @@ std::set<std::string> Manager_Remote::applicationOwners(const std::string & appl
     {
         for ( uint32_t i = 0; i< answer.size(); i++ )
         {
-            r.insert(JSON_ASSTRING(answer,i,""));
+            r.insert(JSON_ARRAY_ASSTRING(answer,i,""));
         }
     }
     return r;
@@ -459,7 +459,7 @@ std::set<std::string> Manager_Remote::applicationAccounts(const std::string & ap
     {
         for ( uint32_t i = 0; i< answer.size(); i++ )
         {
-            r.insert(JSON_ASSTRING(answer,i,""));
+            r.insert(JSON_ARRAY_ASSTRING(answer,i,""));
         }
     }
     return r;
