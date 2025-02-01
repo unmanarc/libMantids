@@ -1,5 +1,5 @@
 #include "mime_sub_content.h"
-#include "mdz_mem_vars/subparser.h"
+#include <mdz_mem_vars/subparser.h>
 using namespace Mantids::Protocols::MIME;
 using namespace Mantids;
 

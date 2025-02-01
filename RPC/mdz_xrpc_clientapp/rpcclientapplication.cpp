@@ -1,8 +1,8 @@
 #include "rpcclientapplication.h"
 #include "globals.h"
-#include "mdz_hlp_functions/crypto.h"
-//#include "mdz_hlp_functions/encoders.h"
-#include "mdz_net_sockets/socket_tls.h"
+#include <mdz_hlp_functions/crypto.h>
+//#include <mdz_hlp_functions/encoders.h>
+#include <mdz_net_sockets/socket_tls.h>
 
 #include <mdz_hlp_functions/file.h>
 
