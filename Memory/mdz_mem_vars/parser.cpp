@@ -96,7 +96,7 @@ std::pair<bool, uint64_t> Parser::parseData(const void *buf, size_t count, size_
 
     // We are parsing data here...
     // written bytes will be filled with first=error, and second=displacebytes
-    // displace bytes is the number of bytes that the subparser have taken from the incomming buffer, so we have to displace them.
+    // displace bytes is the number of bytes that the subparser have taken from the incoming buffer, so we have to displace them.
     std::pair<bool, uint64_t> writtenBytes;
 
     if (currentParser!=nullptr)

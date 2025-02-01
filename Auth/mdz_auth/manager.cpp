@@ -39,7 +39,7 @@ bool Manager::initAccounts()
                       );
 }
 
-Reason Manager::authenticate(const std::string &appName, const sClientDetails &clientDetails, const std::string &sAccountName, const std::string &incommingPassword, uint32_t passIndex, Mode authMode, const std::string &challengeSalt, std::map<uint32_t,std::string> *stAccountPassIndexesUsedForLogin)
+Reason Manager::authenticate(const std::string &appName, const sClientDetails &clientDetails, const std::string &sAccountName, const std::string &incomingPassword, uint32_t passIndex, Mode authMode, const std::string &challengeSalt, std::map<uint32_t,std::string> *stAccountPassIndexesUsedForLogin)
 {
     Reason ret = REASON_BAD_ACCOUNT;
     bool accountFound=false, indexFound=false;
@@ -81,7 +81,7 @@ Reason Manager::authenticate(const std::string &appName, const sClientDetails &c
 
             else
             {
-                ret = validateStoredSecret(pStoredSecretData, incommingPassword, challengeSalt, authMode);
+                ret = validateStoredSecret(pStoredSecretData, incomingPassword, challengeSalt, authMode);
 
                 // On successfull first login, give all pass indexes used for login...
                 if ( IS_PASSWORD_AUTHENTICATED(ret) && stAccountPassIndexesUsedForLogin && passIndex == 0 )

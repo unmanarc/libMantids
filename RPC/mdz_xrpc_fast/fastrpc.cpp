@@ -238,7 +238,7 @@ int FastRPC::processQuery(Network::Sockets::Socket_StreamBase *stream, const std
 
     if ( !parsingSuccessful )
     {
-        // Bad Incomming JSON... Disconnect
+        // Bad Incoming JSON... Disconnect
         delete params;
         return -3;
     }

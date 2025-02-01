@@ -41,7 +41,7 @@ bool HTTPv1_Client::changeToNextParser()
         currentParser = &serverResponse.headers;
     else if (currentParser == &serverResponse.headers)
     {
-        // Process incomming server headers here:
+        // Process incoming server headers here:
         /////////////////////////////////////////////////////////////////////////
 
         // Parse Cache-Control

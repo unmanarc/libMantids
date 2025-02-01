@@ -1074,7 +1074,7 @@ Status::eRetCode WebClientHandler::procJAPI_Session_CHPASSWD(const Authenticatio
         }
         else
         {
-            log(LEVEL_ERR, "rpcServer", 2048, "Password change failed, bad incomming credentials {idx=%d,reason=%s}", credIdx, Mantids::Authentication::getReasonText(authReason));
+            log(LEVEL_ERR, "rpcServer", 2048, "Password change failed, bad incoming credentials {idx=%d,reason=%s}", credIdx, Mantids::Authentication::getReasonText(authReason));
 
             // Mark to Destroy the session if the chpasswd is invalid...
             bDestroySession = true;
@@ -1120,7 +1120,7 @@ Status::eRetCode WebClientHandler::procJAPI_Session_TESTPASSWD(const Authenticat
         }
         else
         {
-            log(LEVEL_ERR, "rpcServer", 2048, "Password validation failed, bad incomming credentials {idx=%d,reason=%s}", auth.getPassIndex(), Mantids::Authentication::getReasonText(authReason));
+            log(LEVEL_ERR, "rpcServer", 2048, "Password validation failed, bad incoming credentials {idx=%d,reason=%s}", auth.getPassIndex(), Mantids::Authentication::getReasonText(authReason));
 
             // Mark to destroy the session if the test password is invalid...
             bDestroySession = true;
