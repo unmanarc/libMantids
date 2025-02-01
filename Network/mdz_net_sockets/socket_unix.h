@@ -20,7 +20,7 @@ public:
      * @brief listenOn Listen on an specific path and address
      * @param path Unix Path
      * @param recvbuffer size in bytes of recv buffer.
-     * @param backlog connection backlog of unattended incomming connections.
+     * @param backlog connection backlog of unattended incoming connections.
      * @return true if listening
      */
     bool listenOn(const char * path, const int32_t & recvbuffer = 0, const int32_t &backlog = 10);
