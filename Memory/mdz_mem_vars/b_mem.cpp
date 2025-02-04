@@ -43,7 +43,7 @@ std::pair<bool, uint64_t> B_MEM::findChar(const int &c, const uint64_t &offset, 
 
     const char * cPos = nullptr;//
 
-    if (!caseSensitive)
+    if (caseSensitive)
         cPos = (const char *)memchr(linearMem+offset,c,searchSpace);
     else
     {
@@ -53,7 +53,7 @@ std::pair<bool, uint64_t> B_MEM::findChar(const int &c, const uint64_t &offset, 
         if      (pos_upper && pos_lower && pos_upper<=pos_lower) cPos = pos_upper;
         else if (pos_upper && pos_lower && pos_lower<pos_upper) cPos = pos_lower;
         else if (pos_upper) cPos = pos_upper;
-        cPos = pos_lower;
+        else cPos = pos_lower;
     }
 
     if (!cPos) return std::make_pair(false,(uint64_t)0);
