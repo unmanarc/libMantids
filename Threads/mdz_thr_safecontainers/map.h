@@ -145,8 +145,7 @@ template<class T>
 void Map<T>::waitForEmpty()
 {
     std::unique_lock<std::mutex> lock(mutex_xMap);
-    if (xMap.empty()) return;
-    cond_zeroMaps.wait(lock);
+    cond_zeroMaps.wait(lock, [this]{ return xMap.empty(); });
 }
 
 }}}
