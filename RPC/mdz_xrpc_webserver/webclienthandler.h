@@ -61,13 +61,13 @@ private:
 
 
     void procResource_HTMLIEngineInclude(const std::string &sRealFullPath, std::string & fileContent);
-    void procResource_HTMLIEngineJFUNC(std::string & fileContent, MultiAuths *extraAuths);
-    void procResource_HTMLIEngineJGETVAR(const std::string &sRealFullPath, std::string &fileContent);
-    void procResource_HTMLIEngineJPOSTVAR(const std::string &sRealFullPath, std::string &fileContent);
-    void procResource_HTMLIEngineJSESSVAR(const std::string &sRealFullPath, std::string &fileContent);
-    void procResource_HTMLIEngineJVAR(const std::string &sRealFullPath, std::string &fileContent);
+    void procResource_JProcessor(const std::string &sRealFullPath, std::string &input, MultiAuths *extraAuths);
 
-
+    std::string procResource_HTMLIEngineJFUNC(const std::string &scriptVarName, const std::string &functionDef, MultiAuths *extraAuths);
+    std::string procResource_HTMLIEngineJGETVAR(const std::string &scriptVarName, const std::string &varName, const std::string &sRealFullPath);
+    std::string procResource_HTMLIEngineJPOSTVAR(const std::string &scriptVarName, const std::string &varName, const std::string &sRealFullPath);
+    std::string procResource_HTMLIEngineJSESSVAR(const std::string &scriptVarName, const std::string &varName, const std::string &sRealFullPath);
+    std::string procResource_HTMLIEngineJVAR(const std::string &scriptVarName, const std::string &varName, const std::string &sRealFullPath);
 
     Protocols::HTTP::Status::eRetCode procJAPI_Session();
     Protocols::HTTP::Status::eRetCode procJAPI_Session_AUTHINFO();
