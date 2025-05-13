@@ -175,7 +175,7 @@ void WebClientHandler::sessionDestroy()
     }
 }
 
-void replaceTagByJVar(std::string &content, const std::string &tag, const json &value, bool replaceFirst = false, const std::string &varName = "")
+std::string replaceByJVar(const json &value, const std::string &scriptVarName)
 {
     Json::FastWriter writer;
     std::string str = writer.write(value);
@@ -183,16 +183,14 @@ void replaceTagByJVar(std::string &content, const std::string &tag, const json &
     boost::replace_all(str, "<", "\\<");
     boost::replace_all(str, ">", "\\>");
 
-    if (!varName.empty() && varName.size() > 1 && varName.at(0) == '/')
+    if (!scriptVarName.empty())
     {
-        str = "<script>\nconst " + varName.substr(1) + " = " + str + ";\n</script>";
+        str = "<script>\nconst " + scriptVarName + " = " + str + ";\n</script>";
     }
 
-    if (!replaceFirst)
-        boost::replace_all(content, tag, str);
-    else
-        boost::replace_first(content, tag, str);
+    return str;
 }
+
 
 // TODO: documentar los privilegios cargados de un usuario
 // TODO: create a TTL for start =  fileContent.begin(); and end = fileContent.end(); on loops to avoid infinite loops in cross-references...
@@ -224,16 +222,7 @@ Status::eRetCode WebClientHandler::procResource_HTMLIEngine(const std::string &s
 
     // CINC PROCESSOR:
     procResource_HTMLIEngineInclude(sRealFullPath, fileContent);
-    // %JVAR PROCESSOR:
-    procResource_HTMLIEngineJVAR(sRealFullPath,fileContent);
-    // %JSESSVAR PROCESSOR:
-    procResource_HTMLIEngineJSESSVAR(sRealFullPath,fileContent);
-    // %JPOSTVAR PROCESSOR:
-    procResource_HTMLIEngineJPOSTVAR(sRealFullPath,fileContent);
-    // %JGETVAR PROCESSOR:
-    procResource_HTMLIEngineJGETVAR(sRealFullPath,fileContent);
-    // %JFUNC PROCESSOR:
-    procResource_HTMLIEngineJFUNC(fileContent,extraAuths);
+    procResource_JProcessor(sRealFullPath, fileContent, extraAuths);
 
     // Update last activity on each page load.
     if (authSession)
@@ -244,48 +233,88 @@ Status::eRetCode WebClientHandler::procResource_HTMLIEngine(const std::string &s
     return HTTP::Status::S_200_OK;
 }
 
-
-
-void WebClientHandler::procResource_HTMLIEngineJSESSVAR(const std::string &sRealFullPath, std::string &fileContent)
+void WebClientHandler::procResource_JProcessor(
+    const std::string &sRealFullPath, std::string &input, MultiAuths *extraAuths)
 {
-    // Manually modified regex pattern to handle case insensitivity (e.g., [jJ], [sS], etc.)
-    std::regex exStaticJsonSessionVar("<\\%?[jJ][sS][eE][sS][sS][vV][aA][rR]([^\\:]*):[ ]*([^\\%]+)[ ]*\\%>");
+    std::regex re("<%[jJ]([a-zA-Z\\/]+):[ ]*([^%]*)[ ]*%>");
+    size_t pos = 0;
 
-    std::smatch whatStaticText;
-    std::string::const_iterator start = fileContent.begin();
-    std::string::const_iterator end = fileContent.end();
+    // Search every J processor in one big loop and replace in place and continue... so won't be a chance to re-ingest anything...
+    while (true)
+    {
+        std::smatch match;
+        std::string::const_iterator start_it = input.begin() + pos;
+        std::string::const_iterator end_it = input.end();
 
-    // Search for matches within the file content
-    while (std::regex_search(start, end, whatStaticText, exStaticJsonSessionVar)) {
-        // Full tag found in the file content (e.g., <%jsessvarVar: someSessionVar%>)
-        std::string fulltag = whatStaticText[0].str();
-
-        // First captured group: script variable name (e.g., "Var")
-        std::string scriptVarName = whatStaticText[1].str();
-
-        // Second captured group: session variable name (e.g., "someSessionVar")
-        std::string varName = whatStaticText[2].str();
-
-        // My code (add your session variable handling logic here)
-        // Report as not found.
-        if (!(authSession && authSession->getSessionVarExist(varName)))
+        if (!std::regex_search(start_it, end_it, match, re))
         {
-            // look in post/get
-            log(LEVEL_ERR, "fileserver", 2048, "Main variable not found: '%s' on resource '%s'", varName.c_str(), sRealFullPath.c_str());
-            boost::replace_all(fileContent, fulltag, "null");
-        }
-        else
-        {
-            replaceTagByJVar(fileContent, fulltag, authSession->getSessionVarValue(varName), false, scriptVarName);
+            break;
         }
 
-        // Move the start iterator to the beginning (maybe we need to reprocess the whole thing after some modifications...
-        start =  fileContent.begin();
-        end = fileContent.end();
+        int absolute_pos = static_cast<int>(std::distance(input.cbegin(), match[0].first));
+        int length = match.length();
+
+        if ( match.size() >=3 )
+        {
+            std::string command = match[1];
+            std::string value = match[2];
+            std::string replacedBy = "null";
+            std::string scriptVarName = "varName";
+
+            if ( boost::istarts_with( command, "VAR/" ) )
+            {
+                scriptVarName=command.c_str()+3+1;
+                // %JVAR PROCESSOR:
+                replacedBy = procResource_HTMLIEngineJVAR(scriptVarName,value, sRealFullPath);
+            }
+            if ( boost::istarts_with( command, "GETVAR/" ) )
+            {
+                scriptVarName=command.c_str()+6+1;
+                // %JGETVAR PROCESSOR:
+                replacedBy = procResource_HTMLIEngineJGETVAR(scriptVarName,value, sRealFullPath);
+            }
+            if ( boost::istarts_with( command, "POSTVAR/" ) )
+            {
+                scriptVarName=command.c_str()+7+1;
+                // %JPOSTVAR PROCESSOR:
+                replacedBy = procResource_HTMLIEngineJPOSTVAR(scriptVarName,value, sRealFullPath);
+            }
+            if ( boost::istarts_with( command, "FUNC/" ) )
+            {
+                scriptVarName=command.c_str()+4+1;
+                // %JFUNC PROCESSOR:
+                replacedBy = procResource_HTMLIEngineJFUNC(scriptVarName,value, extraAuths);
+            }
+            if ( boost::istarts_with( command, "SESS/" ) )
+            {
+                scriptVarName=command.c_str()+4+1;
+                // %JSESSVAR PROCESSOR:
+                replacedBy = procResource_HTMLIEngineJSESSVAR(scriptVarName,value, sRealFullPath);
+            }
+
+            input.replace(absolute_pos, length, replacedBy);
+            pos = absolute_pos + replacedBy.size();
+        }
     }
 }
 
-void WebClientHandler::procResource_HTMLIEngineJVAR(const std::string &sRealFullPath, std::string &fileContent)
+std::string WebClientHandler::procResource_HTMLIEngineJSESSVAR(const std::string &scriptVarName, const std::string &varName,const std::string &sRealFullPath)
+{
+
+    // Report as not found.
+    if (!(authSession && authSession->getSessionVarExist(varName)))
+    {
+        // look in post/get
+        log(LEVEL_ERR, "fileserver", 2048, "Main variable not found: '%s' on resource '%s'", varName.c_str(), sRealFullPath.c_str());
+        return replaceByJVar(Json::Value::null, scriptVarName);
+    }
+    else
+    {
+        return replaceByJVar(authSession->getSessionVarValue(varName), scriptVarName);
+    }
+}
+
+std::string WebClientHandler::procResource_HTMLIEngineJVAR(const std::string &scriptVarName, const std::string &varName,const std::string &sRealFullPath)
 {
     json jVars, jNull;
     jVars["softwareVersion"] = softwareVersion;
@@ -297,120 +326,82 @@ void WebClientHandler::procResource_HTMLIEngineJVAR(const std::string &sRealFull
     jVars["userIP"] = userIP;
     jVars["userTLSCommonName"] = userTLSCommonName;
 
-    // Manually modified regex pattern to handle case insensitivity (e.g., [jJ], [vV], [aA], [rR])
-    std::regex exStaticJsonInputVar("<\\%?[jJ][vV][aA][rR]([^\\:]*):[ ]*([^\\%]+)[ ]*\\%>");
-
-    std::smatch whatStaticText;
-    std::string::const_iterator start = fileContent.begin();
-    std::string::const_iterator end = fileContent.end();
-
-    // Loop to find all matches within the file content
-    while (std::regex_search(start, end, whatStaticText, exStaticJsonInputVar)) {
-        // Full match of the JVAR tag (e.g., <%jvarVarName: someVar%>)
-        std::string fulltag = whatStaticText[0].str();
-
-        // First group captured (script variable name, e.g., "VarName")
-        std::string scriptVarName = whatStaticText[1].str();
-
-        // Second group captured (variable name, e.g., "someVar")
-        std::string varName = whatStaticText[2].str();
-
-        // Report as not found.
-        if (!jVars.isMember(varName))
-        {
-            // look in post/get
-            log(LEVEL_ERR, "fileserver", 2048, "Main variable not found: '%s' on resource '%s'", varName.c_str(), sRealFullPath.c_str());
-            boost::replace_all(fileContent, fulltag, "null");
-        }
-        else
-        {
-            replaceTagByJVar(fileContent, fulltag, jVars[varName], false, scriptVarName);
-        }
-        // Move the start iterator to the beginning (maybe we need to reprocess the whole thing after some modifications...
-        start =  fileContent.begin();
-        end = fileContent.end();
+    // Report as not found.
+    if (!jVars.isMember(varName))
+    {
+        // look in post/get
+        log(LEVEL_ERR, "fileserver", 2048, "Main variable not found: '%s' on resource '%s'", varName.c_str(), sRealFullPath.c_str());
+        return replaceByJVar(Json::Value::null, scriptVarName);
+    }
+    else
+    {
+        return replaceByJVar(jVars[varName], scriptVarName);
     }
 }
 
 // Function to process JGETVAR tags in the file content
-void WebClientHandler::procResource_HTMLIEngineJGETVAR(const std::string &sRealFullPath, std::string &fileContent)
+std::string WebClientHandler::procResource_HTMLIEngineJGETVAR(const std::string &scriptVarName, const std::string &varName,const std::string &sRealFullPath)
 {
-    // Manually modified regex pattern to handle case insensitivity (e.g., [jJ], [gG], [eE], [tT], etc.)
-    std::regex exStaticJsonGetVar("<\\%?[jJ][gG][eE][tT][vV][aA][rR]([^\\:]*):[ ]*([^\\%]+)[ ]*\\%>");
-
-    std::smatch whatStaticText;
-    std::string::const_iterator start = fileContent.begin();
-    std::string::const_iterator end = fileContent.end();
-
-    // Search for matches in the file content
-    while (std::regex_search(start, end, whatStaticText, exStaticJsonGetVar)) {
-        // Full tag found in the file content (e.g., <%jgetvarVar: someVar%>)
-        std::string fulltag = whatStaticText[0].str();
-
-        // First group: script variable name (e.g., "Var")
-        std::string scriptVarName = whatStaticText[1].str();
-
-        // Second group: variable name (e.g., "someVar")
-        std::string varName = whatStaticText[2].str();
-
-        // Obtain using GET Vars...
-        if (clientRequest.getVars(HTTP_VARS_GET)->exist(varName))
-        {
-            replaceTagByJVar(fileContent, fulltag, clientRequest.getVars(HTTP_VARS_GET)->getStringValue(varName));
-        }
-        // Report as not found.
-        else
-        {
-            // look in post/get
-            log(LEVEL_ERR, "fileserver", 2048, "Get variable not found: '%s' on resource '%s'", varName.c_str(), sRealFullPath.c_str());
-            boost::replace_all(fileContent, fulltag, "null");
-        }
-
-        // Move the start iterator to the beginning (maybe we need to reprocess the whole thing after some modifications...
-        start =  fileContent.begin();
-        end = fileContent.end();
+    // Obtain using GET Vars...
+    if (clientRequest.getVars(HTTP_VARS_GET)->exist(varName))
+    {
+        return replaceByJVar(clientRequest.getVars(HTTP_VARS_GET)->getStringValue(varName), scriptVarName);
+    }
+    // Report as not found.
+    else
+    {
+        // look in post/get
+        log(LEVEL_ERR, "fileserver", 2048, "Get variable not found: '%s' on resource '%s'", varName.c_str(), sRealFullPath.c_str());
+        return replaceByJVar(Json::Value::null, scriptVarName);
     }
 }
 
-void WebClientHandler::procResource_HTMLIEngineJPOSTVAR(const std::string &sRealFullPath, std::string &fileContent)
+std::string WebClientHandler::procResource_HTMLIEngineJPOSTVAR(const std::string &scriptVarName, const std::string &varName,const std::string &sRealFullPath)
 {
-    // Manually modified regex pattern to handle case insensitivity (e.g., [jJ], [gG], [eE], [tT], etc.)
-    std::regex exStaticJsonPostVar("<\\%?[jJ][pP][oO][sS][tT][vV][aA][rR]([^\\:]*):[ ]*([^\\%]+)[ ]*\\%>");
-
-    std::smatch whatStaticText;
-    std::string::const_iterator start = fileContent.begin();
-    std::string::const_iterator end = fileContent.end();
-
-    // Search for matches in the file content
-    while (std::regex_search(start, end, whatStaticText, exStaticJsonPostVar)) {
-        // Full tag found in the file content (e.g., <%jgetvarVar: someVar%>)
-        std::string fulltag = whatStaticText[0].str();
-
-        // First group: script variable name (e.g., "Var")
-        std::string scriptVarName = whatStaticText[1].str();
-
-        // Second group: variable name (e.g., "someVar")
-        std::string varName = whatStaticText[2].str();
-
-
-        // Obtain using POST Vars...
-        if (clientRequest.getVars(HTTP_VARS_POST)->exist(varName))
-        {
-            replaceTagByJVar(fileContent, fulltag, clientRequest.getVars(HTTP_VARS_POST)->getStringValue(varName));
-        }
-        // Report as not found.
-        else
-        {
-            // look in post/get
-            log(LEVEL_ERR, "fileserver", 2048, "Post variable not found: '%s' on resource '%s'", varName.c_str(), sRealFullPath.c_str());
-            boost::replace_all(fileContent, fulltag, "null");
-        }
-
-        // Move the start iterator to the beginning (maybe we need to reprocess the whole thing after some modifications...
-        start =  fileContent.begin();
-        end = fileContent.end();
+    // Obtain using POST Vars...
+    if (clientRequest.getVars(HTTP_VARS_POST)->exist(varName))
+    {
+        return replaceByJVar(clientRequest.getVars(HTTP_VARS_POST)->getStringValue(varName), scriptVarName);
+    }
+    // Report as not found.
+    else
+    {
+        // look in post/get
+        log(LEVEL_ERR, "fileserver", 2048, "Post variable not found: '%s' on resource '%s'", varName.c_str(), sRealFullPath.c_str());
+        return replaceByJVar(Json::Value::null, scriptVarName);
     }
 }
+
+std::string WebClientHandler::procResource_HTMLIEngineJFUNC(const std::string &scriptVarName, const std::string &functionDef, MultiAuths *extraAuths)
+{
+    // TODO: como revisar que realmente termine en ) y no haya un ) dentro del json
+    std::regex exStaticJsonFunction("([^\\(]+)\\(([^\\)]*)\\)");
+
+    std::smatch whatStaticText;
+    std::string::const_iterator start = functionDef.begin();
+    std::string::const_iterator end = functionDef.end();
+
+    // Search for matches in the file content
+    if  (std::regex_search(start, end, whatStaticText, exStaticJsonFunction))
+    {
+        // The full tag found in the file content (e.g., <%jfuncVar: Function(param)%>)
+        std::string fulltag = whatStaticText[0].str();
+
+        // Second group: function name (e.g., "Function")
+        std::string functionName = whatStaticText[1].str();
+
+        // Third group: function input/parameters (e.g., "param")
+        std::string functionInput = whatStaticText[2].str();
+        Helpers::Encoders::replaceHexCodes(functionInput);
+
+        Memory::Streams::StreamableJSON jPayloadOutStr;
+        procJAPI_Exec(extraAuths, functionName, functionInput, &jPayloadOutStr);
+        return replaceByJVar(*(jPayloadOutStr.getValue()), scriptVarName);
+    }
+
+    return replaceByJVar(Json::Value::null, scriptVarName);
+}
+
 
 // Function to process the HTMLI include tags within the file content
 void WebClientHandler::procResource_HTMLIEngineInclude(const std::string &sRealFullPath, std::string &fileContent)
@@ -451,48 +442,12 @@ void WebClientHandler::procResource_HTMLIEngineInclude(const std::string &sRealF
             log(LEVEL_ERR, "fileserver", 2048, "file not found: %s", sRealFullPath.c_str());
         }
 
-        // Move the start iterator to the beginning (maybe we need to reprocess the whole thing after some modifications...
+        // Move the start iterator to the beginning (maybe we need to reprocess the whole thing after some modifications)...
         start =  fileContent.begin();
         end = fileContent.end();
     }
 }
 
-void WebClientHandler::procResource_HTMLIEngineJFUNC(std::string &fileContent, MultiAuths *extraAuths)
-{
-    // TODO: como revisar que realmente termine en ) y no haya un ) dentro del json
-
-    // Manually modified regex pattern to handle case insensitivity (e.g., [jJ], [fF], [uU], etc.)
-    std::regex exStaticJsonFunction("<\\%[jJ][fF][uU][nN][cC]([^\\:]*):[ ]*([^\\(]+)\\(([^\\)]*)\\)[ ]*\\%>");
-
-    std::smatch whatStaticText;
-    std::string::const_iterator start = fileContent.begin();
-    std::string::const_iterator end = fileContent.end();
-
-    // Search for matches in the file content
-    while (std::regex_search(start, end, whatStaticText, exStaticJsonFunction))
-    {
-        // The full tag found in the file content (e.g., <%jfuncVar: Function(param)%>)
-        std::string fulltag = whatStaticText[0].str();
-
-        // First group: script variable name (e.g., "Var")
-        std::string scriptVarName = whatStaticText[1].str();
-
-        // Second group: function name (e.g., "Function")
-        std::string functionName = whatStaticText[2].str();
-
-        // Third group: function input/parameters (e.g., "param")
-        std::string functionInput = whatStaticText[3].str();
-        Helpers::Encoders::replaceHexCodes(functionInput);
-
-        Memory::Streams::StreamableJSON jPayloadOutStr;
-        procJAPI_Exec(extraAuths, functionName, functionInput, &jPayloadOutStr);
-        replaceTagByJVar(fileContent, fulltag, *(jPayloadOutStr.getValue()), true, scriptVarName);
-
-        // Move the iterator to continue searching for more matches
-        start = fileContent.begin();
-        end = fileContent.end();
-    }
-}
 
 
 Status::eRetCode WebClientHandler::procJAPI_Session()
