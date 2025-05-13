@@ -195,6 +195,7 @@ void replaceTagByJVar(std::string &content, const std::string &tag, const json &
 }
 
 // TODO: documentar los privilegios cargados de un usuario
+// TODO: create a TTL for start =  fileContent.begin(); and end = fileContent.end(); on loops to avoid infinite loops in cross-references...
 Status::eRetCode WebClientHandler::procResource_HTMLIEngine(const std::string &sRealFullPath, MultiAuths *extraAuths)
 {
     // Drop the MMAP container:
@@ -278,8 +279,9 @@ void WebClientHandler::procResource_HTMLIEngineJSESSVAR(const std::string &sReal
             replaceTagByJVar(fileContent, fulltag, authSession->getSessionVarValue(varName), false, scriptVarName);
         }
 
-        // Move the start iterator to the end of the current match to continue searching for more matches
-        start = whatStaticText[0].second;
+        // Move the start iterator to the beginning (maybe we need to reprocess the whole thing after some modifications...
+        start =  fileContent.begin();
+        end = fileContent.end();
     }
 }
 
@@ -324,9 +326,9 @@ void WebClientHandler::procResource_HTMLIEngineJVAR(const std::string &sRealFull
         {
             replaceTagByJVar(fileContent, fulltag, jVars[varName], false, scriptVarName);
         }
-
-        // Reset iterator to continue searching for more matches
-        start = whatStaticText[0].second;
+        // Move the start iterator to the beginning (maybe we need to reprocess the whole thing after some modifications...
+        start =  fileContent.begin();
+        end = fileContent.end();
     }
 }
 
@@ -364,9 +366,9 @@ void WebClientHandler::procResource_HTMLIEngineJGETVAR(const std::string &sRealF
             boost::replace_all(fileContent, fulltag, "null");
         }
 
-
-        // Move the start iterator to the end of the current match to continue searching for more matches
-        start = whatStaticText[0].second;
+        // Move the start iterator to the beginning (maybe we need to reprocess the whole thing after some modifications...
+        start =  fileContent.begin();
+        end = fileContent.end();
     }
 }
 
@@ -404,9 +406,9 @@ void WebClientHandler::procResource_HTMLIEngineJPOSTVAR(const std::string &sReal
             boost::replace_all(fileContent, fulltag, "null");
         }
 
-
-        // Move the start iterator to the end of the current match to continue searching for more matches
-        start = whatStaticText[0].second;
+        // Move the start iterator to the beginning (maybe we need to reprocess the whole thing after some modifications...
+        start =  fileContent.begin();
+        end = fileContent.end();
     }
 }
 
@@ -449,8 +451,9 @@ void WebClientHandler::procResource_HTMLIEngineInclude(const std::string &sRealF
             log(LEVEL_ERR, "fileserver", 2048, "file not found: %s", sRealFullPath.c_str());
         }
 
-        // Move the start iterator to the end of the current match to continue searching for more matches
-        start = whatStaticText[0].second;
+        // Move the start iterator to the beginning (maybe we need to reprocess the whole thing after some modifications...
+        start =  fileContent.begin();
+        end = fileContent.end();
     }
 }
 
@@ -486,7 +489,8 @@ void WebClientHandler::procResource_HTMLIEngineJFUNC(std::string &fileContent, M
         replaceTagByJVar(fileContent, fulltag, *(jPayloadOutStr.getValue()), true, scriptVarName);
 
         // Move the iterator to continue searching for more matches
-        start = whatStaticText[0].second;
+        start = fileContent.begin();
+        end = fileContent.end();
     }
 }
 
