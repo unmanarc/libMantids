@@ -103,7 +103,7 @@ std::pair<Socket_StreamBase *,Socket_StreamBase *> Socket_StreamBase::GetSocketP
     // Emulate via TCP. (EXPERIMENTAL)
 
     Sockets::Socket_TCP * llsock = new Sockets::Socket_TCP, * lsock = nullptr, * rsock = new Sockets::Socket_TCP;
-    llsock->listenOn(0,"127.0.0.1",true);
+    llsock->listenOn(0,"127.0.0.1");
     rsock->connectTo("127.0.0.1",lsock->getPort());
     lsock = (Sockets::Socket_TCP *)llsock->acceptConnection();
     llsock->closeSocket();
