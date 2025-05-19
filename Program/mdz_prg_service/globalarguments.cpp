@@ -24,8 +24,6 @@ GlobalArguments::GlobalArguments()
     sDefaultDaemonOption = "daemon";
 #endif
     sDefaultHelpOption = "help";
-    inifiniteWaitAtEnd = false;
-    extraOptChars = 256;
 }
 
 bool GlobalArguments::addCommandLineOption(const string &optGroup, char optChar, const string &optName, const string &description, const string &defaultValue, const Var::Type & varType, bool mandatory)
@@ -456,4 +454,15 @@ sProgCMDOpts * GlobalArguments::getProgramOption(const std::string &optName)
         }
     }
     return nullptr;
+}
+
+bool GlobalArguments::getLegacyCrypt() const
+{
+    return legacyCrypt;
+}
+
+void GlobalArguments::setLegacyCrypt(
+    bool newLegacyCrypt)
+{
+    legacyCrypt = newLegacyCrypt;
 }

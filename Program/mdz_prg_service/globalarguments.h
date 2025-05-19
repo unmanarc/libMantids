@@ -139,12 +139,17 @@ public:
     bool parseCommandLineOptions(int argc, char *argv[]);
 
 
+// PROGRAM FUNCTIONS:
+    bool getLegacyCrypt() const;
+    void setLegacyCrypt(bool newLegacyCrypt);
+
+
 private:
-    int extraOptChars;
+    int extraOptChars = 256;
     std::string sDefaultHelpOption;
 #ifndef _WIN32
     std::string sDefaultDaemonOption;
-    uint16_t uid,gid;
+    uint16_t uid = 0, gid = 0;
 #endif
     std::list<sProgCMDOpts *> getAllCMDOptions();
     uint32_t getMaxOptNameSize(std::list<sProgCMDOpts *> options);
@@ -153,7 +158,8 @@ private:
     sProgCMDOpts * getProgramOption(int optChar);
     sProgCMDOpts * getProgramOption(const std::string & optName);
 
-    bool inifiniteWaitAtEnd;    
+    bool inifiniteWaitAtEnd = false;
+    bool legacyCrypt = true;
 
     std::map<std::string,std::list<sProgCMDOpts *>> cmdOptions; // group->list of command options
     // TODO: multimap

@@ -15,8 +15,6 @@
 
 using namespace boost;
 using namespace boost::algorithm;
-
-
 using namespace Mantids::RPC;
 using namespace Mantids::Application;
 
@@ -69,10 +67,22 @@ void RPCClientImpl::runRPClient()
             if (  !Globals::getLC_TLSPhraseFileForPrivateKey().empty() )
             {
                 bool ok = false;
+
                 // Load Key
-                std::string keyPassPhrase = Mantids::Helpers::Crypto::AES256DecryptB64( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
-                                                                                       ,(char *)masterKey->data,masterKey->usedSize,&ok
-                                                                            );
+                std::string keyPassPhrase;
+
+                if (Globals::getGlobalArguments()->getLegacyCrypt())
+                {
+                    keyPassPhrase = Mantids::Helpers::Crypto::AES256DecryptB64( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
+                                                                                           ,(char *)masterKey->data,masterKey->usedSize,&ok
+                                                                                );
+                }
+                else
+                {
+                    keyPassPhrase = Mantids::Helpers::Crypto::AES256DecryptB64v2( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
+                                                                               ,(char *)masterKey->data,masterKey->usedSize,&ok
+                                                                               );
+                }
 
                 if (!sockRPCClient.keys.loadPrivateKeyFromPEMFileEP(  privKeyPath.c_str(), keyPassPhrase.c_str() ))
                 {
@@ -276,7 +286,15 @@ RPCClientImpl::PSKIdKey RPCClientImpl::loadPSK()
     }
     else
     {
-        std::string tokenizedKey = Mantids::Helpers::Crypto::AES256DecryptB64( encryptedKey,(char *)masterKey->data,masterKey->usedSize,&ok );
+        std::string tokenizedKey;
+        if (Globals::getGlobalArguments()->getLegacyCrypt())
+        {
+            tokenizedKey = Mantids::Helpers::Crypto::AES256DecryptB64( encryptedKey,(char *)masterKey->data,masterKey->usedSize,&ok );
+        }
+        else
+        {
+            tokenizedKey = Mantids::Helpers::Crypto::AES256DecryptB64v2( encryptedKey,(char *)masterKey->data,masterKey->usedSize,&ok );
+        }
         std::vector<std::string> keyParts;
         split(keyParts,tokenizedKey,is_any_of(":"),token_compress_on);
         if (!ok || keyParts.size()!=2)

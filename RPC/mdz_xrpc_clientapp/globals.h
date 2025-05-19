@@ -5,6 +5,7 @@
 #include <mdz_prg_logs/applog.h>
 #include <mdz_hlp_functions/json.h>
 #include <mdz_hlp_functions/mem.h>
+#include <mdz_prg_service/globalarguments.h>
 
 #include "rpcclientimpl.h"
 
@@ -107,6 +108,9 @@ public:
     static Mantids::Helpers::Mem::xBinContainer *getMasterKey();
     static void setMasterKey(Mantids::Helpers::Mem::xBinContainer *newMasterKey);
 
+    static Mantids::Application::Arguments::GlobalArguments *getGlobalArguments();
+    static void setGlobalArguments(Mantids::Application::Arguments::GlobalArguments *newGlobalArguments);
+
 protected:
     static boost::property_tree::ptree pLocalConfig;
 
@@ -116,6 +120,7 @@ private:
     // LOGS:
     static Mantids::Application::Logs::AppLog * applog;
     static Mantids::RPC::RPCClientImpl * rpcImpl;
+    static Mantids::Application::Arguments::GlobalArguments * globalArguments;
 };
 
 #endif // GLOBALS_H

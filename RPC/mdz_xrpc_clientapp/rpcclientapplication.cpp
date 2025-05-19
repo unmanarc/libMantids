@@ -54,7 +54,15 @@ bool RPCClientApplication::_config(int argc, char *argv[], Mantids::Application:
         auto masterKey = Globals::getMasterKey();
         sleep(1);
         bool ok;
-        printf("%s\n", Helpers::Crypto::AES256EncryptB64(globalArguments->getCommandLineOptionValue("encode")->toString(),(char *)masterKey->data,masterKey->usedSize,&ok).c_str());
+        if (globalArguments->getLegacyCrypt())
+        {
+            printf("%s\n", Helpers::Crypto::AES256EncryptB64(globalArguments->getCommandLineOptionValue("encode")->toString(),(char *)masterKey->data,masterKey->usedSize,&ok).c_str());
+        }
+        else
+        {
+            printf("%s\n", Helpers::Crypto::AES256EncryptB64v2(globalArguments->getCommandLineOptionValue("encode")->toString(),(char *)masterKey->data,masterKey->usedSize,&ok).c_str());
+        }
+
         fflush(stdout);
         exit(0);
     }
@@ -104,6 +112,7 @@ bool RPCClientApplication::_config(int argc, char *argv[], Mantids::Application:
 
     // Copy Config Main
     Globals::setLocalInitConfig(pMainConfig);
+    Globals::setGlobalArguments(globalArguments);
 
     /////////////////////////////////////////////////////////////////////////
     // LOGS OPTIONS
@@ -171,9 +180,20 @@ int RPCClientApplication::_start(int argc, char *argv[], Mantids::Application::A
             {
                 bool ok = false;
                 // Load Key
-                keyPassPhrase = Mantids::Helpers::Crypto::AES256DecryptB64( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
-                                                                           ,(char *)masterKey->data,masterKey->usedSize,&ok
-                                                                            );
+
+                if (globalArguments->getLegacyCrypt())
+                {
+                    keyPassPhrase = Mantids::Helpers::Crypto::AES256DecryptB64( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
+                                                                               ,(char *)masterKey->data,masterKey->usedSize,&ok
+                                                                                );
+                }
+                else
+                {
+                    keyPassPhrase = Mantids::Helpers::Crypto::AES256DecryptB64v2( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
+                                                                               ,(char *)masterKey->data,masterKey->usedSize,&ok
+                                                                                );
+                }
+
                 if (!ok)
                 {
                     LOG_APP->log0(__func__,Logs::LEVEL_CRITICAL, "Failed to load the passphrase from %s", Globals::getLC_TLSPhraseFileForPrivateKey().c_str());
