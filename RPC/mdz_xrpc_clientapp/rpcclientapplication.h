@@ -5,6 +5,7 @@
 #include <mdz_prg_service/application.h>
 #include <mdz_hlp_functions/mem.h>
 #include <memory>
+
 #include "globals.h"
 //#include "rpcclientimpl.h"
 
@@ -15,7 +16,6 @@ class RPCClientApplication : public Mantids::Application::Application
 public:
     RPCClientApplication( Mantids::Helpers::Mem::xBinContainer * masterKey ) {
         Globals::setMasterKey(masterKey);
-        retrieveConfig = false;
     }
     void _shutdown();
     void _initvars(int argc, char *argv[], Mantids::Application::Arguments::GlobalArguments * globalArguments);
@@ -52,13 +52,13 @@ protected:
      */
     virtual int rpcStart(int argc, char *argv[], Mantids::Application::Arguments::GlobalArguments * globalArguments)=0;
 
-    virtual void processRetrievedConfig() {};
+    virtual void processRetrievedConfig() {}
 
     //
-    uint32_t appVersionMajor,appVersionMinor,appVersionSubMinor;
+    uint32_t appVersionMajor=0,appVersionMinor=0,appVersionSubMinor=1;
     std::string versionCodeName;
     std::string defaultConfigDir;
-    bool retrieveConfig;
+    bool retrieveConfig = false;
 };
 
 }}

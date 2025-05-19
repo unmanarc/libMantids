@@ -241,19 +241,18 @@ int RPCClientApplication::_start(int argc, char *argv[], Mantids::Application::A
         if (!Globals::getRpcImpl()->retrieveConfigFromC2())
         {
             // Unable to get the new config...
-
         }
 
         // Virtual function to process the jRetrievedConfig...
         processRetrievedConfig();
     }
 
-    // Call the start function when everything is done.
-
+    // Call the start function when everything is done and the program configuration was retrieved.
     int r = rpcStart(argc,argv,globalArguments);
 
     // Everything is running ok here...
     LOG_APP->log0(__func__,Logs::LEVEL_INFO,  (globalArguments->getDescription() + " started up, PID: %d").c_str(), getpid());
+
     return r;
 }
 
