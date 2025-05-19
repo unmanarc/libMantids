@@ -1,5 +1,6 @@
 #include "rpcclientimpl.h"
 #include "globals.h"
+#include "mdz_xrpc_fast/fastrpc.h"
 #include <cstdint>
 #include <inttypes.h>
 #include <string>
@@ -25,15 +26,12 @@ RPCClientImpl::RPCClientImpl()
     failedToRetrieveC2Config = false;
 }
 
-RPCClientImpl::~RPCClientImpl()
-{
-
-}
-
 void RPCClientImpl::runRPClient0(RPCClientImpl *rpcImpl)
 {
     rpcImpl->runRPClient();
 }
+
+
 
 void RPCClientImpl::runRPClient()
 {
@@ -41,7 +39,9 @@ void RPCClientImpl::runRPClient()
     std::string remoteAddr = Globals::getLC_C2RemoteAddress();
     int secsBetweenConnections = Globals::getLC_C2TimeBetweenConnections();
 
+    // Add the RPC Methods (this is a virtual function, so your program will add this)...
     addMethods();
+
     std::string caCertPath = Globals::getLC_TLSCAFilePath();
     std::string privKeyPath = Globals::getLC_TLSKeyFilePath();
     std::string pubCertPath = Globals::getLC_TLSCertFilePath();
@@ -98,6 +98,7 @@ void RPCClientImpl::runRPClient()
                     _exit(-3);
                 }
             }
+
             if (!sockRPCClient.keys.loadPublicKeyFromPEMFile(  pubCertPath.c_str() ))
             {
                 LOG_APP->log0(__func__,Logs::LEVEL_ERR, "Error starting RPC Connector to %s:%" PRIu16 ": Bad/Unaccesible TLS Public Certificate (%s)", remoteAddr.c_str(), remotePort, pubCertPath.c_str());
@@ -117,6 +118,7 @@ void RPCClientImpl::runRPClient()
 
         LOG_APP->log0(__func__,Logs::LEVEL_INFO,  "Connecting to RPC Server %s:%" PRIu16 "...", remoteAddr.c_str(), remotePort);
 
+        // Socket Connect
         if ( sockRPCClient.connectTo( remoteAddr.c_str(), remotePort ) )
         {
             LOG_APP->log0(__func__,Logs::LEVEL_INFO,  "RPC Client Connected to server %s:%" PRIu16 " (CN=%s) Using %s", remoteAddr.c_str(), remotePort, sockRPCClient.getTLSPeerCN().c_str(),sockRPCClient.getTLSConnectionCipherName().c_str());
@@ -125,7 +127,11 @@ void RPCClientImpl::runRPClient()
             {
                 // now is fully connected / authenticated...
                 if (failedToRetrieveC2Config)
+                {
                     connectedToC2AfterFailingToLoadC2Config();
+                }
+
+                // Process the connection <->
                 fastRPC.processConnection(&sockRPCClient,"SERVER");
             }
             LOG_APP->log0(__func__,Logs::LEVEL_WARN,  "RPC Client disconnected from %s:%" PRIu16 " (CN=%s)", remoteAddr.c_str(), remotePort, sockRPCClient.getTLSPeerCN().c_str());
@@ -179,6 +185,66 @@ bool RPCClientImpl::retrieveConfigFromLocalFile()
     return false;
 }
 
+bool RPCClientImpl::updateAndSaveConfig(
+    const json &newConfig)
+{
+    /////////////////////////////////////////////////////////////
+    //***********UPDATE AND SAVE CONFIGURATION*******************
+    /////////////////////////////////////////////////////////////
+    std::string sNewConfig = newConfig.toStyledString();
+    std::string sLocalConfig = jRetrievedConfig.toStyledString();
+
+    if (sNewConfig == sLocalConfig)
+    {
+        LOG_APP->log0(__func__, Logs::LEVEL_INFO, "C2 remote/local configuration is the same. Not upgrading.");
+        return true;
+    }
+
+    if (sNewConfig.size() > 7)
+    {
+        std::string sNewConfigEncrypted = encryptStr(sNewConfig);
+        std::string localConfigPath = Globals::getLC_RemoteConfigFilePath();
+
+        std::ofstream outfile;
+        outfile.open(localConfigPath, std::ios_base::out);
+        if (outfile.is_open())
+        {
+            outfile << sNewConfigEncrypted << "\n";
+            outfile.close();
+
+            jRetrievedConfig = newConfig;
+
+            json rpcError;
+            json ans;
+            ans["x"] = fastRPC.runRemoteRPCMethod("SERVER", updateClientConfigLoadTimeCmd, {}, &rpcError);
+
+            if ( JSON_ASBOOL(rpcError,"succeed", false) == false )
+            {
+                LOG_APP->log0(__func__, Logs::LEVEL_ERR, "Configuration updated and saved locally, but failed to update the C2 config access time... %s", rpcError["errorMessage"].asCString());
+            }
+
+            if (JSON_ASBOOL(ans, "x", false) == false)
+            {
+                LOG_APP->log0(__func__, Logs::LEVEL_ERR, "Configuration updated and saved locally, but failed to update the C2 config access time.");
+            }
+
+            LOG_APP->log0(__func__, Logs::LEVEL_INFO, "C2 configuration written to: %s", localConfigPath.c_str());
+
+            return true;
+        }
+        else
+        {
+            LOG_APP->log0(__func__, Logs::LEVEL_ERR, "Failed to write the updated configuration to: %s", localConfigPath.c_str());
+        }
+    }
+    else
+    {
+        LOG_APP->log0(__func__, Logs::LEVEL_ERR, "Updated configuration is not reliable.");
+    }
+
+    return false;
+}
+
 bool RPCClientImpl::retrieveConfigFromC2()
 {
     /////////////////////////////////////////////////////////////
@@ -192,6 +258,7 @@ bool RPCClientImpl::retrieveConfigFromC2()
 
     // Try to retrieve the configuration from the C&C. (will try several attempts)
     json jRemoteConfig = fastRPC.runRemoteRPCMethod("SERVER",getClientConfigCmd,{},&rpcError);
+
     if (rpcError["succeed"].asBool() == true)
     {
         // Translate this config to the configuration file...
@@ -221,7 +288,7 @@ bool RPCClientImpl::retrieveConfigFromC2()
                 json ans;
                 ans["x"] = fastRPC.runRemoteRPCMethod("SERVER",updateClientConfigLoadTimeCmd,{},&rpcError);
 
-                if ( rpcError["succeed"].asBool() == false )
+                if ( JSON_ASBOOL(rpcError,"succeed", false) == false )
                 {
                     LOG_APP->log0(__func__,Logs::LEVEL_ERR, "Configuration loaded from the remote server, but failed to update the C2 config access time... %s", rpcError["errorMessage"].asCString());
                 }
@@ -252,7 +319,6 @@ bool RPCClientImpl::retrieveConfigFromC2()
 
     // If the C2 is available in the near future, handle it (recommendation: exit the program).
     failedToRetrieveC2Config = true;
-
 
     return false;
 }
