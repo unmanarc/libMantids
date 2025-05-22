@@ -57,8 +57,10 @@ struct BinaryContainerChunk {
 
     void truncate(uint64_t nSize)
     {
-        if (nSize>=(offset+size)) return;
-        if (!nSize || nSize == offset) return;
+        if (nSize>=(offset+size))
+            return;
+        if (!nSize || nSize == offset)
+            return;
 
         // Current new chunk size.
         nSize-=offset;
