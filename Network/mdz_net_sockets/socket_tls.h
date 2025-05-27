@@ -48,13 +48,13 @@ public:
                 memset(&psk[0],0x7F, psk.size());
             }
 
-            void setValues(const std::string & identity,const std::string & psk)
+            void setValues(const std::string & _identity,const std::string & _psk)
             {
                 std::unique_lock<std::mutex> lock(mt);
 
                 usingPSK = true;
-                this->psk = psk;
-                this->identity = identity;
+                this->psk = _psk;
+                this->identity = _identity;
             }
 
 
@@ -62,7 +62,6 @@ public:
             std::string psk;
             std::string identity;
             std::mutex mt;
-
         };
 
 
@@ -124,9 +123,9 @@ public:
              * @brief setPSKCallback Set PSK Callback, warn: you have to manage multithread environment there.
              * @param newCbpsk Callback function
              */
-            void setPSKCallback(cbPSK newCbpsk, void * data)
+            void setPSKCallback(cbPSK newCbpsk, void * _data)
             {
-                this->data = data;
+                this->data = _data;
                 cbpsk = newCbpsk;
                 usingPSK = true;
             }
@@ -483,7 +482,7 @@ public:
     /**
      * Class destructor.
      */
-    virtual ~Socket_TLS();
+    virtual ~Socket_TLS() override;
 
 
 
@@ -506,7 +505,8 @@ public:
      * @param datalen data length in bytes
      * @return return the number of bytes read by the socket, zero for end of file and -1 for error.
      */
-    virtual int partialRead(void * data, const uint32_t & datalen) override;
+    virtual ssize_t partialRead(void * data, const uint32_t & datalen) override;
+
     /**
      * Write a data block to the TLS socket
      * note that this haves some limitations. some systems can only send 4k at time.
@@ -515,7 +515,7 @@ public:
      * @param datalen data length in bytes
      * @return return the number of bytes read by the socket, zero for end of file and -1 for error.
      */
-    virtual int partialWrite(const void * data, const uint32_t & datalen) override;
+    virtual ssize_t partialWrite(const void * data, const uint32_t & datalen) override;
 
     /////////////////////////
     // SSL functions:
