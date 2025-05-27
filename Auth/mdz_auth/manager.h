@@ -16,11 +16,11 @@ struct sAccountDetails{
     std::string sGivenName,sLastName,sEmail,sDescription,sExtraData;
 };
 struct sAccountAttribs{
-    sAccountAttribs(bool enabled, bool confirmed,bool superuser)
+    sAccountAttribs(bool _enabled, bool _confirmed,bool _superuser)
     {
-        this->enabled=enabled;
-        this->confirmed=confirmed;
-        this->superuser=superuser;
+        this->enabled=_enabled;
+        this->confirmed=_confirmed;
+        this->superuser=_superuser;
     }
     sAccountAttribs()
     {

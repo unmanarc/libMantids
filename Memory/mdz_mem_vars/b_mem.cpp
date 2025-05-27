@@ -32,7 +32,7 @@ std::pair<bool, uint64_t> B_MEM::findChar(const int &c, const uint64_t &offset, 
 
     size_t currentSize = size();
     // No bytes to copy.
-    if (!currentSize) return std::make_pair(false,(uint64_t)0);
+    if (!currentSize) return std::make_pair(false,static_cast<uint64_t>(0));
 
     if (CHECK_UINT_OVERFLOW_SUM(offset,searchSpace)) return std::make_pair(false,std::numeric_limits<uint64_t>::max());
 
@@ -56,7 +56,7 @@ std::pair<bool, uint64_t> B_MEM::findChar(const int &c, const uint64_t &offset, 
         else cPos = pos_lower;
     }
 
-    if (!cPos) return std::make_pair(false,(uint64_t)0);
+    if (!cPos) return std::make_pair(false,static_cast<uint64_t>(0));
 
     return std::make_pair(true,uint64_t(cPos-linearMem));
 }
@@ -69,12 +69,12 @@ std::pair<bool, uint64_t> B_MEM::truncate2(const uint64_t &bytes)
 
 std::pair<bool, uint64_t> B_MEM::append2(const void *, const uint64_t &, bool )
 {
-    return std::make_pair(false,(uint64_t)0);
+    return std::make_pair(false,static_cast<uint64_t>(0));
 }
 
 std::pair<bool, uint64_t> B_MEM::displace2(const uint64_t &bytesToDisplace)
 {
-    if (bytesToDisplace>size()) return std::make_pair(false,(uint64_t)0);
+    if (bytesToDisplace>size()) return std::make_pair(false,static_cast<uint64_t>(0));
 
     linearMem+=bytesToDisplace;
     decContainerBytesCount(bytesToDisplace);
@@ -97,9 +97,9 @@ std::pair<bool,uint64_t> B_MEM::copyToStream2(std::ostream &bc, const uint64_t &
     if (!bytes) return std::make_pair(true,0);
 
     // Offset:bytes will overflow...
-    if (CHECK_UINT_OVERFLOW_SUM(offset,bytes)) return std::make_pair(false,(uint64_t)0);
+    if (CHECK_UINT_OVERFLOW_SUM(offset,bytes)) return std::make_pair(false,static_cast<uint64_t>(0));
     // No bytes to copy:
-    if (offset>currentBytes) return std::make_pair(false,(uint64_t)0);
+    if (offset>currentBytes) return std::make_pair(false,static_cast<uint64_t>(0));
     // Request exceed this container, bytes should only copy what's right...
     if (offset+bytes>currentBytes) bytes = currentBytes-offset;
 
@@ -131,9 +131,9 @@ std::pair<bool,uint64_t> B_MEM::copyTo2(StreamableObject &bc, Streams::Streamabl
     if (!bytes) return std::make_pair(true,0);
 
     // Offset:bytes will overflow...
-    if (CHECK_UINT_OVERFLOW_SUM(offset,bytes)) return std::make_pair(false,(uint64_t)0);
+    if (CHECK_UINT_OVERFLOW_SUM(offset,bytes)) return std::make_pair(false,static_cast<uint64_t>(0));
     // No bytes to copy:
-    if (offset>size()) return std::make_pair(false,(uint64_t)0);
+    if (offset>size()) return std::make_pair(false,static_cast<uint64_t>(0));
     // Request exceed this container, bytes should only copy what's right...
     if (offset+bytes>size()) bytes = size()-offset;
 
@@ -161,18 +161,18 @@ std::pair<bool,uint64_t> B_MEM::copyTo2(StreamableObject &bc, Streams::Streamabl
 std::pair<bool,uint64_t> B_MEM::copyOut2(void *buf, const uint64_t &bytes, const uint64_t &offset)
 {
     // Offset:bytes will overflow...
-    if (CHECK_UINT_OVERFLOW_SUM(offset,bytes)) return std::make_pair(false,(uint64_t)0);
+    if (CHECK_UINT_OVERFLOW_SUM(offset,bytes)) return std::make_pair(false,static_cast<uint64_t>(0));
 
     // No bytes to copy:
     if (!bytes) return std::make_pair(true,0);
 
     // out of bounds (fail to copy):
-    if (offset+bytes>size()) return std::make_pair(false,(uint64_t)0);
+    if (offset+bytes>size()) return std::make_pair(false,static_cast<uint64_t>(0));
 
     ////////////////////////////////////
 
     // error: offset exceed the container size (try another offset)
-    if (offset>size()) return std::make_pair(false,(uint64_t)0);
+    if (offset>size()) return std::make_pair(false,static_cast<uint64_t>(0));
 
     const char * linearMemOffseted = linearMem+offset;
     uint64_t containerBytesOffseted = size()-offset;

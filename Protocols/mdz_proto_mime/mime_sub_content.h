@@ -11,7 +11,7 @@ class MIME_Sub_Content : public Memory::Streams::SubParser
 {
 public:
     MIME_Sub_Content();
-    ~MIME_Sub_Content();
+    ~MIME_Sub_Content() override;
 
     bool stream(Memory::Streams::StreamableObject::Status &wrStat) override;
 

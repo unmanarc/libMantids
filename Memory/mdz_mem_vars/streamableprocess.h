@@ -12,7 +12,7 @@ class StreamableProcess : public Memory::Streams::StreamableObject
 {
 public:
     StreamableProcess(Mantids::Helpers::AppSpawn * spawner);
-    ~StreamableProcess();
+    ~StreamableProcess() override;
     /**
      * Retrieve Stream to another Streamable.
      * @param objDst pointer to the destination object.

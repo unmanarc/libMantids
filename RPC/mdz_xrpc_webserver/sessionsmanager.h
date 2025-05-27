@@ -18,7 +18,7 @@ public:
         sCSRFAuthConfirmToken = Mantids::Helpers::Random::createRandomString(32);
         sCSRFToken = Mantids::Helpers::Random::createRandomString(32);
     }
-    ~WebSession() { delete authSession; }
+    ~WebSession() override { delete authSession; }
 
     bool validateCSRFToken(const std::string & token)
     {
@@ -39,7 +39,7 @@ class SessionsManager : public Threads::GarbageCollector
 {
 public:
     SessionsManager();
-    ~SessionsManager();
+    ~SessionsManager() override;
 
     static void threadGC(void * sessManager);
     void gc();

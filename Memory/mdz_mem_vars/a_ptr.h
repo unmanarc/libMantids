@@ -11,9 +11,9 @@ class PTR: public Var
 public:
     PTR();
     PTR(void *value);
-    PTR& operator=(void *value)
+    PTR& operator=(void *_value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 

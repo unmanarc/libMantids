@@ -14,23 +14,23 @@ public:
     FastRPCImpl(uint32_t threadsCount = 16, uint32_t taskQueues = 24) : Mantids::RPC::Fast::FastRPC(threadsCount,taskQueues)
     {
     }
-    virtual ~FastRPCImpl()
+    virtual ~FastRPCImpl() override
     {
     }
 
 protected:
     // TODO: report back to the manager_remote.
 
-    void eventUnexpectedAnswerReceived(Mantids::RPC::Fast::FastRPC_Connection *connection, const std::string &answer) override
+    void eventUnexpectedAnswerReceived(Mantids::RPC::Fast::FastRPC_Connection *, const std::string &) override
     {
     }
-    void eventFullQueueDrop(Mantids::RPC::Fast::sFastRPCParameters * params) override
+    void eventFullQueueDrop(Mantids::RPC::Fast::sFastRPCParameters * ) override
     {
     }
-    void eventRemotePeerDisconnected(const std::string &connectionKey, const std::string &methodName, const json &payload) override
+    void eventRemotePeerDisconnected(const std::string &, const std::string &, const json &) override
     {
     }
-    void eventRemoteExecutionTimedOut(const std::string &connectionKey, const std::string &methodName, const json &payload) override
+    void eventRemoteExecutionTimedOut(const std::string &, const std::string &, const json &) override
     {
     }
 private:
@@ -42,7 +42,7 @@ class Manager_Remote : public Manager
 public:
     // Open authentication system:
     Manager_Remote();
-    virtual ~Manager_Remote();
+    virtual ~Manager_Remote() override;
 
     /////////////////////////////////////////////////////////////////////////////////
     // authentication:

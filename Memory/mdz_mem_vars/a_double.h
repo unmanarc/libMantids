@@ -11,9 +11,9 @@ class DOUBLE: public Var
 public:
     DOUBLE();
     DOUBLE(const double & value);
-    DOUBLE& operator=(const double & value)
+    DOUBLE& operator=(const double & _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 

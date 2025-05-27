@@ -74,13 +74,13 @@ void RPCClientImpl::runRPClient()
                 if (Globals::getGlobalArguments()->getLegacyCrypt())
                 {
                     keyPassPhrase = Mantids::Helpers::Crypto::AES256DecryptB64( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
-                                                                                           ,(char *)masterKey->data,masterKey->usedSize,&ok
+                                                                                           ,static_cast<char *>(masterKey->data),masterKey->usedSize,&ok
                                                                                 );
                 }
                 else
                 {
                     keyPassPhrase = Mantids::Helpers::Crypto::AES256DecryptB64v2( Mantids::Helpers::File::loadFileIntoString( Globals::getLC_TLSPhraseFileForPrivateKey() )
-                                                                               ,(char *)masterKey->data,masterKey->usedSize,&ok
+                                                                               ,static_cast<char *>(masterKey->data),masterKey->usedSize,&ok
                                                                                );
                 }
 
@@ -355,11 +355,11 @@ RPCClientImpl::PSKIdKey RPCClientImpl::loadPSK()
         std::string tokenizedKey;
         if (Globals::getGlobalArguments()->getLegacyCrypt())
         {
-            tokenizedKey = Mantids::Helpers::Crypto::AES256DecryptB64( encryptedKey,(char *)masterKey->data,masterKey->usedSize,&ok );
+            tokenizedKey = Mantids::Helpers::Crypto::AES256DecryptB64( encryptedKey,static_cast<char *>(masterKey->data),masterKey->usedSize,&ok );
         }
         else
         {
-            tokenizedKey = Mantids::Helpers::Crypto::AES256DecryptB64v2( encryptedKey,(char *)masterKey->data,masterKey->usedSize,&ok );
+            tokenizedKey = Mantids::Helpers::Crypto::AES256DecryptB64v2( encryptedKey,static_cast<char *>(masterKey->data),masterKey->usedSize,&ok );
         }
         std::vector<std::string> keyParts;
         split(keyParts,tokenizedKey,is_any_of(":"),token_compress_on);

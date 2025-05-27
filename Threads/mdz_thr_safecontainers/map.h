@@ -85,7 +85,7 @@ MapItem *Map<T>::openElement(const T &key)
     if (xMap.find(key) != xMap.end() && xMap[key].rdElement)
     {
         xMap[key].readers++;
-        return xMap[key].rdElement;;
+        return xMap[key].rdElement;
     }
     return nullptr;
 }

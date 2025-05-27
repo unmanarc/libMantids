@@ -10,7 +10,7 @@ class Query_SQLite3 : public Query
 {
 public:
     Query_SQLite3();
-    ~Query_SQLite3();
+    ~Query_SQLite3() override;
 
 
     // Sqlite3 options...
@@ -20,8 +20,8 @@ public:
     bool sqlite3IsDone() const;
 protected:
     // Direct Query:
-    bool exec0(const ExecType & execType, bool recursion);
-    bool step0();
+    bool exec0(const ExecType & execType, bool recursion) override;
+    bool step0() override;
 
 private:
     sqlite3_stmt *stmt;

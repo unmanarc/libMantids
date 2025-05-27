@@ -170,9 +170,9 @@ bool Query_PostgreSQL::postBindInputVars()
         throw std::runtime_error("Can't bind input variables twice (please report).");
     }
 
-    paramValues = (char **)malloc( paramCount * sizeof(char *) );
-    paramLengths = (int *)malloc( paramCount * sizeof(int) );;
-    paramFormats = (int *)malloc( paramCount * sizeof(int) );
+    paramValues = static_cast<char **>(malloc( paramCount * sizeof(char *) ));
+    paramLengths = static_cast<int *>(malloc( paramCount * sizeof(int) ));
+    paramFormats = static_cast<int *>(malloc( paramCount * sizeof(int) ));
 
     for (size_t pos=0; pos<keysByPos.size(); pos++)
     {
@@ -284,11 +284,10 @@ bool Query_PostgreSQL::exec0(const ExecType &execType, bool recursion)
     if (result)
     {
         throw std::runtime_error("Re-using queries is not supported.");
-        return false;
     }
 
     // Prepare the query (will lock the db while using ppDb):
-    ((SQLConnector_PostgreSQL*)sqlConnector)->getDatabaseConnector(this);
+    static_cast<SQLConnector_PostgreSQL*>(sqlConnector)->getDatabaseConnector(this);
 
     if (!dbCnt)
         return false;
@@ -357,7 +356,7 @@ bool Query_PostgreSQL::exec0(const ExecType &execType, bool recursion)
     }
     else
     {
-        affectedRows = strtoull(PQcmdTuples(result),0,10);
+        affectedRows = strtoull(PQcmdTuples(result),nullptr,10);
         if (bFetchLastInsertRowID)
              lastInsertRowID = PQoidValue(result);
         return execStatus == PGRES_COMMAND_OK;

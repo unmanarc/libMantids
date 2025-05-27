@@ -27,7 +27,7 @@ static std::string getStringFromAuthMode( const Mode & mode )
         return "PLAIN";
     case MODE_CHALLENGE:
         return "CHALLENGE";
-    };
+    }
     return "PLAIN";
 }
 

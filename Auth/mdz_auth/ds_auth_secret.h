@@ -40,7 +40,6 @@ struct Secret_PublicData
         return (expiration<time(nullptr) && expiration!=0) || forceExpiration;
     }
 
-
     std::map<std::string,std::string> getMap() const
     {
         std::map<std::string,std::string> r;
@@ -49,9 +48,9 @@ struct Secret_PublicData
         r["SALT"] = Mantids::Helpers::Encoders::toHex(ssalt,4);
         r["EXPIRATION"] = std::to_string(expiration);
         r["FORCE_EXPIRATION"] = std::string(forceExpiration?"1":"0");
-        r["BAD_ATTEMPTS"] = badAttempts;
+        r["BAD_ATTEMPTS"] = std::to_string(badAttempts);
         r["DESCRIPTION"] = description;
-        r["REQUIRED_AT_LOGIN"] = std::string(requiredAtLogin?"1":"0");;
+        r["REQUIRED_AT_LOGIN"] = std::string(requiredAtLogin?"1":"0");
         r["LOCKED"] = locked;
         r["NUL"] = nul;
         return r;

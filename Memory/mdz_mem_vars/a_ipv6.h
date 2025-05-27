@@ -18,9 +18,9 @@ public:
     IPV6();
     IPV6(const in6_addr &value);
     IPV6(const std::string &value);
-    IPV6& operator=(const in6_addr & value)
+    IPV6& operator=(const in6_addr & _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 

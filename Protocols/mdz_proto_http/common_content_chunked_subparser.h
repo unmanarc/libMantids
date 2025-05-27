@@ -9,7 +9,7 @@ class Content_Chunked_SubParser : public Memory::Streams::StreamableObject
 {
 public:
     Content_Chunked_SubParser( Memory::Streams::StreamableObject * dst );
-    ~Content_Chunked_SubParser( );
+    ~Content_Chunked_SubParser( ) override;
 
     bool streamTo(Memory::Streams::StreamableObject * out, Memory::Streams::StreamableObject::Status & wrsStat) override;
     Memory::Streams::StreamableObject::Status write(const void * buf, const size_t &count, Memory::Streams::StreamableObject::Status & wrStatUpd) override;

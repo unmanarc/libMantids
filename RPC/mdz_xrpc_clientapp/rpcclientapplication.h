@@ -17,10 +17,12 @@ public:
     RPCClientApplication( Mantids::Helpers::Mem::xBinContainer * masterKey ) {
         Globals::setMasterKey(masterKey);
     }
-    void _shutdown();
-    void _initvars(int argc, char *argv[], Mantids::Application::Arguments::GlobalArguments * globalArguments);
-    bool _config(int argc, char *argv[], Mantids::Application::Arguments::GlobalArguments * globalArguments);
-    int _start(int argc, char *argv[], Mantids::Application::Arguments::GlobalArguments * globalArguments);
+    virtual ~RPCClientApplication() override = default;
+
+    void _shutdown() override;
+    void _initvars(int argc, char *argv[], Mantids::Application::Arguments::GlobalArguments * globalArguments) override;
+    bool _config(int argc, char *argv[], Mantids::Application::Arguments::GlobalArguments * globalArguments) override;
+    int _start(int argc, char *argv[], Mantids::Application::Arguments::GlobalArguments * globalArguments) override;
 
 
 protected:

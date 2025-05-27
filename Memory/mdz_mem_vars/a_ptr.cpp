@@ -7,14 +7,14 @@ using namespace Mantids::Memory::Abstract;
 
 PTR::PTR()
 {
-    value = 0;
+    value = nullptr;
     setVarType(TYPE_PTR);
 }
 
-PTR::PTR(void *value)
+PTR::PTR(void *_value)
 {
     setVarType(TYPE_PTR);
-    this->value = value;
+    this->value = _value;
 }
 
 void * PTR::getValue()
@@ -23,11 +23,11 @@ void * PTR::getValue()
     return value;
 }
 
-bool PTR::setValue(void * value)
+bool PTR::setValue(void * _value)
 {
     Threads::Sync::Lock_RW lock(mutex);
 
-    this->value = value;
+    this->value = _value;
     return true;
 }
 
@@ -41,16 +41,16 @@ std::string PTR::toString()
     return ovalue;
 }
 
-bool PTR::fromString(const std::string &value)
+bool PTR::fromString(const std::string &_value)
 {
     Threads::Sync::Lock_RW lock(mutex);
 
-    if (value.empty())
+    if (_value.empty())
     {
-        this->value = 0;
+        this->value = nullptr;
         return true;
     }
-    this->value = (void *)(strtol( value.c_str(), nullptr, 16 ));
+    this->value = (void *)(strtol( _value.c_str(), nullptr, 16 ));
     return true;
 }
 

@@ -42,7 +42,7 @@ Reason Manager_Remote::authenticate(const std::string &, const sClientDetails &c
     {
         for ( size_t i=0; i<answer["accountPassIndexesUsedForLogin"].size();i++ )
         {
-            json v = answer["accountPassIndexesUsedForLogin"][(int)i];
+            json v = answer["accountPassIndexesUsedForLogin"][static_cast<int>(i)];
 
             uint32_t key = JSON_ASUINT(v,"idx",0);
             std::string txt = JSON_ASSTRING(v,"txt","");

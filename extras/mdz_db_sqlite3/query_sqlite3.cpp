@@ -229,14 +229,13 @@ bool Query_SQLite3::step0()
             case Memory::Abstract::Var::TYPE_UINT64:
                 // Not implemented.
                 throw std::runtime_error("UINT64 is not supported by SQLite3 and can lead to precision errors, check your implementation");
-                break;
             case Memory::Abstract::Var::TYPE_DOUBLE:
                 ABSTRACT_PTR_AS(DOUBLE,outputVar)->setValue( sqlite3_column_double(stmt, columnpos) );
                 break;
             case Memory::Abstract::Var::TYPE_BIN:
             {
                 Memory::Abstract::BINARY::sBinContainer binContainer;
-                binContainer.ptr = (char *)sqlite3_column_blob(stmt,columnpos);
+                binContainer.ptr = (char *)(sqlite3_column_blob(stmt,columnpos));
                 // TODO: should bytes need to be 64-bit for blob64?
                 binContainer.dataSize = sqlite3_column_bytes(stmt,columnpos);
                 ABSTRACT_PTR_AS(BINARY,outputVar)->setValue( &binContainer );
@@ -292,8 +291,8 @@ bool Query_SQLite3::sqlite3IsDone() const
     return lastSQLReturnValue == SQLITE_DONE;
 }
 
-void Query_SQLite3::sqlite3SetDatabaseConnector(sqlite3 *ppDb)
+void Query_SQLite3::sqlite3SetDatabaseConnector(sqlite3 *_ppDb)
 {
-    this->ppDb = ppDb;
+    this->ppDb = _ppDb;
 }
 

@@ -8,7 +8,7 @@ using S = std::chrono::seconds;
 
 
 
-void fastRPCPingerThread( FastRPC * obj )
+static void fastRPCPingerThread( FastRPC * obj )
 {
 #ifndef WIN32
     pthread_setname_np(pthread_self(), "fRPC:Pinger");

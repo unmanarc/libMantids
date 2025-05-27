@@ -42,14 +42,14 @@ public:
 
     struct sFilter
     {
-        sFilter( const std::list<std::string> & regexs,
-                 const std::string & redirectLocation,
-                 const std::list<std::string> & reqAttrib,
-                 const std::list<std::string> & rejAttrib,
-                 const eFilterActions & action
+        sFilter( const std::list<std::string> & _regexs,
+                 const std::string & _redirectLocation,
+                 const std::list<std::string> & _reqAttrib,
+                 const std::list<std::string> & _rejAttrib,
+                 const eFilterActions & _action
                  )
         {
-            for ( const auto &i : regexs )
+            for ( const auto &i : _regexs )
             {
                 this->sRegexs.push_back(i);
 #ifdef USE_STD_REGEX
@@ -58,10 +58,10 @@ public:
                 this->regexs.push_back( boost::regex(i.c_str(),boost::regex::extended ));
 #endif
             }
-            this->redirectLocation = redirectLocation;
-            this->action = action;
-            this->reqAttrib = reqAttrib;
-            this->rejAttrib = rejAttrib;
+            this->redirectLocation = _redirectLocation;
+            this->action = _action;
+            this->reqAttrib = _reqAttrib;
+            this->rejAttrib = _rejAttrib;
         }
 
         std::string listToString(const std::list<std::string> & list)const
@@ -72,9 +72,9 @@ public:
             return x;
         }
 
-        std::string actionToString(eFilterActions action)const
+        std::string actionToString(eFilterActions _action)const
         {
-            switch (action)
+            switch (_action)
             {
             case     RFILTER_ACCEPT:
                 return "ACCEPT";

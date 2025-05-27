@@ -173,7 +173,7 @@ public:
         if (readOK) *readOK = true;
 
         // readBlockWAllocEx will handle readDeSync();
-        char * data = (char *)readBlockWAllocEx<T>(&receivedBytes);
+        char * data = static_cast<char *>(readBlockWAllocEx<T>(&receivedBytes));
         if (!data)
         {
             if (readOK) *readOK = false;

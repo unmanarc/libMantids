@@ -89,7 +89,7 @@ std::pair<bool, uint64_t> B_Chunks::truncate2(const uint64_t &bytes)
 
     // If the offset is beyond the current data, return failure.
     if (ival==MAX_SIZE_T)
-        return std::make_pair(false,(uint64_t)0);
+        return std::make_pair(false,static_cast<uint64_t>(0));
 
     // If the offset exactly matches the end of a chunk, remove that chunk and all following chunks.
     if (chunksVector[ival].offset == bytes)
@@ -128,13 +128,13 @@ std::pair<bool, uint64_t> B_Chunks::append2(const void *buf, const uint64_t &roL
 
     // Offset:bytes will overflow...
     if (CHECK_UINT_OVERFLOW_SUM(len,size()))
-        return std::make_pair(false,(uint64_t)0);
+        return std::make_pair(false,static_cast<uint64_t>(0));
 
     if (maxContainerSizeUntilGoingToFS!=0 && len+size() > maxContainerSizeUntilGoingToFS)
     {
         mmapContainer = copyToFS("",true);
         if (!mmapContainer)
-            return std::make_pair(false,(uint64_t)0);
+            return std::make_pair(false,static_cast<uint64_t>(0));
         clearChunks(); // Clear this container leaving the mmap intact...
         if (prependMode)
             return mmapContainer->prepend(buf,len);
@@ -183,7 +183,7 @@ std::pair<bool, uint64_t> B_Chunks::append2(const void *buf, const uint64_t &roL
 
         ////////////////////////////
         // local counters update...
-        buf=((const char *)buf)+chunkSize;
+        buf=(static_cast<const char *>(buf))+chunkSize;
         len-=chunkSize;
     }
 
@@ -254,9 +254,9 @@ std::pair<bool,uint64_t> B_Chunks::copyToStream2(std::ostream &bc, const uint64_
     if (!bytes) return std::make_pair(true,0);
 
     // Offset:bytes will overflow...
-    if (CHECK_UINT_OVERFLOW_SUM(offset,bytes)) return std::make_pair(false,(uint64_t)0);
+    if (CHECK_UINT_OVERFLOW_SUM(offset,bytes)) return std::make_pair(false,static_cast<uint64_t>(0));
     // No bytes to copy:
-    if (offset>size()) return std::make_pair(false,(uint64_t)0);
+    if (offset>size()) return std::make_pair(false,static_cast<uint64_t>(0));
     // Request exceed this container.
     if (offset+bytes>size()) bytes = size()-offset;
 
@@ -312,9 +312,9 @@ std::pair<bool,uint64_t> B_Chunks::copyTo2(StreamableObject &bc, Streams::Stream
     if (!bytes) return std::make_pair(true,0);
 
     // Offset:bytes will overflow...
-    if (CHECK_UINT_OVERFLOW_SUM(offset,bytes)) return std::make_pair(false,(uint64_t)0);
+    if (CHECK_UINT_OVERFLOW_SUM(offset,bytes)) return std::make_pair(false,static_cast<uint64_t>(0));
     // No bytes to copy:
-    if (offset>size()) return std::make_pair(false,(uint64_t)0);
+    if (offset>size()) return std::make_pair(false,static_cast<uint64_t>(0));
     // Request exceed this container.
     if (offset+bytes>size()) bytes = size()-offset;
 
@@ -369,18 +369,18 @@ std::pair<bool, uint64_t> B_Chunks::copyOut2(void *buf, const uint64_t &roBytes,
     uint64_t copiedBytes = 0;
 
     // Offset:bytes will overflow...
-    if (CHECK_UINT_OVERFLOW_SUM(offset,bytes)) return std::make_pair(false,(uint64_t)0);
+    if (CHECK_UINT_OVERFLOW_SUM(offset,bytes)) return std::make_pair(false,static_cast<uint64_t>(0));
 
     // No bytes to copy:
     if (!bytes) return std::make_pair(true,0);
 
     // out of bounds (fail to copy):
-    if (offset+bytes>size()) return std::make_pair(false,(uint64_t)0);
+    if (offset+bytes>size()) return std::make_pair(false,static_cast<uint64_t>(0));
 
     ////////////////////////////////////
 
     size_t icurrentChunk = I_Chunk_GetPosForOffset(offset);
-    if (icurrentChunk==MAX_SIZE_T) return std::make_pair(false,(uint64_t)0);
+    if (icurrentChunk==MAX_SIZE_T) return std::make_pair(false,static_cast<uint64_t>(0));
 
     BinaryContainerChunk currentChunk = chunksVector[icurrentChunk];
     currentChunk.moveToOffset(offset);
@@ -552,13 +552,13 @@ std::pair<bool, uint64_t> B_Chunks::findChar(const int &c, const uint64_t &roOff
             if (searchSpace>currentChunk.size)
                 searchSpace-=currentChunk.size;
             else
-                 return std::make_pair(false,(uint64_t)0);
+                 return std::make_pair(false,static_cast<uint64_t>(0));
         }
 
         // chunk discarded.
         retpos+=originalChunk->size;
     }
-    return std::make_pair(false,(uint64_t)0);
+    return std::make_pair(false,static_cast<uint64_t>(0));
 }
 
 void B_Chunks::recalcChunkOffsets()

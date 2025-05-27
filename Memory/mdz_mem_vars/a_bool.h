@@ -11,9 +11,9 @@ class BOOL: public Var
 public:
     BOOL();
     BOOL(const bool & value);
-    BOOL& operator=(const bool & value)
+    BOOL& operator=(const bool & _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 

@@ -15,7 +15,7 @@ class Query_PostgreSQL : public Query
 {
 public:
     Query_PostgreSQL();
-    ~Query_PostgreSQL();
+    ~Query_PostgreSQL() override;
     bool exec(const ExecType & execType);
 
 
@@ -24,9 +24,9 @@ public:
     ExecStatusType psqlGetExecStatus() const;
 
 protected:
-    bool exec0(const ExecType & execType, bool recursion);
-    bool step0();
-    bool postBindInputVars();
+    bool exec0(const ExecType & execType, bool recursion) override;
+    bool step0() override;
+    bool postBindInputVars() override;
 private:
 
     std::vector<std::string> keysByPos;

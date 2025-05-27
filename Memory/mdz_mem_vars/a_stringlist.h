@@ -12,9 +12,9 @@ class STRINGLIST: public Var
 public:
     STRINGLIST();
     STRINGLIST(const std::list<std::string> & value);
-    STRINGLIST& operator=(const std::list<std::string> & value)
+    STRINGLIST& operator=(const std::list<std::string> & _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
     std::list<std::string> getValue();

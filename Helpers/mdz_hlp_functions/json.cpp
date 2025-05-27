@@ -41,18 +41,18 @@ std::list<std::string> Mantids::Helpers::jsonToStringList(const json &value, con
 
     if (sub.empty() && value.isArray())
     {
-        for ( size_t x = 0; x< value.size(); x++)
+        for (size_t x = 0; x < value.size(); ++x)
         {
-            if (value[(int)x].isString())
-                r.push_back(value[(int)x].asString());
+            if (value[static_cast<int>(x)].isString())
+                r.push_back(value[static_cast<int>(x)].asString());
         }
     }
-    else if (!sub.empty() && JSON_ISARRAY(value,sub))
+    else if (!sub.empty() && JSON_ISARRAY(value, sub))
     {
-        for ( size_t x = 0; x< value[sub].size(); x++)
+        for (size_t x = 0; x < value[sub].size(); ++x)
         {
-            if (value[sub][(int)x].isString())
-                r.push_back(value[sub][(int)x].asString());
+            if (value[sub][static_cast<int>(x)].isString())
+                r.push_back(value[sub][static_cast<int>(x)].asString());
         }
     }
     return r;

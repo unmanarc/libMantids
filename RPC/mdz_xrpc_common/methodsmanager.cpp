@@ -7,9 +7,9 @@
 using namespace Mantids::RPC;
 using namespace Mantids;
 
-MethodsManager::MethodsManager(const std::string &appName)
+MethodsManager::MethodsManager(const std::string &_appName)
 {
-    this->appName = appName;
+    this->appName = _appName;
 }
 
 bool MethodsManager::addRPCMethod(const std::string &methodName, const std::set<std::string> &reqAttribs, const sRPCMethod &rpcMethod, bool requireFullAuth)

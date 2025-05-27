@@ -72,7 +72,8 @@ public:
      * @param data Memory address where the received data will be allocated
      * @param expectedDataBytesCount Expected data size (in bytes) to be read from the socket
      * @param receivedBytesCount if not null, this function returns the received byte count.
-     * @return if it's disconnected (invalid sockfd) or it's not able to obtain at least 1 byte, then return false, otherwise true, you should check by yourself that expectedDataBytesCount == *receivedDataBytesCount
+     * @return if it's disconnected and/or it's not able to obtain the full object, then return false, otherwise true,
+     * And when readFull is false, you should check by yourself that *receivedDataBytesCount, because you may have received something.
      */
     virtual bool readFull(void * data, const uint64_t &expectedDataBytesCount, uint64_t * receivedDataBytesCount = nullptr) override;
 

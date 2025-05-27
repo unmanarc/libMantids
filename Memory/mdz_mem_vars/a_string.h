@@ -11,9 +11,9 @@ class STRING: public Var
 public:
     STRING();
     STRING(const std::string & value);
-    STRING& operator=(const std::string & value)
+    STRING& operator=(const std::string & _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
     std::string getValue();

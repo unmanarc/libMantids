@@ -20,9 +20,9 @@ public:
     IPV4(const in_addr & value, const uint8_t & cidrMask=32);
     IPV4(const std::string & value);
 
-    IPV4& operator=(const in_addr & value)
+    IPV4& operator=(const in_addr & _value)
     {
-        setValue(value,32);
+        setValue(_value,32);
         return *this;
     }
 

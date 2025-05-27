@@ -14,6 +14,7 @@ class LoginRPCClient
 {
 public:
     LoginRPCClient();
+    virtual ~LoginRPCClient() = default;
 
     /**
      * @brief notifyTLSConnecting Notify just before the TLS/TCP-IP Connection
@@ -46,7 +47,7 @@ public:
      * @brief connect Internal Static function for processing the connections
      * @param rpcClient Login RPC Client Class to process
      */
-    static void process(LoginRPCClient * rpcClient,uint16_t sleepBetweenConnectionsSeconds);
+    [[noreturn]] static void process(LoginRPCClient * rpcClient,uint16_t sleepBetweenConnectionsSeconds);
     /**
      * @brief start start connection loop in background
      * NOTE: every set for this call should be done before start.

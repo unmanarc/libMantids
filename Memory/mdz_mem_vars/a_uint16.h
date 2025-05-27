@@ -12,9 +12,9 @@ class UINT16: public Var
 public:
     UINT16();
     UINT16(const uint16_t &value);
-    UINT16& operator=(const uint16_t & value)
+    UINT16& operator=(const uint16_t & _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 

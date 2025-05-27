@@ -90,7 +90,7 @@ public:
      * @param taskQueues
      */
     FastRPC(uint32_t threadsCount = 16, uint32_t taskQueues = 24);
-    ~FastRPC();
+    virtual ~FastRPC();
     /**
      * @brief stop Stop the thread pool.
      */
