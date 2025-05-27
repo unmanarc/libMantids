@@ -93,7 +93,10 @@ bool Socket_TLS::postConnectSubInitialization()
     {
         sslErrors.push_back("SSL_new failed.");
         return false;
-    }
+    }    
+
+    SSL_set_mode(sslh, SSL_MODE_ENABLE_PARTIAL_WRITE);
+    SSL_set_mode(sslh, SSL_MODE_AUTO_RETRY);
 
     // If there is any configured PSK, put the key in the static list here...
     bool usingPSK = keys.linkPSKWithTLSHandle(sslh);
@@ -156,6 +159,9 @@ bool Socket_TLS::postAcceptSubInitialization()
         sslErrors.push_back("SSL_new failed.");
         return false;
     }
+
+    SSL_set_mode(sslh, SSL_MODE_ENABLE_PARTIAL_WRITE);
+    SSL_set_mode(sslh, SSL_MODE_AUTO_RETRY);
 
     // If the parent have any PSK key, pass everything to the current socket_tls.
     *(keys.getPSKServerWallet()) = *(tlsParent->keys.getPSKServerWallet());
@@ -427,14 +433,16 @@ void Socket_TLS::setIsServerMode(bool value)
 Socket_TLS::sCipherBits Socket_TLS::getTLSConnectionCipherBits()
 {
     sCipherBits cb;
-    if (!sslh) return cb;
+    if (!sslh)
+        return cb;
     cb.aSymBits = SSL_get_cipher_bits(sslh, &cb.symBits);
     return cb;
 }
 
 string Socket_TLS::getTLSConnectionProtocolVersion()
 {
-    if (!sslh) return "";
+    if (!sslh)
+        return "";
     return SSL_get_version(sslh);
 }
 
