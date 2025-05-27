@@ -21,6 +21,8 @@ namespace Mantids { namespace Application {
 class Application
 {
 public:
+    virtual ~Application() = default;
+
 /**
  * @brief _shutdown function called for program shutdown (close here your descriptors, connections, etc)
  */

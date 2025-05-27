@@ -25,11 +25,11 @@ public:
      * @brief runRPClient0 Run the class RPC Client (to be called from a thread)
      * @param rpcImpl RPC Client Implementation object
      */
-    static void runRPClient0(RPCClientImpl * rpcImpl);
+    [[noreturn]] static void runRPClient0(RPCClientImpl * rpcImpl);
     /**
      * @brief runRPClient run RPC Client and made connection/authentication/processing (will block indefinitely)
      */
-    void runRPClient();
+    [[noreturn]] void runRPClient();
     /**
      * @brief retrieveConfigFromLocalFile Retrieve the jRetrievedConfig from the local file.
      * @return true if can retrieve, otherwise false.
@@ -84,8 +84,8 @@ protected:
      */
     virtual bool postConnect(Mantids::Network::Sockets::Socket_TLS * sockRPCClient) { return  true; }
 
-    virtual std::string decryptStr(const std::string & src) { return src; };
-    virtual std::string encryptStr(const std::string & src) { return src; };
+    virtual std::string decryptStr(const std::string & src) { return src; }
+    virtual std::string encryptStr(const std::string & src) { return src; }
 
     std::string getClientConfigCmd,updateClientConfigLoadTimeCmd;
 

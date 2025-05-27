@@ -12,9 +12,9 @@ class UINT8: public Var
 public:
     UINT8();
     UINT8(const uint8_t & value);
-    UINT8& operator=(const uint8_t & value)
+    UINT8& operator=(const uint8_t & _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 

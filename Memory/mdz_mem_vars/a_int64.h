@@ -12,9 +12,9 @@ class INT64: public Var
 public:
     INT64();
     INT64(const int64_t &value);
-    INT64& operator=(const int64_t &value)
+    INT64& operator=(const int64_t &_value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 

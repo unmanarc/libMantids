@@ -6,7 +6,7 @@
 
 namespace Mantids { namespace Memory { namespace Abstract {
 
-#define ABSTRACT_PTR_AS(x,y) ((Mantids::Memory::Abstract::x *)y)
+#define ABSTRACT_PTR_AS(x,y) (static_cast<Mantids::Memory::Abstract::x *>(y))
 
 class Var
 {

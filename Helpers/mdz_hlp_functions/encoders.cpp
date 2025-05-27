@@ -19,14 +19,15 @@ string Encoders::fromBase64Obf(const string &sB64Buf, const uint64_t & seed)
     std::mt19937_64 gen( seed );
     std::uniform_int_distribution<char> dis;
     size_t count=sB64Buf.size(), x=0, y=0;
-    int bufPos=0;
+    size_t bufPos=0;
 
     while (     count-- &&
                 ( sB64Buf[bufPos] != '=')  &&
                 (isalnum(sB64Buf[bufPos]) || (sB64Buf[bufPos] == '/') || (sB64Buf[bufPos] == '+'))
            )
     {
-        cont4[x++]=sB64Buf[bufPos]; bufPos++;
+        cont4[x++]=sB64Buf[bufPos];
+        bufPos++;
         if (x==4)
         {
             for (x=0; x <4; x++)
@@ -71,9 +72,9 @@ string Encoders::toBase64Obf(const unsigned char *buf, uint64_t count,  const ui
 {
     std::string r;
     std::mt19937_64 gen( seed );
-    std::uniform_int_distribution<char> dis;
+    std::uniform_int_distribution<unsigned char> dis;
 
-    unsigned char * obfBuf = (unsigned char *)malloc(count);
+    unsigned char * obfBuf = static_cast<unsigned char *>(malloc(count));
     if (!obfBuf) return "";
 
     for ( size_t i=0; i<count; i++ )
@@ -97,7 +98,7 @@ std::shared_ptr<Mem::xBinContainer> Encoders::fromBase64ToBin(const std::string 
 
     unsigned char cont4[4], cont3[3];
     uint64_t count=sB64Buf.size(), x=0, y=0;
-    int bufPos=0;
+    size_t bufPos=0;
 
     while (     count-- &&
                 ( sB64Buf[bufPos] != '=')  &&
@@ -150,7 +151,7 @@ string Encoders::fromBase64(const string &sB64Buf)
     unsigned char cont4[4], cont3[3];
     std::string decodedString;
     uint64_t count=sB64Buf.size(), x=0, y=0;
-    int bufPos=0;
+    size_t bufPos=0;
 
     while (     count-- &&
                 ( sB64Buf[bufPos] != '=')  &&
@@ -313,7 +314,9 @@ string Encoders::toHex(const unsigned char *data, size_t len)
 
 void Encoders::fromHex(const string &hexValue, unsigned char *data, size_t maxlen)
 {
-    if ((hexValue.size()/2)<maxlen) maxlen=(hexValue.size()/2);
+    if ((hexValue.size()/2)<maxlen)
+        maxlen=(hexValue.size()/2);
+
     for (size_t i=0;i<(maxlen*2);i+=2)
     {
         data[i/2] = hexToValue(hexValue.at(i))*0x10 + hexToValue(hexValue.at(i+1));

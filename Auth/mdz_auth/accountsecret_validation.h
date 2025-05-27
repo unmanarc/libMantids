@@ -31,7 +31,7 @@ class AccountSecret_Validation : public Mantids::Threads::Safe::MapItem
 {
 public:
     AccountSecret_Validation();
-    virtual ~AccountSecret_Validation();
+    virtual ~AccountSecret_Validation() override;
 
     virtual std::string accountConfirmationToken(const std::string & sAccountName)=0;
     virtual Secret_PublicData accountSecretPublicData(const std::string & sAccountName, uint32_t passIndex=0)=0;

@@ -19,7 +19,7 @@ public:
      * Class constructor.
      */
     Socket_TCP();
-    virtual ~Socket_TCP();
+    virtual ~Socket_TCP() override;
     /**
      * Listen on an specific TCP port and address
      * @param listenOnAddress address to listen on. (use * for any address)

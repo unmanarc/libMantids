@@ -13,7 +13,7 @@ class StreamableFile : public Memory::Streams::StreamableObject
 {
 public:
     StreamableFile(int _rd_fd = STDIN_FILENO, int _wr_fd = STDOUT_FILENO);
-    ~StreamableFile();
+    ~StreamableFile() override;
 
     /**
      * @brief open Open File function

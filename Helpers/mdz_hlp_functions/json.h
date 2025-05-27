@@ -110,6 +110,6 @@ private:
     std::string errors;
 };
 
-}};
+}}
 
 #endif // JSON_H

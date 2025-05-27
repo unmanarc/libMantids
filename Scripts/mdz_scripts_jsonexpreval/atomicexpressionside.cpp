@@ -64,7 +64,7 @@ set<string> AtomicExpressionSide::resolve(const json &v, bool resolveRegex, bool
         else
         {
             for (size_t i=0; i<result.size();i++)
-                res.insert( result[(int)i].asString() );
+                res.insert( result[static_cast<int>(i)].asString() );
         }
         return res;
     }

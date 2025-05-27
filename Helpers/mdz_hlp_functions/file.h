@@ -13,6 +13,6 @@ public:
     static bool loadStringIntoFile(const std::string & file, const std::string &content);
 };
 
-}};
+}}
 
 #endif // FILE_H

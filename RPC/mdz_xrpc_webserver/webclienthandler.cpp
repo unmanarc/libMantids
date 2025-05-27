@@ -175,7 +175,7 @@ void WebClientHandler::sessionDestroy()
     }
 }
 
-std::string replaceByJVar(const json &value, const std::string &scriptVarName)
+static std::string replaceByJVar(const json &value, const std::string &scriptVarName)
 {
     Json::FastWriter writer;
     std::string str = writer.write(value);
@@ -190,7 +190,6 @@ std::string replaceByJVar(const json &value, const std::string &scriptVarName)
 
     return str;
 }
-
 
 // TODO: documentar los privilegios cargados de un usuario
 // TODO: create a TTL for start =  fileContent.begin(); and end = fileContent.end(); on loops to avoid infinite loops in cross-references...
@@ -685,7 +684,7 @@ Status::eRetCode WebClientHandler::procJAPI_Session_AUTHINFO()
 
     (*(jPayloadOutStr->getValue()))["user"] = !authSession ? "" : authSession->getUserDomainPair().first;
     (*(jPayloadOutStr->getValue()))["domain"] = !authSession ? "" : authSession->getUserDomainPair().second;
-    (*(jPayloadOutStr->getValue()))["maxAge"] = (Json::UInt64) uSessionMaxAge;
+    (*(jPayloadOutStr->getValue()))["maxAge"] = static_cast<Json::UInt64>(uSessionMaxAge);
 
     serverResponse.setDataStreamer(jPayloadOutStr, true);
     serverResponse.setContentType("application/json", true);

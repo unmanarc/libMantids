@@ -39,11 +39,11 @@ JSONEval::JSONEval(const std::string &expr)
     isCompiled = compile(expr);
 }
 
-JSONEval::JSONEval(const string &expr, std::vector<string> *staticTexts, bool negativeExpression)
+JSONEval::JSONEval(const string &expr, std::vector<string> *_staticTexts, bool negativeExpression)
 {
     this->negativeExpression = negativeExpression;
     staticTextsOwner = false;
-    this->staticTexts = staticTexts;
+    this->staticTexts = _staticTexts;
     isCompiled = compile(expr);
 }
 
@@ -203,7 +203,7 @@ bool JSONEval::evaluate(const json &values)
             }
         }
         return calcNegative(true);
-    }break;
+    }
     case EVAL_MODE_OR:
     {
         for (const auto & i : atomExpressions)
@@ -220,7 +220,7 @@ bool JSONEval::evaluate(const json &values)
             }
         }
         return calcNegative(false);
-    }break;
+    }
     default:
         return false;
     }

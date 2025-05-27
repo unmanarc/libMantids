@@ -216,7 +216,7 @@ public:
     void setMaxQueryLockMilliseconds(uint64_t newMaxQueryLockMilliseconds);
 
 protected:
-    virtual Query * createQuery0() { return nullptr; };
+    virtual Query * createQuery0() { return nullptr; }
     virtual bool connect0() { return false; }
 
     std::string dbFilePath;

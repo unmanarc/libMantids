@@ -4,6 +4,7 @@
 #include "b_chunks.h"
 #include "b_ref.h"
 #include "streamableobject.h"
+#include <memory>
 
 //#define DEBUG 1
 
@@ -93,7 +94,7 @@ protected:
     /**
      * @brief ParseValidator On Parsing mode Validator, Parse Validator should return the size of the content that matches with the validation (eg. xml, json)
      * @param bc container with the data to be analyzed.
-     * @return bytes matching the policy.
+     * @return bytes matching the policy. (or std::numeric_limits<size_t>::max() on default)
      */
     virtual size_t ParseValidator(Mantids::Memory::Containers::B_Base & bc);
     /**
@@ -144,7 +145,7 @@ private:
     std::pair<bool,uint64_t> parseDirectDelimiter(const void * buf, size_t count);
 
     uint64_t getLastBytesInCommon(const std::string &boundary);
-    Mantids::Memory::Containers::B_Ref referenceLastBytes(const size_t &bytes);
+    std::shared_ptr<Containers::B_Ref> referenceLastBytes(const size_t &bytes);
 
     Mantids::Memory::Containers::B_Ref parsedBuffer;
     Mantids::Memory::Containers::B_Chunks unparsedBuffer;

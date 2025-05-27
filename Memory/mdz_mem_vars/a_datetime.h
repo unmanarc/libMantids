@@ -12,9 +12,9 @@ class DATETIME: public Var
 public:
     DATETIME();
     DATETIME(const time_t & value);
-    DATETIME& operator=(const time_t & value)
+    DATETIME& operator=(const time_t & _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 

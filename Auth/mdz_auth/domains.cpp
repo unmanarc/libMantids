@@ -15,7 +15,7 @@ bool Domains::addDomain(const std::string &domainName, Manager *auth)
 
 Manager *Domains::openDomain(const std::string &domainName)
 {
-    Manager * i = (Manager *)domainMap.openElement(domainName);;
+    Manager * i = (Manager *)domainMap.openElement(domainName);
     if (i) i->checkConnection();
     return i;
 }

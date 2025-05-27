@@ -12,9 +12,9 @@ class INT16: public Var
 public:
     INT16();
     INT16(const int16_t & value);
-    INT16& operator=(const int16_t & value)
+    INT16& operator=(const int16_t & _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 

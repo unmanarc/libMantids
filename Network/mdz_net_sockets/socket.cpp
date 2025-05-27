@@ -114,7 +114,7 @@ bool Socket::bindTo(const char *bindAddress, const uint16_t & port)
     return true;
 }
 
-bool Socket::getAddrInfo(const char *remoteHost, const uint16_t &remotePort, int ai_socktype, void **res)
+bool Socket::getAddrInfo(const char *remoteHost, const uint16_t &_remotePort, int ai_socktype, void **res)
 {
     addrinfo hints;
     int rc;
@@ -151,7 +151,7 @@ bool Socket::getAddrInfo(const char *remoteHost, const uint16_t &remotePort, int
     }
 
     char serverPort[8];
-    snprintf(serverPort,sizeof(serverPort),"%" PRIu16,remotePort);
+    snprintf(serverPort,sizeof(serverPort),"%" PRIu16,_remotePort);
 
     rc = getaddrinfo(remoteHost, serverPort, &hints, (addrinfo **)res);
 
@@ -331,38 +331,38 @@ uint16_t Socket::getPort()
     return ntohs(sin.sin_port);
 }
 
-int Socket::partialRead(void *data, const uint32_t &datalen)
+ssize_t Socket::partialRead(void *data, const uint32_t &datalen)
 {
     if (!isActive()) return -1;
     if (!datalen) return 0;
     if (!useWrite)
     {
-        ssize_t recvLen = recv(sockfd, (char *) data, datalen, 0);
+        ssize_t recvLen = recv(sockfd, static_cast<char *>(data), datalen, 0);
         return recvLen;
     }
     else
     {
-        ssize_t recvLen = read(sockfd, (char *) data, datalen);
+        ssize_t recvLen = read(sockfd, static_cast<char *>(data), datalen);
         return recvLen;
     }
 }
 
-int Socket::partialWrite(const void *data, const uint32_t &datalen)
+ssize_t Socket::partialWrite(const void *data, const uint32_t &datalen)
 {
     if (!isActive()) return -1;
     if (!datalen) return 0;
     if (!useWrite)
     {
 #ifdef _WIN32
-        ssize_t sendLen = send(sockfd, (char *) data, datalen, 0);
+        ssize_t sendLen = send(sockfd, static_cast<char *>(data), datalen, 0);
 #else
-        ssize_t sendLen = send(sockfd, (char *) data, datalen, MSG_NOSIGNAL);
+        ssize_t sendLen = send(sockfd, static_cast<const char *>(data), datalen, MSG_NOSIGNAL);
 #endif
         return sendLen;
     }
     else
     {
-        ssize_t sendLen = write(sockfd, (char *) data, datalen);
+        ssize_t sendLen = write(sockfd, static_cast<const char *>(data), datalen);
         return sendLen;
     }
 }

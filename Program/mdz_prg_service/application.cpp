@@ -38,7 +38,7 @@ static string pidFile;
 
 static void daemonize();
 void pidCheck();
-void exitRoutine(int, siginfo_t *, void *);
+[[noreturn]] void exitRoutine(int, siginfo_t *, void *);
 
 #else
 
@@ -335,6 +335,8 @@ static void child_handler(int signum)
     case SIGCHLD:
         cerr << globalArgs.getDaemonName() << " child handler: SIGCHLD" << endl << flush;
         _exit(EXIT_FAILURE);
+    default:
+        break;
     }
 }
 

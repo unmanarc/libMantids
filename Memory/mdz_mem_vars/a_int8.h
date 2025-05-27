@@ -12,9 +12,9 @@ class INT8: public Var
 public:
     INT8();
     INT8(const int8_t &value);
-    INT8& operator=(const int8_t & value)
+    INT8& operator=(const int8_t & _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 

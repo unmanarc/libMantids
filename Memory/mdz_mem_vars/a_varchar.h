@@ -17,12 +17,12 @@ public:
 
     /**
      * @brief operator =  Copy Value from a null terminated string (check with getWasTruncated)
-     * @param value null terminated string.
+     * @param _value null terminated string.
      * @return current class.
      */
-    VARCHAR& operator=(char * value)
+    VARCHAR& operator=(char * _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 

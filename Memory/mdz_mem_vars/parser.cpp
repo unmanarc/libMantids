@@ -90,7 +90,7 @@ std::pair<bool, uint64_t> Parser::parseData(const void *buf, size_t count, size_
 #ifdef DEBUG
         fprintf(stderr, "%p Parser reaching TTL %zu", this, *ttl); fflush(stderr);
 #endif
-        return std::make_pair(false,(uint64_t)0); // TTL Reached...
+        return std::make_pair(false,static_cast<uint64_t>(0)); // TTL Reached...
     }
     (*ttl)++;
 
@@ -105,7 +105,7 @@ std::pair<bool, uint64_t> Parser::parseData(const void *buf, size_t count, size_
         currentParser->setParseStatus(SubParser::PARSE_STAT_GET_MORE_DATA);
         // Here, the parser should call the sub stream parser parse function and set the new status.
         if ((writtenBytes=currentParser->writeIntoParser(buf,count)).first==false)
-            return std::make_pair(false,(uint64_t)0);
+            return std::make_pair(false,static_cast<uint64_t>(0));
         // TODO: what if error? how to tell the parser that it should analize the connection up to there (without correctness).
         switch (currentParser->getParseStatus())
         {
@@ -116,7 +116,7 @@ std::pair<bool, uint64_t> Parser::parseData(const void *buf, size_t count, size_
 #endif
             // Check if there is next parser...
             if (!changeToNextParser())
-                return std::make_pair(false,(uint64_t)0);
+                return std::make_pair(false,static_cast<uint64_t>(0));
 #ifdef DEBUG
             printf("%p PARSE_STAT_GOTO_NEXT_SUBPARSER changed to %s\n", this,(!currentParser?"nullptr" : currentParser->getSubParserName().c_str())); fflush(stdout);
 #endif
@@ -142,7 +142,7 @@ std::pair<bool, uint64_t> Parser::parseData(const void *buf, size_t count, size_
             printf("%p PARSE_STAT_ERROR executed from %s\n", this,(!currentParser?"nullptr" : currentParser->getSubParserName().c_str())); fflush(stdout);
 #endif
 
-            return std::make_pair(false,(uint64_t)0);
+            return std::make_pair(false,static_cast<uint64_t>(0));
             // Unknown parser...
         }
     }

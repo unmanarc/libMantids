@@ -9,10 +9,10 @@ std::map<void *,Socket_TLS::TLSKeyParameters::PSKServerWallet *> Socket_TLS::TLS
 std::mutex Socket_TLS::TLSKeyParameters::PSKStaticHdlr::mCLIPSKBySSLH;
 std::mutex Socket_TLS::TLSKeyParameters::PSKStaticHdlr::mSVRPSKBySSLH;
 
-Socket_TLS::TLSKeyParameters::PSKStaticHdlr::PSKStaticHdlr(PSKClientValue *pskClientValues, PSKServerWallet *pskServerValues)
+Socket_TLS::TLSKeyParameters::PSKStaticHdlr::PSKStaticHdlr(PSKClientValue *_pskClientValues, PSKServerWallet *_pskServerValues)
 {
-    this->pskClientValues = pskClientValues;
-    this->pskServerValues = pskServerValues;
+    this->pskClientValues = _pskClientValues;
+    this->pskServerValues = _pskServerValues;
     sslhForPSK = nullptr;
 }
 
@@ -57,12 +57,12 @@ Socket_TLS::TLSKeyParameters::PSKClientValue *Socket_TLS::TLSKeyParameters::PSKS
     return nullptr;
 }
 
-bool Socket_TLS::TLSKeyParameters::PSKStaticHdlr::setSSLHandler(SSL *sslh)
+bool Socket_TLS::TLSKeyParameters::PSKStaticHdlr::setSSLHandler(SSL *_sslh)
 {
     if (sslhForPSK)
         throw std::runtime_error("Can't reuse the PSK and Socket. Create a new one (1).");
 
-    sslhForPSK = sslh;
+    sslhForPSK = _sslh;
 
     if (pskServerValues->usingPSK)
     {

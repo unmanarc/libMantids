@@ -12,9 +12,9 @@ class UINT32: public Var
 public:
     UINT32();
     UINT32(const uint32_t &value);
-    UINT32& operator=(const uint32_t & value)
+    UINT32& operator=(const uint32_t & _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 

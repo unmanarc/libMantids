@@ -12,9 +12,9 @@ class INT32: public Var
 public:
     INT32();
     INT32(const int32_t &value);
-    INT32& operator=(const int32_t & value)
+    INT32& operator=(const int32_t & _value)
     {
-        setValue(value);
+        setValue(_value);
         return *this;
     }
 
