@@ -22,11 +22,11 @@
 #include <signal.h>
 #include <fcntl.h>
 
-
 #ifdef _WIN32
 #include <openssl/safestack.h>
 #include <mdz_mem_vars/w32compat.h>
 #endif
+
 
 using namespace std;
 using namespace Mantids::Network::Sockets;
@@ -218,7 +218,6 @@ SSL_CTX *Socket_TLS::createServerSSLContext()
 #elif TLS_MAX_VERSION >= TLS1_3_VERSION
     return SSL_CTX_new (TLS_server_method());
 #endif
-    return nullptr;
 }
 
 SSL_CTX *Socket_TLS::createClientSSLContext()
@@ -232,7 +231,6 @@ SSL_CTX *Socket_TLS::createClientSSLContext()
 #elif TLS_MAX_VERSION >= TLS1_3_VERSION
     return SSL_CTX_new (TLS_client_method());
 #endif
-    return nullptr;
 }
 
 bool Socket_TLS::getIsServer() const
@@ -256,7 +254,6 @@ bool Socket_TLS::createTLSContext()
     if (ctx)
     {
         throw std::runtime_error("Can't reuse the TLS socket. Create a new one.");
-        return false;
     }
 
     if (bIsServer)
@@ -473,75 +470,107 @@ Mantids::Network::Sockets::Socket_StreamBase * Socket_TLS::acceptConnection()
     return acceptedTLSSock;
 }
 
-int Socket_TLS::partialRead(void * data, const uint32_t & datalen)
+ssize_t Socket_TLS::partialRead(
+    void *data, const uint32_t &datalen)
 {
-    if (!sslh) return -1;
-    char cError[1024]="Unknown Error";
+    if (!sslh) {
+        lastError = "SSL handle is null";
+        return -1;
+    }
 
-    int readBytes = SSL_read(sslh, data, datalen);
+    int readBytes = SSL_read(sslh, data, static_cast<int>(datalen));
     if (readBytes > 0)
     {
+        lastError = "";
         return readBytes;
     }
-    else
+    else if (readBytes == 0)
     {
-        // Connection may be lost... shutdown here using the TCP/IP layer to prevent further protocol negotiations that can lead to sigpipe...
-        Socket_TCP::iShutdown();
-
-        int err = SSL_get_error(sslh, readBytes);
-        switch(err)
-        {
-        case SSL_ERROR_WANT_WRITE:
-        case SSL_ERROR_WANT_READ:
-            parseErrors();
-            return -1;
-        case SSL_ERROR_ZERO_RETURN:
-            // Socket closed.
-            parseErrors();
-            return -1;
-        case SSL_ERROR_SYSCALL:
-            // Common error (maybe tcp error).
-            parseErrors();
-            lastError = "Error " + std::to_string(errno) + " during read: " + strerror_r(errno,cError,sizeof(cError));
-            return -1;
-        default:
-            parseErrors();
-            return -1;
-        }
+        // The connection has been closed.
+        lastError = "Connection closed by peer";
+        return 0;
     }
+
+    // Error mgmt:
+    int sslError = SSL_get_error(sslh, readBytes);
+    switch (sslError)
+    {
+    case SSL_ERROR_WANT_READ:
+        lastError = "SSL wants more data to read, Terminating...";
+        break;
+    case SSL_ERROR_WANT_WRITE:
+        lastError = "SSL wants to write before reading, Terminating...";
+        break;
+    case SSL_ERROR_SYSCALL:
+    {
+        int errnoCopy = errno;
+        char errorBuffer[256];
+        strerror_r(errnoCopy, errorBuffer, sizeof(errorBuffer));
+        lastError = std::string("System call error: ") + errorBuffer;
+        break;
+    }
+    case SSL_ERROR_ZERO_RETURN:
+    case SSL_ERROR_SSL:
+        // SSL Specific error.
+        {
+            parseErrors();
+            lastError = std::string("SSL Layer Error");
+            break;
+        }
+    default:
+        lastError = "Unknown SSL error occurred";
+    }
+
+    // In case of error, close the connection.
+    Socket_TCP::iShutdown();
+
+    return -1;
 }
 
-int Socket_TLS::partialWrite(const void * data, const uint32_t & datalen)
+ssize_t Socket_TLS::partialWrite(const void * data, const uint32_t & datalen)
 {
-    if (!sslh) return -1;
+    if (!sslh)
+    {
+        return -1;
+    }
+
+    int chunkSize = static_cast<int>(datalen);
+    if ( datalen>static_cast<uint64_t>(std::numeric_limits<int>::max()) )
+    {
+        throw std::runtime_error("Data size exceeds the maximum allowed for partial write.");
+    }
 
     // TODO: sigpipe here?
-    int sentBytes = SSL_write(sslh, data, datalen);
+    int sentBytes = SSL_write(sslh, data, chunkSize);
     if (sentBytes > 0)
     {
+        lastError = "";
+        return sentBytes;
+    }
+    else if (sentBytes == 0)
+    {
+        // Closed.
+        lastError = "Connection closed";
         return sentBytes;
     }
     else
     {
-        // Connection may be lost... shutdown here using the TCP/IP layer to prevent further protocol negotiations that can lead to sigpipe...
-        Socket_TCP::iShutdown();
-
-        switch(SSL_get_error(sslh, sentBytes))
-        {
-        case SSL_ERROR_WANT_WRITE:
+        int sslErr = SSL_get_error(sslh, sentBytes);
+        switch(sslErr) {
         case SSL_ERROR_WANT_READ:
-            // Must wait a little bit until the socket buffer is free
-            // TODO: ?
-            usleep(100000);
-            return 0;
-        case SSL_ERROR_ZERO_RETURN:
-            // Socket closed...
+            lastError = "SSL wants more data to read, Terminating...";
+            return -1;
+        case SSL_ERROR_WANT_WRITE:
+            lastError = "SSL wants more buffer to write, Terminating...";
             parseErrors();
             return -1;
+        case SSL_ERROR_SYSCALL:
         default:
-            // Another SSL Error.
+            // Other SSL errors
             parseErrors();
             return -1;
         }
     }
+
+
 }
