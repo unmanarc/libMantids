@@ -473,8 +473,6 @@ public:
         CERT_X509_CHECKANDPASS,
         CERT_X509_NOVALIDATE
     };
-
-
     /**
      * Class constructor.
      */
@@ -483,9 +481,6 @@ public:
      * Class destructor.
      */
     virtual ~Socket_TLS() override;
-
-
-
     /**
      * TLS server function for protocol initialization , it runs in blocking mode and should be called apart to avoid tcp accept while block
      * @return returns true if was properly initialized.
@@ -506,7 +501,6 @@ public:
      * @return return the number of bytes read by the socket, zero for end of file and -1 for error.
      */
     virtual ssize_t partialRead(void * data, const uint32_t & datalen) override;
-
     /**
      * Write a data block to the TLS socket
      * note that this haves some limitations. some systems can only send 4k at time.
@@ -605,6 +599,11 @@ private:
     bool validateTLSConnection(const bool &usingPSK);
 
 
+    ssize_t iPartialRead(void * data, const uint32_t & datalen, int ttl = 100);
+    ssize_t iPartialWrite(const void * data, const uint32_t & datalen, int ttl = 100);
+
+
+
     Socket_TLS *tlsParent;
 
     eCertValidationOptions certValidation;
@@ -614,6 +613,7 @@ private:
     SSL_CTX * createClientSSLContext();
 
     std::list<std::string> sslErrors;
+    std::mutex mutexRead, mutexWrite;
 
     bool bIsServer;
 };

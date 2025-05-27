@@ -331,6 +331,135 @@ bool Socket_TLS::validateTLSConnection(const bool & usingPSK)
     return bValid;
 }
 
+ssize_t Socket_TLS::iPartialRead(
+    void *data, const uint32_t &datalen, int ttl)
+{
+
+    if (!sslh)
+    {
+        lastError = "SSL handle is null";
+        return -1;
+    }
+
+    if (ttl == 0)
+    {
+        return -1;
+    }
+
+    int readBytes = SSL_read(sslh, data, static_cast<int>(datalen));
+
+    if (readBytes > 0)
+    {
+        lastError = "";
+        return readBytes;
+    }
+    else if (readBytes == 0)
+    {
+        // The connection has been closed.
+        lastError = "Connection closed by peer";
+        return 0;
+    }
+
+    // Error mgmt:
+    int sslError = SSL_get_error(sslh, readBytes);
+    switch (sslError)
+    {
+    case SSL_ERROR_WANT_READ:
+    case SSL_ERROR_WANT_WRITE:
+        // Try Again after 10ms...
+        usleep(10000);
+        return iPartialRead(data,datalen,ttl-1);
+    case SSL_ERROR_SYSCALL:
+    {
+        int errnoCopy = errno;
+        char errorBuffer[256];
+        strerror_r(errnoCopy, errorBuffer, sizeof(errorBuffer));
+        lastError = std::string("System call error: ") + errorBuffer;
+        break;
+    }
+    case SSL_ERROR_ZERO_RETURN:
+    case SSL_ERROR_SSL:
+        // SSL Specific error.
+        {
+            parseErrors();
+            lastError = std::string("SSL Layer Error");
+            break;
+        }
+    default:
+        lastError = "Unknown SSL error occurred";
+    }
+
+    // In case of error, close the connection.
+    Socket_TCP::iShutdown();
+
+    return -1;
+}
+
+ssize_t Socket_TLS::iPartialWrite(
+    const void *data, const uint32_t &datalen, int ttl)
+{
+    if (!sslh)
+    {
+        return -1;
+    }
+
+    if (ttl == 0)
+    {
+        return -1;
+    }
+
+    int chunkSize = static_cast<int>(datalen);
+    if ( datalen>static_cast<uint64_t>(std::numeric_limits<int>::max()) )
+    {
+        throw std::runtime_error("Data size exceeds the maximum allowed for partial write.");
+    }
+
+    // TODO: sigpipe here?
+    int sentBytes = SSL_write(sslh, data, chunkSize);
+
+    if (sentBytes > 0)
+    {
+        lastError = "";
+        return sentBytes;
+    }
+    else if (sentBytes == 0)
+    {
+        // Closed.
+        lastError = "Connection closed";
+        return sentBytes;
+    }
+    else
+    {
+        int sslErr = SSL_get_error(sslh, sentBytes);
+        switch(sslErr) {
+        case SSL_ERROR_WANT_READ:
+        case SSL_ERROR_WANT_WRITE:
+            // Wait 10ms... and try again...
+            usleep(10000);
+            return iPartialWrite(data,datalen,ttl-1);
+        case SSL_ERROR_SYSCALL:
+        {
+            int errnoCopy = errno;
+            char errorBuffer[256];
+            strerror_r(errnoCopy, errorBuffer, sizeof(errorBuffer));
+            lastError = std::string("System call error: ") + errorBuffer;
+            parseErrors();
+            Socket_TCP::iShutdown();
+            return -1;
+        }
+        case SSL_ERROR_ZERO_RETURN:
+        case SSL_ERROR_SSL:
+        default:
+            // Other SSL errors
+            lastError = std::string("SSL Layer Error");
+            parseErrors();
+            Socket_TCP::iShutdown();
+            return -1;
+        }
+    }
+
+}
+
 Socket_TLS::eCertValidationOptions Socket_TLS::getCertValidation() const
 {
     return certValidation;
@@ -478,107 +607,16 @@ Mantids::Network::Sockets::Socket_StreamBase * Socket_TLS::acceptConnection()
     return acceptedTLSSock;
 }
 
-ssize_t Socket_TLS::partialRead(
-    void *data, const uint32_t &datalen)
+ssize_t Socket_TLS::partialRead(void *data, const uint32_t &datalen)
 {
-    if (!sslh) {
-        lastError = "SSL handle is null";
-        return -1;
-    }
+    std::unique_lock<std::mutex> lock(mutexRead);
 
-    int readBytes = SSL_read(sslh, data, static_cast<int>(datalen));
-    if (readBytes > 0)
-    {
-        lastError = "";
-        return readBytes;
-    }
-    else if (readBytes == 0)
-    {
-        // The connection has been closed.
-        lastError = "Connection closed by peer";
-        return 0;
-    }
-
-    // Error mgmt:
-    int sslError = SSL_get_error(sslh, readBytes);
-    switch (sslError)
-    {
-    case SSL_ERROR_WANT_READ:
-        lastError = "SSL wants more data to read, Terminating...";
-        break;
-    case SSL_ERROR_WANT_WRITE:
-        lastError = "SSL wants to write before reading, Terminating...";
-        break;
-    case SSL_ERROR_SYSCALL:
-    {
-        int errnoCopy = errno;
-        char errorBuffer[256];
-        strerror_r(errnoCopy, errorBuffer, sizeof(errorBuffer));
-        lastError = std::string("System call error: ") + errorBuffer;
-        break;
-    }
-    case SSL_ERROR_ZERO_RETURN:
-    case SSL_ERROR_SSL:
-        // SSL Specific error.
-        {
-            parseErrors();
-            lastError = std::string("SSL Layer Error");
-            break;
-        }
-    default:
-        lastError = "Unknown SSL error occurred";
-    }
-
-    // In case of error, close the connection.
-    Socket_TCP::iShutdown();
-
-    return -1;
+    return iPartialRead(data,datalen);
 }
 
 ssize_t Socket_TLS::partialWrite(const void * data, const uint32_t & datalen)
 {
-    if (!sslh)
-    {
-        return -1;
-    }
+    std::unique_lock<std::mutex> lock(mutexWrite);
 
-    int chunkSize = static_cast<int>(datalen);
-    if ( datalen>static_cast<uint64_t>(std::numeric_limits<int>::max()) )
-    {
-        throw std::runtime_error("Data size exceeds the maximum allowed for partial write.");
-    }
-
-    // TODO: sigpipe here?
-    int sentBytes = SSL_write(sslh, data, chunkSize);
-    if (sentBytes > 0)
-    {
-        lastError = "";
-        return sentBytes;
-    }
-    else if (sentBytes == 0)
-    {
-        // Closed.
-        lastError = "Connection closed";
-        return sentBytes;
-    }
-    else
-    {
-        int sslErr = SSL_get_error(sslh, sentBytes);
-        switch(sslErr) {
-        case SSL_ERROR_WANT_READ:
-            lastError = "SSL wants more data to read, Terminating...";
-            return -1;
-        case SSL_ERROR_WANT_WRITE:
-            lastError = "SSL wants more buffer to write, Terminating...";
-            parseErrors();
-            return -1;
-        case SSL_ERROR_SYSCALL:
-        default:
-            // Other SSL errors
-            parseErrors();
-            return -1;
-        }
-    }
-
-
+    return iPartialWrite(data,datalen);
 }
