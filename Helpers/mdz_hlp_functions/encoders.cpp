@@ -17,7 +17,7 @@ string Encoders::fromBase64Obf(const string &sB64Buf, const uint64_t & seed)
     unsigned char cont4[4], cont3[3];
     std::string decodedString;
     std::mt19937_64 gen( seed );
-    std::uniform_int_distribution<char> dis;
+    std::uniform_int_distribution<unsigned char> dis;
     size_t count=sB64Buf.size(), x=0, y=0;
     size_t bufPos=0;
 
@@ -62,7 +62,10 @@ string Encoders::fromBase64Obf(const string &sB64Buf, const uint64_t & seed)
         cont3[1]=((cont4[1] & 0xf) << 4) + ((cont4[2] & 0x3c) >> 2);
         cont3[2]=((cont4[2] & 0x3) << 6) + cont4[3];
 
-        for (y=0; (y < x - 1); y++) decodedString += cont3[y]^dis(gen);
+        for (y=0; (y < x - 1); y++)
+        {
+            decodedString += cont3[y]^dis(gen);
+        }
     }
 
     return decodedString;
@@ -75,7 +78,8 @@ string Encoders::toBase64Obf(const unsigned char *buf, uint64_t count,  const ui
     std::uniform_int_distribution<unsigned char> dis;
 
     unsigned char * obfBuf = static_cast<unsigned char *>(malloc(count));
-    if (!obfBuf) return "";
+    if (!obfBuf)
+        return "";
 
     for ( size_t i=0; i<count; i++ )
         obfBuf[i] = buf[i]^dis(gen);
@@ -361,18 +365,25 @@ void Encoders::replaceHexCodes(std::string &content)
 
 char Encoders::toHexPair(char value, char part)
 {
-    if (part == 1) value = value/0x10;
-    else if (part == 2) value = value&0xF;
-    if (value >= 0x0 && value <=0x9) return '0'+value;
-    if (value >= 0xA && value <=0xF) return 'A'+value-0xA;
+    if (part == 1)
+        value = value/0x10;
+    else if (part == 2)
+        value = value&0xF;
+    if (value >= 0x0 && value <=0x9)
+        return '0'+value;
+    if (value >= 0xA && value <=0xF)
+        return 'A'+value-0xA;
     return '0';
 }
 
 char Encoders::hexToValue(char v)
 {
-    if (v>='0' && v<='9') return v-'0';
-    if (v>='A' && v<='F') return v-'A'+10;
-    if (v>='a' && v<='f') return v-'a'+10;
+    if (v>='0' && v<='9')
+        return v-'0';
+    if (v>='A' && v<='F')
+        return v-'A'+10;
+    if (v>='a' && v<='f')
+        return v-'a'+10;
     return 0;
 }
 
@@ -381,15 +392,20 @@ bool Encoders::getIfMustBeURLEncoded(char c,const eURLEncodingType & urlEncoding
     if (urlEncodingType==ENC_QUOTEPRINT)
     {
         // All printable chars but "
-        if (  c=='\"' ) return true;
-        if (c >= 32 && c<= 126) return false;
+        if (  c=='\"' )
+            return true;
+        if (c >= 32 && c<= 126)
+            return false;
     }
     else
     {
         // be strict: Only very safe chars...
-        if (c >= 'A' && c<= 'Z') return false;
-        if (c >= 'a' && c<= 'z') return false;
-        if (c >= '0' && c<= '9') return false;
+        if (c >= 'A' && c<= 'Z')
+            return false;
+        if (c >= 'a' && c<= 'z')
+            return false;
+        if (c >= '0' && c<= '9')
+            return false;
     }
 
     return true;
