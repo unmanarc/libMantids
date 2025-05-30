@@ -1,6 +1,7 @@
 #ifndef SOCKET_H
 #define SOCKET_H
 
+#include <mutex>
 #ifndef _WIN32
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -299,6 +300,7 @@ protected:
      */
     std::atomic<int> sockfd;
 
+    std::mutex mutexClose;
 
     bool shutdown_proto_rd;
     bool shutdown_proto_wr;
