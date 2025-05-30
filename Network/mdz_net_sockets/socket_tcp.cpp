@@ -552,7 +552,7 @@ bool Socket_TCP::postAcceptSubInitialization()
 int Socket_TCP::setTCPOptionBool(const int32_t &optname, bool value)
 {
     return setSocketOptionBool(
-            #ifdef WIN32
+            #ifdef _WIN32
                 IPPROTO_TCP
             #else
                 SOL_TCP
@@ -563,7 +563,7 @@ int Socket_TCP::setTCPOptionBool(const int32_t &optname, bool value)
 int Socket_TCP::setTCPOption(const int32_t &optname, const void *optval, socklen_t optlen)
 {
     return setSocketOption(
-            #ifdef WIN32
+            #ifdef _WIN32
                 IPPROTO_TCP
             #else
                 SOL_TCP
@@ -574,7 +574,7 @@ int Socket_TCP::setTCPOption(const int32_t &optname, const void *optval, socklen
 int Socket_TCP::getTCPOption(const int32_t & optname, void *optval, socklen_t *optlen)
 {
     return getSocketOption(
-            #ifdef WIN32
+            #ifdef _WIN32
                 IPPROTO_TCP
             #else
                 SOL_TCP

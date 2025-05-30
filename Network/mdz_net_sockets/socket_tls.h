@@ -598,11 +598,8 @@ private:
     void parseErrors();
     bool validateTLSConnection(const bool &usingPSK);
 
-
     ssize_t iPartialRead(void * data, const uint32_t & datalen, int ttl = 100);
     ssize_t iPartialWrite(const void * data, const uint32_t & datalen, int ttl = 100);
-
-
 
     Socket_TLS *tlsParent;
 

@@ -67,10 +67,14 @@ static Application *appPTR = nullptr;
 
 int StartApplication(int argc, char *argv[], Application *_app)
 {
+#ifdef _WIN32
+    setvbuf(stdout, NULL, _IONBF, 0);
+    setvbuf(stderr, NULL, _IONBF, 0);
+#endif
+
 #ifndef _WIN32
     pthread_setname_np(pthread_self(), "APP:Start");
 #endif
-
     appPTR = _app;
     // Get program name from program path.
     globalArgs.initProgramName(argv[0]);
@@ -126,7 +130,7 @@ int StartApplication(int argc, char *argv[], Application *_app)
             )
     {
         // :)
-#ifdef WIN32
+#ifdef _WIN32
 
         // TODO: windows service or something like?
         fprintf(stderr,"Not supported yet.\n");

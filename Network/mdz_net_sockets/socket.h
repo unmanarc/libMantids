@@ -297,7 +297,7 @@ protected:
     /**
      * @brief sockfd Socket descriptor
      */
-    int sockfd;
+    std::atomic<int> sockfd;
 
 
     bool shutdown_proto_rd;
