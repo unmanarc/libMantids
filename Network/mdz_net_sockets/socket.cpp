@@ -359,7 +359,7 @@ ssize_t Socket::partialWrite(const void *data, const uint32_t &datalen)
     if (!useWrite)
     {
 #ifdef _WIN32
-        ssize_t sendLen = send(sockfd, static_cast<char *>(data), datalen, 0);
+        ssize_t sendLen = send(sockfd, static_cast<const char *>(data), datalen, 0);
 #else
         ssize_t sendLen = send(sockfd, static_cast<const char *>(data), datalen, MSG_NOSIGNAL);
 #endif

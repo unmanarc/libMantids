@@ -546,7 +546,7 @@ int Socket_TLS::iShutdown(int mode)
             // Call the private TCP iShutdown to shutdown RD on the socket ?...
             //return Socket_TCP::iShutdown(mode);
         default:
-            //The shutdown was not successful.
+            //return Socket::iShutdown(); //The shutdown was not successful. Try... socket shutdown.
             return -3;
         }
     }
