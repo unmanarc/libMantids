@@ -300,15 +300,17 @@ int Socket::closeSocket()
     if (!isActive())
         return 0;
 
+    mutexClose.lock();
     // Prevent socket utilization / race condition.
     auto socktmp = (int)sockfd;
     sockfd = -1;
-
 #ifdef _WIN32
     int i = closesocket(socktmp);
 #else
     int i = close(socktmp);
 #endif
+    mutexClose.unlock();
+
     return i;
 }
 
