@@ -297,13 +297,18 @@ bool Socket::listenOn(const uint16_t &, const char *, const int32_t &, const int
 
 int Socket::closeSocket()
 {
-    if (!isActive()) return 0;
-#ifdef _WIN32
-    int i = closesocket(sockfd);
-#else
-    int i = close(sockfd);
-#endif
+    if (!isActive())
+        return 0;
+
+    // Prevent socket utilization / race condition.
+    auto socktmp = (int)sockfd;
     sockfd = -1;
+
+#ifdef _WIN32
+    int i = closesocket(socktmp);
+#else
+    int i = close(socktmp);
+#endif
     return i;
 }
 
@@ -369,7 +374,10 @@ ssize_t Socket::partialWrite(const void *data, const uint32_t &datalen)
 
 int Socket::iShutdown(int mode)
 {
-   bool rd_to_shutdown = false;
+    if (!isActive())
+        return -10;
+
+    bool rd_to_shutdown = false;
     bool wr_to_shutdown = false;
 
     switch (mode)
@@ -394,42 +402,32 @@ int Socket::iShutdown(int mode)
     if (shutdown_proto_wr == true)
         wr_to_shutdown = false;
 
-    if ( rd_to_shutdown && wr_to_shutdown )
+    if (rd_to_shutdown && wr_to_shutdown)
     {
         int x = _shutdownSocket(SHUT_RDWR);
-//        if (x == 0)
-//        {
-            shutdown_proto_rd = true;
-            shutdown_proto_wr = true;
-//        }
+        shutdown_proto_rd = true;
+        shutdown_proto_wr = true;
         return x;
     }
-    else if ( rd_to_shutdown )
+    else if (rd_to_shutdown)
     {
         int x = _shutdownSocket(SHUT_RD);
-//        if (x == 0)
-//        {
-            shutdown_proto_rd = true;
-//        }
+        shutdown_proto_rd = true;
         return x;
     }
-    else if ( wr_to_shutdown )
+    else if (wr_to_shutdown)
     {
         int x = _shutdownSocket(SHUT_WR);
-//        if (x == 0)
-//        {
-            shutdown_proto_wr = true;
-//        }
+        shutdown_proto_wr = true;
         return x;
     }
     else
     {
         // Double shutdown?
         //fprintf(stderr,"Double shutdown detected at socket: %i in mode %s @%p\n", sockfd, mode==SHUT_RD?"RD": ( mode==SHUT_WR?"WR":"RDWR") ,this); fflush(stderr);
-//        throw std::runtime_error("Double shutdown on Socket");
+        //        throw std::runtime_error("Double shutdown on Socket");
         return -1;
     }
-
 }
 
 void Socket::socketSystemInitialization()
@@ -590,8 +588,16 @@ int Socket::shutdownSocket(int mode)
 
 int Socket::_shutdownSocket(int mode)
 {
-    //printf("Shutting down socket: %i in mode %s @%p\n", sockfd, mode==SHUT_RD?"RD": ( mode==SHUT_WR?"WR":"RDWR") ,this); fflush(stdout);
+    //printf("Shutting down socket: %i in mode %s @%p\n", sockfd, mode==SHUT_RD?"RD": ( mode==SHUT_WR?"WR":"RDWR") ,this); fflush(stdout);    
     int x = shutdown(sockfd, mode);
+
+#ifdef WIN32
+    if ( mode == SHUT_RDWR )
+    {
+        closeSocket();
+    }
+#endif
+
     return x;
 }
 

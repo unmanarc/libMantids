@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 ##############################################################################################################################
 # Vars and Versions:
-set(SVERSION 2.8.21)
+set(SVERSION 2.8.23)
 
 set(PROJECT_HOMEPAGE_URL "https://github.com/unmanarc/libMantids")
 set(PROJECT_CONTACT "Aaron G. Mizrachi P. <aaron@unmanarc.com>")
@@ -52,3 +52,26 @@ ADD_SUBDIRECTORY(RPC)
 ADD_SUBDIRECTORY(extras)
 #############################################################################################################################
 
+#############################################################################################################################
+# Update version in spec.:
+
+# File where %define version is located
+set(SPEC_FILE "${CMAKE_SOURCE_DIR}/rpm/build.spec")
+
+# Create a temporary file
+file(WRITE ${CMAKE_BINARY_DIR}/temp_build_spec.txt "")
+
+# Read the original file line by line
+file(STRINGS ${SPEC_FILE} SPEC_LINES)
+
+foreach(LINE ${SPEC_LINES})
+    # Find the line containing %define version and replace it with SVERSION value
+    if("${LINE}" MATCHES "^%define version .*$")
+        file(APPEND ${CMAKE_BINARY_DIR}/temp_build_spec.txt "%define version ${SVERSION}\n")
+    else()
+        file(APPEND ${CMAKE_BINARY_DIR}/temp_build_spec.txt "${LINE}\n")
+    endif()
+endforeach()
+
+# Replace the original file with the temporary one
+file(RENAME ${CMAKE_BINARY_DIR}/temp_build_spec.txt ${SPEC_FILE})
