@@ -136,7 +136,7 @@ bool Socket_StreamBase::writeFull(const void *data, const uint64_t &datalen)
         ssize_t sentBytes = partialWrite(dataPtr, static_cast<uint32_t>(chunkSize));
 
         // Manejo de errores
-        if (sentBytes == -1)
+        if (sentBytes < 0)
         {
             // Error al enviar los datos
             shutdownSocket();
@@ -203,7 +203,7 @@ bool Socket_StreamBase::readFull(void* data, const uint64_t& expectedDataBytesCo
             static_cast<uint32_t>(bytesToRead)
             );
 
-        if (partialReceivedBytesCount == -1)
+        if (partialReceivedBytesCount < 0)
         {
             // Read Error.
             return false;
