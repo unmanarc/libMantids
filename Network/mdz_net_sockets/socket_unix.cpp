@@ -43,7 +43,7 @@ bool Socket_UNIX::listenOn(const uint16_t &, const char *path, const int32_t &re
 
    server_len = sizeof(server_address);
 
-   if (bind(sockfd,(struct sockaddr *)&server_address,server_len) < 0)
+   if (::bind(sockfd,(struct sockaddr *)&server_address,server_len) < 0)
    {
        lastError = "bind() failed";
        closeSocket();
