@@ -83,7 +83,7 @@ bool Socket::bindTo(const char *bindAddress, const uint16_t & port)
         else
             inet_pton(AF_INET, bindAddress, &saBindServer.sin_addr);
 
-        if (bind(sockfd,(struct sockaddr *)&saBindServer,sizeof(saBindServer)) < 0)
+        if (::bind(sockfd,(struct sockaddr *)&saBindServer,sizeof(saBindServer)) < 0)
         {
             lastError = "bind() failed";
             closeSocket();
@@ -103,7 +103,7 @@ bool Socket::bindTo(const char *bindAddress, const uint16_t & port)
         else
             inet_pton(AF_INET6, bindAddress, &saBindServer.sin6_addr);
 
-        if (bind(sockfd,(struct sockaddr *)&saBindServer,sizeof(saBindServer)) < 0)
+        if (::bind(sockfd,(struct sockaddr *)&saBindServer,sizeof(saBindServer)) < 0)
         {
             lastError = "bind() failed";
             closeSocket();
