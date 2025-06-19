@@ -136,7 +136,7 @@ void WebClientHandler::sessionOpen()
         if (sSessionId != "")
         {
             log(LEVEL_WARN, "rpcServer", 2048, "Requested session not found {sessionId=%s}", RPCLog::truncateSessionId(sSessionId).c_str());
-            serverResponse.addCookieClearSecure("sessionId");
+            serverResponse.addCookieClearSecure("sessionId", "/");
             // return HTTP::Status::S_404_NOT_FOUND;
         }
         sSessionId = ""; // INVALID SESSION ID.
@@ -150,15 +150,14 @@ void WebClientHandler::sessionRelease()
         // Set this cookie to report only to the javascript the remaining session time.
         Headers::Cookie simpleJSSecureCookie;
         simpleJSSecureCookie.setValue("1");
+        simpleJSSecureCookie.setPath("/"); // all the site.
         simpleJSSecureCookie.setSecure(true);
         simpleJSSecureCookie.setHttpOnly(false);
         simpleJSSecureCookie.setExpirationFromNow(uSessionMaxAge);
         simpleJSSecureCookie.setMaxAge(uSessionMaxAge);
         simpleJSSecureCookie.setSameSite(Protocols::HTTP::Headers::Cookie::HTTP_COOKIE_SAMESITE_STRICT);
-
         serverResponse.setCookie("jsSessionTimeout", simpleJSSecureCookie);
-        serverResponse.setSecureCookie("sessionId", sSessionId, uSessionMaxAge);
-
+        serverResponse.setSecureCookie("sessionId", sSessionId, uSessionMaxAge, "/");
         sessionsManager->releaseSession(sSessionId);
     }
 }
@@ -167,8 +166,8 @@ void WebClientHandler::sessionDestroy()
 {
     if (bDestroySession)
     {
-        serverResponse.addCookieClearSecure("jsSessionTimeout");
-        serverResponse.addCookieClearSecure("sessionId");
+        serverResponse.addCookieClearSecure("jsSessionTimeout", "/");
+        serverResponse.addCookieClearSecure("sessionId", "/");
         log(LEVEL_DEBUG, "rpcServer", 2048, "Destroying session {sessionId=%s}", RPCLog::truncateSessionId(sSessionId).c_str());
         // TODO: redirect on logout?
         sessionsManager->destroySession(sSessionId);
