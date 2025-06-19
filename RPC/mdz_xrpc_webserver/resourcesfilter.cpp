@@ -116,20 +116,41 @@ Mantids::RPC::Web::ResourcesFilter::sFilterEvaluation ResourcesFilter::evaluateA
         for (const auto & attrib : filter.reqAttrib)
         {
             if (!hSession || !authorizer) // Any attribute without the session is marked as false
+            {
                 allAttribsDone = false;
-            else if (attrib == "loggedin" && hSession->getAuthUser() == "")
-                allAttribsDone = false;
+                break;
+            }
+            else if (attrib == "loggedin")
+            {
+                if (hSession->getAuthUser() == "")
+                {
+                    allAttribsDone = false;
+                    break;
+                }
+            }
             else if (!authorizer->accountValidateAttribute(hSession->getAuthUser(),{hSession->getAppName(), attrib}))
+            {
                 allAttribsDone = false;
+                break;
+            }
         }
         for (const auto & attrib : filter.rejAttrib)
         {
             if (hSession && authorizer)
             {
-                if (attrib == "loggedin" && hSession->getAuthUser() != "")
-                    allAttribsDone = false;
+                if (attrib == "loggedin")
+                {
+                    if (hSession->getAuthUser() != "")
+                    {
+                        allAttribsDone = false;
+                        break;
+                    }
+                }
                 else if (authorizer->accountValidateAttribute(hSession->getAuthUser(),{hSession->getAppName(), attrib}))
+                {
                     allAttribsDone = false;
+                    break;
+                }
             }
         }
 
@@ -157,9 +178,9 @@ Mantids::RPC::Web::ResourcesFilter::sFilterEvaluation ResourcesFilter::evaluateA
             if (boost::regex_match(uri.c_str(), what, i)) // boost::regex_match
 #endif
             {
-              /*  printf("Rule %d match regex, returning action.\n", ruleId);
-                fflush(stdout);
-*/
+                // printf("Rule %d match regex on URI %s, returning action.\n", ruleId, uri.c_str());
+                // fflush(stdout);
+
                 switch (  filter.action  )
                 {
                 case RFILTER_ACCEPT:
@@ -175,6 +196,11 @@ Mantids::RPC::Web::ResourcesFilter::sFilterEvaluation ResourcesFilter::evaluateA
                     break;
                 }
                 return evalRet;
+            }
+            else
+            {
+                // printf("Rule %d does not match regex on URI %s.\n", ruleId, uri.c_str());
+                // fflush(stdout);
             }
         }
     }
