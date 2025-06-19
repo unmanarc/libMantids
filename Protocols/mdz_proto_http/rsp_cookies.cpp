@@ -71,9 +71,13 @@ bool Cookies_ServerSide::addCookieVal(const string &cookieName, const Headers::C
     return true;
 }
 
-void Cookies_ServerSide::addClearSecureCookie(const string &cookieName)
+void Cookies_ServerSide::addClearSecureCookie(
+    const std::string &cookieName, const std::string &path)
 {
     Headers::Cookie c;
+
+    if (!path.empty())
+        c.setPath(path);
 
     c.setValue("");
     c.setSecure(true);
@@ -88,4 +92,9 @@ void Cookies_ServerSide::addClearSecureCookie(const string &cookieName)
     }
 
     addCookieVal(cookieName,c);
+}
+
+void Cookies_ServerSide::addClearSecureCookie(const string &cookieName)
+{
+    addClearSecureCookie(cookieName,"");
 }

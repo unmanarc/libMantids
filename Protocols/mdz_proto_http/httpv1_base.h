@@ -189,9 +189,39 @@ public:
          * @param cookieName
          * @return
          */
+        void addCookieClearSecure(const std::string &cookieName, const std::string & path)
+        {
+            cookies.addClearSecureCookie(cookieName, path);
+        }
+
+        /**
+         * @brief addCookieClearSecure Set Response Secure Cookie (Secure,httpOnly,SameSite) as delete cookie
+         * @param cookieName
+         * @return
+         */
         void addCookieClearSecure(const std::string &cookieName)
         {
             cookies.addClearSecureCookie(cookieName);
+        }
+        /**
+         * @brief setSecureCookie Set Response Secure Cookie (Secure,httpOnly,SameSite)
+         * @param cookieName
+         * @param cookieValue
+         * @param uMaxAge
+         * @param path
+         * @return
+         */
+        bool setSecureCookie(const std::string &cookieName, const std::string & cookieValue, const uint32_t & uMaxAge, const std::string & path)
+        {
+            Headers::Cookie val;
+            val.setPath(path);
+            val.setValue(cookieValue);
+            val.setSecure(true);
+            val.setHttpOnly(true);
+            val.setExpirationFromNow(uMaxAge);
+            val.setMaxAge(uMaxAge);
+            val.setSameSite(Headers::Cookie::HTTP_COOKIE_SAMESITE_STRICT);
+            return setCookie(cookieName,val);
         }
         /**
          * @brief setSecureCookie Set Response Secure Cookie (Secure,httpOnly,SameSite)
