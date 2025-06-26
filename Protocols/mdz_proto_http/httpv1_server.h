@@ -177,6 +177,10 @@ protected:
 
     sClientVars clientVars;
 
+
+    Mantids::Memory::Containers::B_MEM * getStaticContentElement(const std::string & elementPath);
+
+
 private:
     void fillRequestDataStruct();
     bool changeToNextParserOnClientHeaders();

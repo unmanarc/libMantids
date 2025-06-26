@@ -140,6 +140,18 @@ void HTTPv1_Server::setResponseServerName(const string &sServerName)
     serverResponse.headers.replace("Server", sServerName);
 }
 
+
+Memory::Containers::B_MEM *HTTPv1_Server::getStaticContentElement(
+    const std::string &elementPath)
+{
+    if (  staticContentElements.find(elementPath) == staticContentElements.end() )
+    {
+        return nullptr;
+    }
+    return staticContentElements[elementPath];
+}
+
+
 bool HTTPv1_Server::getLocalFilePathFromURI2(string sServerDir, sLocalRequestedFileInfo *info, const std::string &defaultFileAppend, const bool &dontMapExecutables)
 {
     if (!info)
@@ -453,9 +465,12 @@ void HTTPv1_Server::addResponseContentTypeFileExtension(const string &ext, const
 bool HTTPv1_Server::changeToNextParser()
 {
     // Server Mode:
-    if (currentParser == &clientRequest.requestLine) return changeToNextParserOnClientRequest();
-    else if (currentParser == &clientRequest.headers) return changeToNextParserOnClientHeaders();
-    else return changeToNextParserOnClientContentData();
+    if (currentParser == &clientRequest.requestLine)
+        return changeToNextParserOnClientRequest();
+    else if (currentParser == &clientRequest.headers)
+        return changeToNextParserOnClientHeaders();
+    else
+        return changeToNextParserOnClientContentData();
 }
 
 bool HTTPv1_Server::changeToNextParserOnClientHeaders()
@@ -682,7 +697,6 @@ void HTTPv1_Server::parseHostOptions()
     }
 }
 
-
 bool HTTPv1_Server::answer(Memory::Streams::StreamableObject::Status &wrStat)
 {
     wrStat.bytesWritten = 0;
@@ -785,14 +799,6 @@ Memory::Streams::StreamableObject::Status HTTPv1_Server::getResponseTransmission
 {
     return ansBytes;
 }
-
-
-
-
-
-
-
-
 
 Memory::Streams::StreamableObject::Status HTTPv1_Server::streamResponse(Memory::Streams::StreamableObject *source)
 {

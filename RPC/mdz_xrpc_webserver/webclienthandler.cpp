@@ -435,9 +435,19 @@ void WebClientHandler::procResource_HTMLIEngineInclude(const std::string &sRealF
         }
         else
         {
-            boost::replace_all(fileContent, fulltag, "<!-- HTMLI ENGINE ERROR (FILE NOT FOUND): " + includePath + " -->");
-
-            log(LEVEL_ERR, "fileserver", 2048, "file not found: %s", sRealFullPath.c_str());
+            Memory::Containers::B_MEM * memContent = getStaticContentElement(includePath);
+            if (!memContent)
+            {
+                boost::replace_all(fileContent, fulltag, "<!-- HTMLI ENGINE ERROR (FILE NOT FOUND): " + includePath + " -->");
+                log(LEVEL_ERR, "fileserver", 2048, "file not found: %s", sRealFullPath.c_str());
+            }
+            else
+            {
+                if (!tag.empty() && tag.size() > 1 && tag.at(0) == '/')
+                    boost::replace_all(fileContent, fulltag, "<" + tag.substr(1) + ">" + memContent->toString() + "</" + tag.substr(1) + ">");
+                else
+                    boost::replace_all(fileContent, fulltag, memContent->toString());
+            }
         }
 
         // Move the start iterator to the beginning (maybe we need to reprocess the whole thing after some modifications)...
