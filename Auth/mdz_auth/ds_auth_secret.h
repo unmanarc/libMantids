@@ -51,8 +51,8 @@ struct Secret_PublicData
         r["BAD_ATTEMPTS"] = std::to_string(badAttempts);
         r["DESCRIPTION"] = description;
         r["REQUIRED_AT_LOGIN"] = std::string(requiredAtLogin?"1":"0");
-        r["LOCKED"] = locked;
-        r["NUL"] = nul;
+        r["LOCKED"] = std::string(locked?"1":"0");
+        r["NUL"] = std::string(nul?"1":"0");
         return r;
     }
 

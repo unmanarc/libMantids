@@ -1,5 +1,4 @@
-#ifndef XRPC_FUNCTIONS_AUTH_H
-#define XRPC_FUNCTIONS_AUTH_H
+#pragma once
 
 #include <mdz_xrpc_common/methodsmanager.h>
 #include <mdz_hlp_functions/json.h>
@@ -41,6 +40,7 @@ private:
     static json accountLastName(void * obj, Mantids::Authentication::Manager * auth, Mantids::Authentication::Session * session, const json & payload);
     static json accountLastLogin(void * obj, Mantids::Authentication::Manager * auth, Mantids::Authentication::Session * session, const json & payload);
     static json resetBadAttempts(void * obj, Mantids::Authentication::Manager * auth, Mantids::Authentication::Session * session, const json & payload);
+    static json getAccountAllSecretsPublicData(void * obj, Mantids::Authentication::Manager * auth, Mantids::Authentication::Session * session, const json & payload);
     static json accountEmail(void * obj, Mantids::Authentication::Manager * auth, Mantids::Authentication::Session * session, const json & payload);
     static json accountExtraData(void * obj, Mantids::Authentication::Manager * auth, Mantids::Authentication::Session * session, const json & payload);
     static json accountExpirationDate(void * obj, Mantids::Authentication::Manager * auth, Mantids::Authentication::Session * session, const json & payload);
@@ -140,5 +140,3 @@ private:
 };
 
 }}}
-
-#endif // XRPC_FUNCTIONS_AUTH_H

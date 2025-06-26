@@ -43,6 +43,7 @@ void FullAuth::AddFullAuthMethods(MethodsManager *methods, const std::string &_d
     methods->addRPCMethod("accountExpirationDate", {"DIRREAD"}, {&accountExpirationDate,nullptr});
     methods->addRPCMethod("accountLastLogin", {"DIRREAD"}, {&accountLastLogin,nullptr});
     methods->addRPCMethod("resetBadAttempts", {"DIRWRITE"}, {&resetBadAttempts,nullptr});
+    methods->addRPCMethod("getAccountAllSecretsPublicData", {"DIRREAD"}, {&getAccountAllSecretsPublicData,nullptr});
 
     // Attribs:
     methods->addRPCMethod("attribAdd", {"DIRWRITE"}, {&attribAdd,nullptr});
@@ -435,6 +436,21 @@ json FullAuth::resetBadAttempts(void *, Authentication::Manager *auth, Authentic
 {
     json payloadOut;
     auth->resetBadAttempts(JSON_ASSTRING(payload,"accountName",""),JSON_ASUINT(payload,"passIndex",0));
+    return payloadOut;
+}
+
+json FullAuth::getAccountAllSecretsPublicData(
+    void *obj, Authentication::Manager *auth, Authentication::Session *session, const json &payload)
+{
+    json payloadOut;
+
+    for (const auto & i : auth->getAccountAllSecretsPublicData( JSON_ASSTRING(payload,"accountName","") ))
+    {
+        for (const auto & j :i.second.getMap())
+        {
+            payloadOut[std::to_string(i.first)][j.first] = j.second;
+        }
+    }
     return payloadOut;
 }
 
