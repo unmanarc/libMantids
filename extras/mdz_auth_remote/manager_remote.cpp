@@ -301,6 +301,13 @@ json Manager_Remote::getStaticContent()
     return fastRPC->runRemoteRPCMethod(CKEY,"getStaticContent",payload,nullptr);
 }
 
+json Manager_Remote::getStaticContent2()
+{
+    // Get Static Content from the remote Authenticator Server. (scripts and resources)
+    json payload;
+    return fastRPC->runRemoteRPCMethod(CKEY,"getStaticContent2",payload,nullptr);
+}
+
 int Manager_Remote::processFastRPCConnection(Mantids::Network::Sockets::Socket_StreamBase *stream)
 {
     return fastRPC->processConnection(stream,CKEY);

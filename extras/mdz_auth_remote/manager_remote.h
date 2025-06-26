@@ -210,6 +210,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////
     // Static Content:
     json getStaticContent();
+    json getStaticContent2();
 
     // Connection:
     /**
