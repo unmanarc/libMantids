@@ -35,7 +35,7 @@ bool MIME_Sub_Content::stream(Memory::Streams::StreamableObject::Status &wrStat)
     Memory::Streams::StreamableObject::Status cur;
     // TODO: interpret content encoding...
     if (!contentContainer->streamTo(upStream,wrStat)) return false;
-    if (!(cur+=contentContainer->writeString("\r\n--" + boundary, wrStat)).succeed) return false;
+    if (!(cur+=upStream->writeString("\r\n--" + boundary, wrStat)).succeed) return false;
     return true;
 }
 
