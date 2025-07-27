@@ -540,7 +540,7 @@ std::pair<bool, uint64_t> B_Chunks::findChar(const int &c, const uint64_t &roOff
                 if      (pos_upper && pos_lower && pos_upper<=pos_lower) pos = pos_upper;
                 else if (pos_upper && pos_lower && pos_lower<pos_upper) pos = pos_lower;
                 else if (pos_upper) pos = pos_upper;
-                pos = pos_lower;
+                else if (pos_lower) pos = pos_lower;
             }
 
             if (pos)
