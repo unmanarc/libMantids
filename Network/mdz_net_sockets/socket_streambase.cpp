@@ -66,15 +66,33 @@ bool Socket_StreamBase::streamTo(Memory::Streams::StreamableObject *out, Memory:
 Memory::Streams::StreamableObject::Status Socket_StreamBase::write(const void *buf, const size_t &count, Memory::Streams::StreamableObject::Status &wrStat)
 {
     Memory::Streams::StreamableObject::Status cur;
-    // TODO: report the right amount of data copied...
-    bool r = writeFull(buf,count);
-    if (!r)
-        wrStat.succeed=cur.succeed=setFailedWriteState();
+
+    ssize_t writtenBytes = partialWrite(buf,count);
+
+    if (writtenBytes>0)
+    {
+        // Some data was transmitted.
+        cur.bytesWritten = writtenBytes;
+        cur.finish = false;
+        cur.succeed = true;
+    }
+    else if (writtenBytes == 0)
+    {
+        // Connection closed.
+        cur.bytesWritten = 0;
+        cur.finish = true;
+        cur.succeed = !count?true:false;
+    }
     else
     {
-        cur.bytesWritten+=count;
-        wrStat.bytesWritten+=count;
+        // Connection Error.
+        cur.bytesWritten = 0;
+        cur.finish = false;
+        cur.succeed = false;
     }
+
+    wrStat+=cur;
+
     return cur;
 }
 
