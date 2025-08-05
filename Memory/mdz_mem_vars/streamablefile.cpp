@@ -96,8 +96,10 @@ StreamableObject::Status StreamableFile::write(const void *buf, const size_t &co
 
 void StreamableFile::closeAll()
 {
-    if (rd_fd!=STDIN_FILENO && rd_fd>0)   close(rd_fd);
-    if (wr_fd!=STDOUT_FILENO  && wr_fd!=STDERR_FILENO  && wr_fd>0)  close(wr_fd);
+    if (rd_fd!=STDIN_FILENO && rd_fd>0)
+        close(rd_fd);
+    if (wr_fd!=STDOUT_FILENO  && wr_fd!=STDERR_FILENO  && wr_fd>0)
+        close(wr_fd);
 
     rd_fd=-1;
     wr_fd=-1;

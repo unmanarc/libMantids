@@ -47,8 +47,14 @@ public:
         Status & operator+=(const Status & x)
         {
             bytesWritten += x.bytesWritten;
-            if (!x.succeed) succeed = false;
-            if (x.finish) finish = x.finish;
+            if (!x.succeed)
+            {
+                succeed = false;
+            }
+            if (x.finish)
+            {
+                finish = x.finish;
+            }
             return *this;
         }
 

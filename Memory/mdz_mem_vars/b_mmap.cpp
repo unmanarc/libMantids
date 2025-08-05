@@ -115,6 +115,7 @@ std::pair<bool, uint64_t> B_MMAP::displace2(const uint64_t &roBytesToDisplace)
 
     if (bytesToDisplace>fileReference.getFileOpenSize())
         return std::make_pair(false,static_cast<uint64_t>(0));
+
     if (!fileReference.mmapDisplace(bytesToDisplace))
         return std::make_pair(false,static_cast<uint64_t>(0));
 

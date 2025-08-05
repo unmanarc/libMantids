@@ -60,7 +60,9 @@ StreamableObject::Status Parser::write(const void *buf, const size_t &count, Sta
 #endif
 
     std::pair<bool, uint64_t> r = parseData(buf,count, &ttl, &finished);
-    if (finished) ret.finish = wrStat.finish = true;
+
+    if (finished)
+        ret.finish = wrStat.finish = true;
 
     if (r.first==false)
     {

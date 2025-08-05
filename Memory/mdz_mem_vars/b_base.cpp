@@ -748,13 +748,12 @@ uint64_t B_Base::copyToSOUsingCleanVector(StreamableObject &bc, std::vector<Bina
     // Appending mode.
     for (size_t i=0; i<copyChunks.size();i++)
     {
-        Memory::Streams::StreamableObject::Status cur;
-        if ( !(cur = bc.write(copyChunks[i].rodata,copyChunks[i].rosize,wrStatUpd)).succeed || cur.bytesWritten!=copyChunks[i].rosize)
+        Memory::Streams::StreamableObject::Status cur = bc.writeFullStream(copyChunks[i].rodata,copyChunks[i].rosize,wrStatUpd);
+        acum+=cur;
+        if (!cur.succeed || cur.bytesWritten!=copyChunks[i].rosize || cur.finish)
         {
-            acum+=cur;
             return acum.bytesWritten;
         }
-        acum+=cur;
     }
     return acum.bytesWritten;
 }
