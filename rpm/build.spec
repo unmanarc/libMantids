@@ -1,5 +1,5 @@
 %define name libMantids
-%define version 2.8.32
+%define version 2.8.33
 %define build_timestamp %{lua: print(os.date("%Y%m%d"))}
 Name:           %{name}
 Version:        %{version}
@@ -62,7 +62,12 @@ This package contains the PostgreSQL extensions for libMantids
 Summary:        C++11 Framework Libraries v2 MariaDB Extensions
 Group:          Development/Libraries
 Provides:       %{name}-mariadb
-Requires:       %{name} mariadb-devel mariadb-libs
+Requires:       %{name} mariadb-devel
+%if 0%{?rhel} <= 7
+Requires:       mariadb-libs
+%else
+Requires:       mariadb-common
+%endif
 %description mariadb
 This package contains the MariaDB extensions for libMantids
 %package devel
