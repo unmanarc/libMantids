@@ -51,7 +51,6 @@ bool URLVars::streamTo(Memory::Streams::StreamableObject *out, Memory::Streams::
         varName.append(i.first.c_str(), i.first.size());
 
         Memory::Streams::Encoders::URL varNameEncoder(out);
-        //bytesWritten+=varNameEncoder.getFinalBytesWritten();
         if (!(cur+=varName.streamTo(&varNameEncoder, wrsStat)).succeed)
         {
             out->writeEOF(false);
@@ -64,7 +63,6 @@ bool URLVars::streamTo(Memory::Streams::StreamableObject *out, Memory::Streams::
                 return false;
 
             Memory::Streams::Encoders::URL varNameEncoder2(out);
-            //writtenBytes+=varNameEncoder2.getFinalBytesWritten();
             if (!((Memory::Containers::B_Chunks *)i.second)->streamTo(&varNameEncoder2,wrsStat))
             {
                 out->writeEOF(false);

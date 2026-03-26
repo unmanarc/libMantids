@@ -12,7 +12,6 @@ using namespace Mantids::Memory::Streams::Encoders;
 URL::URL(Memory::Streams::StreamableObject * orig)
 {
     this->orig = orig;
-    finalBytesWritten =0;
 }
 
 bool URL::streamTo(Memory::Streams::StreamableObject *, Status & )
@@ -43,7 +42,6 @@ StreamableObject::Status URL::write(const void *buf, const size_t &count, Status
         {
             if (!(cur+=orig->writeFullStream( ((const unsigned char *)buf)+pos ,bytesToTransmitInPlain,wrStat)).succeed)
             {
-                finalBytesWritten+=cur.bytesWritten;
                 return cur;
             }
             pos+=bytesToTransmitInPlain;
@@ -54,13 +52,11 @@ StreamableObject::Status URL::write(const void *buf, const size_t &count, Status
             snprintf(encodedByte,sizeof(encodedByte), "%%%02" PRIX8, *(((const unsigned char *)buf)+pos));
             if (!(cur+=orig->writeFullStream(encodedByte,3, wrStat)).succeed)
             {
-                finalBytesWritten+=cur.bytesWritten;
                 return cur;
             }
             pos++;
         }
     }
-    finalBytesWritten+=cur.bytesWritten;
     return cur;
 }
 
@@ -81,12 +77,6 @@ inline bool URL::shouldEncodeThisByte(const unsigned char &byte) const
             (byte>='0' && byte<='9')
     );
 }
-
-uint64_t URL::getFinalBytesWritten() const
-{
-    return finalBytesWritten;
-}
-
 
 std::string URL::encodeURLStr(const std::string &url)
 {

@@ -1,144 +1,140 @@
 #include "streamdecoder_url.h"
 #include <mdz_hlp_functions/encoders.h>
 
-#include <mdz_mem_vars/b_mem.h>
 #include <mdz_mem_vars/b_chunks.h>
+#include <mdz_mem_vars/b_mem.h>
 
 using namespace Mantids::Memory::Streams;
 using namespace Mantids::Memory::Streams::Decoders;
 
-URL::URL(Memory::Streams::StreamableObject * orig)
+URL::URL(Memory::Streams::StreamableObject *orig)
 {
     this->orig = orig;
-    filled=0;
-    finalBytesWritten =0;
+    filled = 0;
 }
 
-bool URL::streamTo(Memory::Streams::StreamableObject *, StreamableObject::Status & )
+bool URL::streamTo(Memory::Streams::StreamableObject *, StreamableObject::Status &)
 {
     return false;
 }
-
 StreamableObject::Status URL::write(const void *buf, const size_t &count, Status &wrStat)
 {
     StreamableObject::Status cur;
-    size_t pos=0;
 
-    while (pos<count)
+    const unsigned char *data = static_cast<const unsigned char *>(buf);
+
+    // Handle empty buffer
+    if (count == 0)
     {
-        switch (filled)
+        if (filled!=0)
         {
-        // No URL Encoded %XX is pending...
-        case 0:
-        {
-            unsigned char byteDetected=0;
-            size_t bytesToTransmitInPlain;
-            // Get number of bytes that are in plain text (not encoded)
-            if ((bytesToTransmitInPlain=getPlainBytesSize(((unsigned char *)buf)+pos,count-pos,&byteDetected))>0)
-            {
-                // If there are bytes to transmit, transmit them.
-                if (!(cur+=orig->writeFullStream(((unsigned char *)buf)+pos,bytesToTransmitInPlain,wrStat)).succeed)
-                {
-                    finalBytesWritten+=cur.bytesWritten;
-                    return cur;
-                }
-                pos+=bytesToTransmitInPlain;
-            }
-            else
-            {
-                // Current byte should be % (since pos<count prevents to be the last byte)
-                if (byteDetected == '%')
-                {
-                    // Pass to the next scenario.
-                    bytes[0]='%';
-                    pos++;
-                    filled = 1;
-                }
-                else if (byteDetected == '+')
-                {
-                    // Change the + by space...
-                    bytes[0]=' ';
-                    pos++;
-                    filled = 1;
-                    // Flush this decoded byte and set filled=0 (continue decoding)
-                    if (!(cur+=flushBytes(wrStat)).succeed)
-                    {
-                        finalBytesWritten+=cur.bytesWritten;
-                        return cur;
-                    }
-                }
-            }
-        }break;
-        // We are waiting for the first byte of the URL Encoding: %[X]X
-        case 1:
-        {
-            // Put the first byte in the URL Encoding Stack:
-            bytes[1]=*(((unsigned char *)buf)+pos);
-            pos++;
-            filled = 2;
-            if (!isxdigit(bytes[1]))
-            {
-                // If malformed: flush byte 0,1 from the URL Encoding stack:
-                // Write original 2 bytes... and set filled to 0.
-                if (!(cur+=flushBytes(wrStat)).succeed)
-                {
-                    finalBytesWritten+=cur.bytesWritten;
-                    return cur;
-                }
-            }
-        }break;
-        // We are waiting for the second byte of the URL Encoding: %X[X]
-        case 2:
-        {
-            // Put the second byte in the URL Encoding Stack:
-            bytes[2]=*(((unsigned char *)buf)+pos);
-            // Return to normal operation...
-            pos++;
+            cur.succeed = false;
+        }
+        return cur;
+    }
 
-            if (!isxdigit(bytes[2]))
+    switch (filled)
+    {
+    case 0: // Normal mode - looking for special characters
+    {
+        unsigned char byteDetected = 0;
+        size_t plainBytes;
+
+        // Find consecutive plain bytes (non-special characters)
+        plainBytes = getPlainBytesSize(data, count, &byteDetected);
+
+        if (plainBytes > 0)
+        {
+            // Transmit plain bytes
+            cur.bytesWritten = plainBytes;
+            if (!(orig->writeFullStream(data, plainBytes, wrStat)).succeed)
             {
-                // If malformed: flush the byte 0,1,2 from the URL Encoding stack:
-                // Write original 3 bytes...
-                filled = 3;
-                if (!(cur+=flushBytes(wrStat)).succeed)
-                {
-                    finalBytesWritten+=cur.bytesWritten;
-                    return cur;
-                }
-                filled = 0;
+                cur.succeed = false;
             }
-            else
+        }
+        else
+        {
+            // Special character detected
+            if (byteDetected == '%')
             {
-                // If not malformed... perform the transform from hex to uchar (URL Decoding)
-                filled = 0;
-                unsigned char val[2];
-                val[0] = Helpers::Encoders::hexPairToByte( (char *) bytes+1 );
-                // Transmit the decoded byte back to the decoded stream.
-                if (!(cur+=orig->writeFullStream(val,1, wrStat)).succeed)
+                // Start of URL encoding sequence
+                bytes[0] = '%';
+                filled = 1;
+                cur.bytesWritten = 1;
+            }
+            else if (byteDetected == '+')
+            {
+                // Plus sign represents space
+                bytes[0] = ' ';
+                cur.bytesWritten = 1;
+                if (!(orig->writeFullStream(bytes, 1, wrStat)).succeed)
                 {
-                    finalBytesWritten+=cur.bytesWritten;
-                    return cur;
+                    cur.succeed = false;
                 }
             }
-        }break;
-        default:
-            break;
         }
     }
-    finalBytesWritten+=cur.bytesWritten;
+    break;
+    case 1: // Waiting for first hex digit after %
+    {
+        bytes[1] = data[0];
+        cur.bytesWritten = 1;
+
+        filled = 2;
+        if (!isxdigit(bytes[1]))
+        {
+            // Malformed - flush the % and the invalid byte as-is
+            if (!(flushBytes(wrStat)).succeed)
+            {
+                cur.succeed = false;
+            }
+        }
+    }
+    break;
+    case 2: // Waiting for second hex digit
+    {
+        bytes[2] = data[0];
+        cur.bytesWritten = 1;
+
+        if (!isxdigit(bytes[2]))
+        {
+            // Malformed - flush all 3 bytes as-is
+            filled = 3;
+            if (!(flushBytes(wrStat)).succeed)
+            {
+                cur.succeed = false;
+            }
+        }
+        else
+        {
+            // Valid hex pair - decode and write
+            unsigned char val;
+            val = Helpers::Encoders::hexPairToByte((char *) bytes + 1);
+            filled = 0;
+            if (!(orig->writeFullStream(&val, 1, wrStat)).succeed)
+            {
+                cur.succeed = false;
+            }
+        }
+    }
+
+    default:
+        break;
+    }
+
     return cur;
 }
 
-size_t URL::getPlainBytesSize(const unsigned char *buf, size_t count, unsigned char * byteDetected)
+size_t URL::getPlainBytesSize(const unsigned char *buf, size_t count, unsigned char *byteDetected)
 {
-    for (size_t i=0;i<count;i++)
+    for (size_t i = 0; i < count; i++)
     {
-        if (buf[i]=='%')
+        if (buf[i] == '%')
         {
             *byteDetected = '%';
             return i;
         }
-        else if (buf[i]=='+')
+        else if (buf[i] == '+')
         {
             *byteDetected = '+';
             return i;
@@ -147,19 +143,15 @@ size_t URL::getPlainBytesSize(const unsigned char *buf, size_t count, unsigned c
     return count;
 }
 
-StreamableObject::Status URL::flushBytes(Status & wrStat)
+StreamableObject::Status URL::flushBytes(Status &wrStat)
 {
-    auto x= orig->writeFullStream(bytes,filled, wrStat);
+    auto x = orig->writeFullStream(bytes, filled, wrStat);
     filled = 0;
     return x;
 }
 
-uint64_t URL::getFinalBytesWritten() const
-{
-    return finalBytesWritten;
-}
 
-void URL::writeEOF(bool )
+void URL::writeEOF(bool)
 {
     // flush intermediary bytes...
     Status w;
@@ -168,7 +160,7 @@ void URL::writeEOF(bool )
 
 std::string URL::decodeURLStr(const std::string &url)
 {
-    Mantids::Memory::Containers::B_MEM uriEncoded( url.c_str(), url.size() );
+    Mantids::Memory::Containers::B_MEM uriEncoded(url.c_str(), url.size());
     Memory::Containers::B_Chunks uriDecoded;
 
     // Decode URI (maybe it's url encoded)...
@@ -176,7 +168,7 @@ std::string URL::decodeURLStr(const std::string &url)
     Memory::Streams::StreamableObject::Status cur;
     Memory::Streams::StreamableObject::Status wrsStat;
 
-    if ((cur+=uriEncoded.streamTo(&uriDecoder, wrsStat)).succeed)
+    if ((cur += uriEncoded.streamTo(&uriDecoder, wrsStat)).succeed)
     {
         return uriDecoded.toString();
     }

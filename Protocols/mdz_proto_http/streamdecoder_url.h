@@ -13,7 +13,6 @@ public:
     bool streamTo(Memory::Streams::StreamableObject *, Status & ) override;
     Status write(const void * buf, const size_t &count, Status &wrStat) override;
 
-    uint64_t getFinalBytesWritten() const;
     void writeEOF(bool) override;
 
     static std::string decodeURLStr(const std::string & url);
@@ -25,7 +24,6 @@ private:
     unsigned char bytes[3];
     uint8_t filled;
 
-    uint64_t finalBytesWritten;
     Memory::Streams::StreamableObject * orig;
 };
 
