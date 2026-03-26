@@ -597,7 +597,7 @@ bool HTTPv1_Server::streamServerHeaders(Memory::Streams::StreamableObject::Statu
     if ((strsize=serverResponse.content.getStreamSize()) == std::numeric_limits<uint64_t>::max())
     {
         // TODO: connection keep alive.
-        serverResponse.headers.add("Connetion", "Close");
+        serverResponse.headers.add("Connection", "Close");
         serverResponse.headers.remove("Content-Length");
         /////////////////////
         if (serverResponse.content.getTransmitionMode() == Common::Content::TRANSMIT_MODE_CHUNKS)
@@ -605,7 +605,7 @@ bool HTTPv1_Server::streamServerHeaders(Memory::Streams::StreamableObject::Statu
     }
     else
     {
-        serverResponse.headers.remove("Connetion");
+        serverResponse.headers.remove("Connection");
         serverResponse.headers.replace("Content-Length", std::to_string(strsize));
     }
 

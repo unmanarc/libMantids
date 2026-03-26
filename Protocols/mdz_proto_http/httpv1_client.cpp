@@ -150,7 +150,7 @@ bool HTTPv1_Client::streamClientHeaders(Memory::Streams::StreamableObject::Statu
         return false;
     else
     {
-        clientRequest.headers.remove("Connetion");
+        clientRequest.headers.remove("Connection");
         clientRequest.headers.replace("Content-Length", std::to_string(strsize));
     }
 
