@@ -59,7 +59,8 @@ std::string URLVar_SubParser::flushRetrievedContentAsString()
 Memory::Streams::SubParser::ParseStatus URLVar_SubParser::parse()
 {
     pData->clear();
-    if (!getParsedBuffer()->size()) return Memory::Streams::SubParser::PARSE_STAT_GET_MORE_DATA;
+    if (!getParsedBuffer()->size())
+        return Memory::Streams::SubParser::PARSE_STAT_GET_MORE_DATA;
     Memory::Streams::StreamableObject::Status cur;
     Memory::Streams::Decoders::URL decUrl(pData);
     if (!(cur=getParsedBuffer()->streamTo(&decUrl,cur)).succeed)
