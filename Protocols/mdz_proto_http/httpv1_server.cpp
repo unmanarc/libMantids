@@ -355,6 +355,7 @@ bool HTTPv1_Server::getLocalFilePathFromURI0NE(const std::string & uri, std::str
     std::string sFullComputedRealPath;
     {
         char cRealPath[PATH_MAX+2];
+        errno = 0;
         realpath(sFullRequestedPath.c_str(), cRealPath);
         if ( errno == ENOENT )
         {
